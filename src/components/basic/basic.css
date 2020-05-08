@@ -1,0 +1,16 @@
+.navbar-light .navbar-brand {
+    color: rgb(4, 105, 4) !important;
+}
+
+.float-right{
+    float:right;
+}
+
+.caret {
+    display: none;
+    }
+
+.dropdown-toggle.btn.btn-secondary::before,
+.dropdown-toggle.nav-link::after{
+    display: none;
+}
