@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
 import Router from './router/router';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Footer from './components/basic/Footer';
 
 ReactDOM.render(
 
@@ -14,6 +14,7 @@ ReactDOM.render(
     <BrowserRouter>
       <App />
       <Router />
+      <Footer />
     </BrowserRouter>
   </React.StrictMode>
   ,

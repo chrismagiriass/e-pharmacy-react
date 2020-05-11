@@ -14,3 +14,17 @@
 .dropdown-toggle.nav-link::after{
     display: none;
 }
+
+
+
+footer {
+    /* position:absolute; */
+    left:0;
+    bottom:0;
+    right:0;
+    background: #343a40;
+    padding: 30px;
+}
+footer a {
+    color: #f8f9fa!important
+}

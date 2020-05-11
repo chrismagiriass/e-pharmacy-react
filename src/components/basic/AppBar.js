@@ -13,16 +13,23 @@ class AppBar extends Component {
 
         this.state = {
             showModal: false,
+            modalTitle: '',
+            register: true,
             cart: {
                 items: 4
             }
         };
-        this.openModal = this.openModal.bind(this);
+        this.openRegisterModal = this.openRegisterModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.openLoginModal = this.openLoginModal.bind(this);
     }
 
-    openModal() {
-        this.setState({ showModal: true });
+    openRegisterModal() {
+        this.setState({ showModal: true, register: true, modalTitle: 'Register' });
+
+    }
+    openLoginModal() {
+        this.setState({ showModal: true, register: false, modalTitle: 'Login' });
 
     }
     closeModal() {
@@ -57,14 +64,12 @@ class AppBar extends Component {
                         </NavDropdown>
 
                         <NavDropdown title={<div style={{ display: "inline-block" }}><AccountCircle /> Account </div>} id="basic-nav-dropdown">
-                            <NavDropdown.Item onClick={this.openModal}>Register</NavDropdown.Item>
-                            <NavDropdown.Item href="/login">Login</NavDropdown.Item>
+                            <NavDropdown.Item onClick={this.openRegisterModal}>Register</NavDropdown.Item>
+                            <NavDropdown.Item onClick={this.openLoginModal}>Login</NavDropdown.Item>
                         </NavDropdown>
-
                     </Navbar.Collapse>
-                    <MyModal showModal={this.state.showModal} onHide={this.closeModal} />
                 </Navbar>
-
+                <MyModal key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} register={this.state.register} />
             </>
         );
     }

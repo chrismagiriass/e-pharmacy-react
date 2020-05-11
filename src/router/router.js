@@ -1,18 +1,22 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import CustomerList from '../components/customers/CustomerList';
-// import AddressList from '../components/address/AddressList';
-// import CustomerForm from '../components/customers/CustomerForm';
-// import MyModal from '../components/basic/MyModal';
+import ShowCustomers from '../components/customers/ShowCustomers';
+import ShowEmployees from '../components/employees/ShowEmployees';
 
 
 const Router = () => {
 
+
     return (
         <Switch>
-            {/* <Route exact path='/customers/create' component={CustomerForm} /> */}
-            <Route exact path='/customers' component={CustomerList} />
-            {/* <Route exact path='/register' component={() => } /> */}
+
+            <Route exact path='/home' />
+            <Route exact path='/products' />
+            <Route exact path='/ingredients' />
+            <Route exact path='/customers' component={ShowCustomers} />
+            <Route exact path='/employees' component={ShowEmployees} />
+            <Route exact path='/intranet/products' />
+            <Route exact path='/intranet/employees' />
 
         </Switch>
     );

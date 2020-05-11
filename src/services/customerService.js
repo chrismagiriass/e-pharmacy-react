@@ -8,8 +8,8 @@ export default {
   post(customer) {
     return apiClient.post('customers', customer);
   },
-  update(id, user) {
-    return apiClient.post('users/' + id + '/update', user);
+  update(id, customer) {
+    return apiClient.post('customers/' + id + '/update', customer);
   },
   get() {
     return apiClient.get('customers');
@@ -17,7 +17,7 @@ export default {
   deleteCustomer(id) {
     return apiClient.delete(`customers/${id}`);
   },
-  uniqueEmailandUsername(data) {
+  uniqueEmail(data) {
     return apiClient.post('customers/unique', data);
   }
 
