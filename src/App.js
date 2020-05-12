@@ -12,11 +12,8 @@ class App extends Component {
     return (
       <div>
         <AppBar />
-        <div>
-          <ProductBar />
-        </div>
+        <ProductBar />
       </div>
-      // <HomePage/>
     );
   }
 }

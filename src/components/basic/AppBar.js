@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button, InputGroup } from 'react-bootstrap';
 import { AccountCircle } from '@material-ui/icons';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
+import SearchIcon from '@material-ui/icons/Search';
 import './basic.css';
 import MyModal from './MyModal';
 
@@ -42,30 +43,37 @@ class AppBar extends Component {
 
         return (
             <>
-                <Navbar bg="light" expand="xl" className="menuBar">
+                <Navbar expand="xl" sticky={true}>
                     <Navbar.Brand href="#home"><img
                         src="/favicon.ico"
-                        width="30"
-                        height="30"
-                        className="d-inline-block align-top"
+                        width="60"
+                        height="60"
+                        className="d-inline-block align-center"
                         alt="Pharmacy4all logo"
-                    />pharmacy4all</Navbar.Brand>
+                    />pharmacy<span className="brand-number">4</span>all</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto"></Nav>
-                        <Form inline>
-                            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                            <Button variant="outline-success">Search</Button>
-                        </Form>
-
-                        <NavDropdown title={<div style={{ display: "inline-block" }}><ShoppingCartIcon /> Cart {this.state.cart.items} </div>} id="basic-nav-dropdown">
-                            <NavDropdown.Item >Cart item 1</NavDropdown.Item>
-                            <NavDropdown.Item >Cart item 2</NavDropdown.Item>
-                        </NavDropdown>
+                        <Nav className="mx-auto">
+                            <Form >
+                                <InputGroup className="mr-sm-2">
+                                    <Form.Control
+                                        className="py-2 border-right-0 border"
+                                        type="text"
+                                        placeholder="Search" />
+                                    <span className="input-group-append">
+                                        <button className="btn btn-outline-secondary border-left-0 border"><SearchIcon /></button>
+                                    </span>
+                                </InputGroup>
+                            </Form>
+                        </Nav>
 
                         <NavDropdown title={<div style={{ display: "inline-block" }}><AccountCircle /> Account </div>} id="basic-nav-dropdown">
                             <NavDropdown.Item onClick={this.openRegisterModal}>Register</NavDropdown.Item>
                             <NavDropdown.Item onClick={this.openLoginModal}>Login</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.state.cart.items}</sup> </div>} id="basic-nav-dropdown">
+                            <NavDropdown.Item >Cart item 1</NavDropdown.Item>
+                            <NavDropdown.Item >Cart item 2</NavDropdown.Item>
                         </NavDropdown>
                     </Navbar.Collapse>
                 </Navbar>

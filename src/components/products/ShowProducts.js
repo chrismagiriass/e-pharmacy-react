@@ -10,26 +10,21 @@ class ShowProducts extends Component {
 
 
     render() {
-        // let modalBody;
-        // if (this.props.register) {
-        //     modalBody = <CustomerForm register={this.props.register} />
-        // } else {
-        //     modalBody = <LoginForm></LoginForm>
-        // }
+
         return (
             <div className="row">
-                   <div className="col-md-2">
-                   <SearchBar />
-                   </div>
-                   <div className="col-md-10">
-                <Container  fluid ={true} className="product-container">
-                    <div className="row">
-                        <ProductCard className="col-md-2" />
-                        <ProductCard className="col-md-2" />
-                        <ProductCard className="col-md-2" />
-                        <ProductCard className="col-md-2" />
-                    </div>
-                </Container>
+                <div className="col-md-2">
+                    <SearchBar />
+                </div>
+                <div className="col-md-10">
+                    <Container fluid={true} className="product-container">
+                        <div className="row">
+                            <ProductCard className="col-md-2" />
+                            <ProductCard className="col-md-2" />
+                            <ProductCard className="col-md-2" />
+                            <ProductCard className="col-md-2" />
+                        </div>
+                    </Container>
                 </div>
             </div>
         );

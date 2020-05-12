@@ -1,5 +1,24 @@
-.navbar-light .navbar-brand {
-    color: rgb(4, 105, 4) !important;
+.navbar-brand {
+    color: #507642 !important;
+    font-size: 26px;
+    font-weight: 700;
+    font-family: Apple Chancery, cursive;
+}
+
+.brand-number{
+    color: #507642 !important;
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.navbar{
+    background-color:#F3F4EC !important;
+    color: #507642 !important;
+    padding-inline-end: 45px !important;
+}
+
+.nav-link, .navbar-light .navbar-nav .nav-link {
+    color: #507642 !important;
 }
 
 .float-right{
@@ -22,9 +41,33 @@ footer {
     left:0;
     bottom:0;
     right:0;
-    background: #343a40;
+    background: #507642;
+    color: #CCCFBC !important;
     padding: 30px;
 }
-footer a {
-    color: #f8f9fa!important
+footer a, footer p{
+    color: #CCCFBC !important;
 }
+
+
+.cirlce {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    color: #CCCFBC;
+    font-size: 8px;
+    border-radius: 50%;
+    background: #507642;
+    display: inline-block;
+
+}
+
+.review{
+    background-color: #CCCFBC;
+    color: #507642;
+    height: 200px;
+   
+}
+
+

@@ -17,7 +17,7 @@ class ProductBar extends Component {
     render() {
 
         return (
-            <Navbar bg="light" variant="light" expand="sm" className="productBar">
+            <Navbar expand="sm" className="productBar">
 
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
