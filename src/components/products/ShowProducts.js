@@ -17,12 +17,13 @@ class ShowProducts extends Component {
                     <SearchBar />
                 </div>
                 <div className="col-md-10">
-                    <Container fluid={true} className="product-container">
+                    <Container fluid={true} >
+
                         <div className="row">
-                            <ProductCard className="col-md-2" />
-                            <ProductCard className="col-md-2" />
-                            <ProductCard className="col-md-2" />
-                            <ProductCard className="col-md-2" />
+                            <ProductCard />
+                            <ProductCard />
+                            <ProductCard />
+                            <ProductCard />
                         </div>
                     </Container>
                 </div>
