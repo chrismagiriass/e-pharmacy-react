@@ -1,0 +1,17 @@
+.product-container{
+    border:1px solid olive;
+    padding: 10px;
+    margin-left: 0px !important;
+    
+}
+
+.product-container .row{
+    padding: 10px;
+}
+
+
+.product-card{
+    width: 15%;
+    margin: 11px;
+
+}

@@ -24,7 +24,7 @@ class ProductBar extends Component {
                     <Nav className="mr-auto">
                         <Nav.Link href="#home">Home</Nav.Link>
                         <NavDropdown title="Products" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Woman</NavDropdown.Item>
+                            <NavDropdown.Item href="/products">Woman</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">Men</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.3">Pharmacy</NavDropdown.Item>
                             <NavDropdown.Divider />
