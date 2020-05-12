@@ -43,7 +43,7 @@ class AppBar extends Component {
 
         return (
             <>
-                <Navbar expand="xl" sticky={true}>
+                <Navbar expand="xl" sticky={true} className="appbar">
                     <Navbar.Brand href="#home"><img
                         src="/favicon.ico"
                         width="60"

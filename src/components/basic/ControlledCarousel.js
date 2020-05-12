@@ -13,6 +13,7 @@ function ControlledCarousel() {
             <Carousel.Item>
                 <img
                     className="d-block w-100"
+                    style={{ height: 400 }}
                     src="/slider1.png"
                     alt="First slide"
                 />
@@ -36,7 +37,8 @@ function ControlledCarousel() {
             <Carousel.Item>
                 <img
                     className="d-block w-100"
-                    src="holder.js/800x400?text=Third slide&bg=20232a"
+                    style={{ height: 400 }}
+                    src="/slider1.png"
                     alt="Third slide"
                 />
 
@@ -47,7 +49,7 @@ function ControlledCarousel() {
             </p>
                 </Carousel.Caption>
             </Carousel.Item>
-        </Carousel>
+        </Carousel >
     );
 }
 

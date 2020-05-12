@@ -16,6 +16,9 @@
     color: #507642 !important;
     padding-inline-end: 45px !important;
 }
+.appbar{
+    border-bottom: 1px solid lightgray;
+}
 
 .nav-link, .navbar-light .navbar-nav .nav-link {
     color: #507642 !important;
