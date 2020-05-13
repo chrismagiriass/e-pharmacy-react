@@ -31,7 +31,7 @@ export class ApiClient {
             .then(response => Promise.resolve(response))
             .catch(error => Promise.reject(error));
     }
-
+// 
     post(url, data = {}, conf = {}) {
         return this.client.post(url, data, conf)
             .then(response => Promise.resolve(response.data))
