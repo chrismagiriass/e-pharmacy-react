@@ -11,7 +11,32 @@
 
 
 .product-card{
-    width: 15%;
-    margin: 11px;
+    text-align: center;
+}
 
+.product-price{
+    font-weight: 700;
+}
+
+.product-price-discount{
+    padding-right: 10px;
+    font-size: small;
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.item {
+    position:relative;
+    display:inline-block;
+}
+.notify-badge{
+    position: absolute;
+    left:-5px;
+    top:-5px;
+    background:rgb(189, 7, 7);
+    text-align: center;
+    border-radius: 50%;
+    color:white;
+    padding:5px 10px;
+    font-size:15px;
 }
