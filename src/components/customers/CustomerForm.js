@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./customerForm.css";
-import { Button, Form, Col, InputGroup } from 'react-bootstrap';
+import { Form, Col, InputGroup } from 'react-bootstrap';
 import CustomerService from "../../services/customerService";
 import { withRouter } from "react-router-dom";
 
@@ -218,7 +218,7 @@ class CustomerForm extends Component {
                             feedback="You must agree before submitting."
                         />
                     </Form.Group>
-                    <Button type="submit">Submit form</Button>
+                    <button type="submit" className="btn btn-submit float-right">{this.state.register ? 'Register' : 'Update'}</button>
                 </Form>
             </div>
         );

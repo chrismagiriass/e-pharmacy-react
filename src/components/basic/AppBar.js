@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button, InputGroup } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Form, InputGroup } from 'react-bootstrap';
 import { AccountCircle } from '@material-ui/icons';
 import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 import SearchIcon from '@material-ui/icons/Search';
@@ -55,7 +55,7 @@ class AppBar extends Component {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mx-auto">
                             <Form >
-                                <InputGroup className="mr-sm-2">
+                                <InputGroup className="mr-md-5 mr-sm-2 mr-xl-5">
                                     <Form.Control
                                         className="py-2 border-right-0 border"
                                         type="text"
@@ -67,13 +67,15 @@ class AppBar extends Component {
                             </Form>
                         </Nav>
 
-                        <NavDropdown title={<div style={{ display: "inline-block" }}><AccountCircle /> Account </div>} id="basic-nav-dropdown">
+                        <NavDropdown title={<div style={{ display: "inline-block" }}><AccountCircle /> </div>} id="basic-nav-dropdown">
                             <NavDropdown.Item onClick={this.openRegisterModal}>Register</NavDropdown.Item>
                             <NavDropdown.Item onClick={this.openLoginModal}>Login</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.state.cart.items}</sup> </div>} id="basic-nav-dropdown">
                             <NavDropdown.Item >Cart item 1</NavDropdown.Item>
                             <NavDropdown.Item >Cart item 2</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4"><button className="btn btn-submit">Checkout</button></NavDropdown.Item>
                         </NavDropdown>
                     </Navbar.Collapse>
                 </Navbar>

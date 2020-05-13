@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Modal } from 'react-bootstrap';
 import FormatQuoteIcon from '@material-ui/icons/FormatQuote';
 
 class ReviewContainer extends Component {
