@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./customerForm.css";
-import { Button, Form, Col, InputGroup } from 'react-bootstrap';
+import { Form, Col, InputGroup } from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
 
 class LoginForm extends Component {
@@ -89,7 +89,7 @@ class LoginForm extends Component {
                             </InputGroup>
                         </Form.Group>
                     </Form.Row>
-                    <Button type="submit">Login</Button>
+                    <button type="submit" className="btn btn-submit float-right">Login</button>
                 </Form>
             </div>
         );
