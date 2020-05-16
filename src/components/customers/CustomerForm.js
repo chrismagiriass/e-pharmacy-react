@@ -14,16 +14,10 @@ class CustomerForm extends Component {
             validated: false,
             customer: {
                 firstName: '',
+                role: 'ADMIN',
                 lastName: '',
                 password: '',
-                email: '',
-                address: {
-                    city: '',
-                    streetName: '',
-                    streetNumber: '',
-                    region: '',
-                    zipCode: ''
-                }
+                email: ''
             }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -70,13 +64,86 @@ class CustomerForm extends Component {
     }
 
     showExtraFields() {
+
         this.setState({ register: !this.state.register });
+        if (this.state.register) {
+            this.setState({
+                customer: {
+                    ...this.state.customer,
+                    address: {
+                        city: '',
+                        streetName: '',
+                        streetNumber: '',
+                        region: '',
+                        zipCode: ''
+                    }
+                }
+            })
+
+        }
     }
 
     render() {
+        let addressFields = '';
+        if (!this.state.register) {
 
+            addressFields = <Form.Row className={this.state.register ? 'hidden-row' : ''}>
+                <Form.Group as={Col} md="6" controlId="validationCustfomPassword">
+                    <Form.Label>City</Form.Label>
+                    <InputGroup>
+                        <Form.Control
+                            type="text"
+                            placeholder="City"
+                            name="address.city"
+                            value={this.state.customer.address.city}
+                            onChange={this.changeHandler} />
+                    </InputGroup>
+                </Form.Group>
+                <Form.Group as={Col} md="6">
+                    <Form.Label>Region</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Region"
+                        name="address.region"
+                        value={this.state.customer.address.region}
+                        onChange={this.changeHandler} />
+                </Form.Group>
+
+                <Form.Group as={Col} md="6">
+                    <Form.Label>Street name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Street name"
+                        name="address.streetName"
+                        value={this.state.customer.address.streetName}
+                        onChange={this.changeHandler} />
+                </Form.Group>
+                <Form.Group as={Col} md="3">
+                    <Form.Label>Str. no </Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Str. no"
+                        name="address.streetNumber"
+                        value={this.state.customer.address.streetNumber}
+                        onChange={this.changeHandler} />
+                </Form.Group>
+                <Form.Group as={Col} md="3">
+                    <Form.Label>Zip code</Form.Label>
+                    <Form.Control
+                        type="number"
+                        min={"0"}
+                        max={"123123"}
+
+                        placeholder="Zip code"
+                        name="address.zipCode"
+                        value={this.state.customer.address.zipCode}
+                        onChange={this.changeHandler} />
+                </Form.Group>
+            </Form.Row>
+
+        }
         return (
-            <div className="container" style={{ marginTop: 50 }}>
+            <div className="container">
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Row>
                         <Form.Group as={Col} md="6">
@@ -154,59 +221,7 @@ class CustomerForm extends Component {
                         </Form.Group>
                     </Form.Row>
 
-                    <Form.Row className={this.state.register ? 'hidden-row' : ''}>
-                        <Form.Group as={Col} md="6" controlId="validationCustfomPassword">
-                            <Form.Label>City</Form.Label>
-                            <InputGroup>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="City"
-                                    name="address.city"
-                                    value={this.state.customer.address.city}
-                                    onChange={this.changeHandler} />
-                            </InputGroup>
-                        </Form.Group>
-                        <Form.Group as={Col} md="6">
-                            <Form.Label>Region</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Region"
-                                name="address.region"
-                                value={this.state.customer.address.region}
-                                onChange={this.changeHandler} />
-                        </Form.Group>
-
-                        <Form.Group as={Col} md="6">
-                            <Form.Label>Street name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Street name"
-                                name="address.streetName"
-                                value={this.state.customer.address.streetName}
-                                onChange={this.changeHandler} />
-                        </Form.Group>
-                        <Form.Group as={Col} md="3">
-                            <Form.Label>Str. no </Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Str. no"
-                                name="address.streetNumber"
-                                value={this.state.customer.address.streetNumber}
-                                onChange={this.changeHandler} />
-                        </Form.Group>
-                        <Form.Group as={Col} md="3">
-                            <Form.Label>Zip code</Form.Label>
-                            <Form.Control
-                                type="number"
-                                min={"0"}
-                                max={"123123"}
-
-                                placeholder="Zip code"
-                                name="address.zipCode"
-                                value={this.state.customer.address.zipCode}
-                                onChange={this.changeHandler} />
-                        </Form.Group>
-                    </Form.Row>
+                    {addressFields}
                     <Form.Group>
                         <Form.Check className={this.state.hiddenCheckBox ? '' : 'hidden-row'}
                             label="Fill in address info."

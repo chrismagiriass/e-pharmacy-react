@@ -11,8 +11,11 @@ export default {
   update(id, product) {
     return apiClient.post('products/' + id + '/update', product);
   },
-  get() {
-    return apiClient.get('products');
+  get( conf = {} ) {
+    return apiClient.get('products',conf);
+  },
+  getById( id ) {
+    return apiClient.get(`products/${id}`);
   },
   deleteProduct(id) {
     return apiClient.delete(`products/${id}`);

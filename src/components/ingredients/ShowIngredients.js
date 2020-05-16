@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
-import ProductCard from './ProductCard';
+import IngredientCard from './IngredientCard';
 import { Container } from 'react-bootstrap';
-import "./products.css";
+import "./ingredients.css";
 import SearchBar from '../basic/SearchBar';
-import ProductService from '../../services/productService';
+import IngredientService from '../../services/ingredientService';
 import Pagination from "react-js-pagination";
 
-class ShowProducts extends Component {
+class ShowIngredients extends Component {
 
 
 
     constructor(props) {
         super(props)
         this.state = {
-            products: [],
+            ingredients: [],
             activePage: 1,
             itemsPerPage: 12,
             totalItems: 0,
             sort: 'name'
         }
-        this.getProducts.bind(this)
+        this.getIngredients.bind(this)
 
     }
 
     componentDidMount() {
-        ProductService.get(
+        IngredientService.get(
             {
                 params: {
                     page: this.state.activePage - 1,
@@ -34,18 +34,18 @@ class ShowProducts extends Component {
             }
         ).then(result => {
             this.setState({
-                products: result.results,
+                ingredients: result.results,
                 totalItems: result.totalItems
             });
         }
         ).catch(error =>
-            console.error("Error from product", error)
+            console.error("Error from ingredients", error)
         )
     }
 
 
-    getProducts(pageNumber) {
-        ProductService.get(
+    getIngredients(pageNumber) {
+        IngredientService.get(
             {
                 params: {
                     page: pageNumber - 1,
@@ -55,19 +55,19 @@ class ShowProducts extends Component {
             }
         ).then(result => {
             this.setState({
-                products: result.results,
+                ingredients: result.results,
                 totalItems: result.totalItems
             });
         }
         ).catch(error =>
-            console.error("Error from product", error)
+            console.error("Error from ingredients", error)
         )
     }
 
     handlePageChange(pageNumber) {
         console.log(`active page is ${pageNumber}`);
         this.setState({ activePage: pageNumber });
-        this.getProducts(pageNumber);
+        this.getIngredients(pageNumber);
     }
 
 
@@ -85,7 +85,7 @@ class ShowProducts extends Component {
                     <Container fluid={true} >
 
                         <div className="row">
-                            {this.state.products.map((product, i) => <ProductCard key={product.productId} product={product} />)}
+                            {this.state.ingredients.map((ingredient, i) => <IngredientCard key={ingredient.ingredientId} ingredient={ingredient} />)}
                         </div>
                         <div className="row d-flex justify-content-center">
                             <Pagination
@@ -105,4 +105,4 @@ class ShowProducts extends Component {
     }
 }
 
-export default ShowProducts;
+export default ShowIngredients;

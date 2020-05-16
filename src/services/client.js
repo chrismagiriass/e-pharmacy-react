@@ -4,8 +4,10 @@ const getClientAxios = () => {
     // const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const options = {
         baseURL: 'http://localhost:8080/pharmacy/api',
+        credentials: 'include', 
         headers: {
-            Accept: 'application/json'
+            Accept: 'application/json',
+            
         }
     };
 

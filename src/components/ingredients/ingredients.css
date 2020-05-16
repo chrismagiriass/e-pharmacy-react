@@ -1,24 +1,24 @@
-.product-container{
+.ingredient-container{
     border:1px solid #507642;
     padding: 10px;
     margin-left: 0px !important;
     
 }
 
-.product-container .row{
+.ingredient-container .row{
     padding: 10px;
 }
 
 
-.product-card{
+.ingredient-card{
     text-align: center;
 }
 
-.product-price{
+.ingredient-price{
     font-weight: 700;
 }
 
-.product-price-discount{
+.ingredient-price-discount{
     padding-right: 10px;
     font-size: small;
     text-decoration: line-through;
@@ -44,4 +44,3 @@
 .pagination{
  padding-top: 60px;
 }
-

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./customerForm.css";
 import { Form, Col, InputGroup } from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
+import LoginService from "../../services/loginService";
 
 class LoginForm extends Component {
 
@@ -11,7 +12,7 @@ class LoginForm extends Component {
             validated: false,
             user: {
                 password: '',
-                email: ''
+                username: ''
             }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,7 +39,10 @@ class LoginForm extends Component {
             this.setState({ validated: true });
         } else {
             event.preventDefault();
-            // CustomerService.post(this.state.user);
+            LoginService.login(this.state.user)
+            .then(resp=>console.log(resp))
+            //add user to local storage 
+            .catch(err=>console.log(err));
             // this.props.history.push("/customers");
 
         }
@@ -48,7 +52,7 @@ class LoginForm extends Component {
     render() {
 
         return (
-            <div className="container" style={{ marginTop: 50 }}>
+            <div className="container">
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Row>
 
@@ -60,11 +64,11 @@ class LoginForm extends Component {
                                 </InputGroup.Prepend>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Email"
+                                    placeholder="Username"
                                     aria-describedby="inputGroupPrepend"
                                     required
-                                    name="email"
-                                    value={this.state.user.email}
+                                    name="username"
+                                    value={this.state.user.username}
                                     onChange={this.changeHandler}
                                 />
                                 <Form.Control.Feedback type="invalid">

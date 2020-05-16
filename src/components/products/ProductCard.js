@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
 import "./products.css";
-import { Link } from 'react-router-dom';
+import { Link, useHistory, withRouter } from 'react-router-dom';
 
 
 class ProductCard extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
+        this.productDetails.bind(this)
+    }
+
+    productDetails(product) {
+        // useHistory().push(`products/${product.productId}`)
+        //     let path = `/products/${product.productId}`;
+        //     let history = useHistory();
+        //    return  history.push(path);
+
+        this.props.history.push(`/products/${product.productId}`);
     }
 
     render() {
@@ -18,10 +27,14 @@ class ProductCard extends Component {
 
         return (
             <div className="col-md-3">
+
                 <Card className="mb-2 product-card">
-                    <div class="item">
-                        {saleBadge}
-                        <Card.Img variant="top" src="/slider1.png" />
+                    <div class="item" >
+                        <Link to={"/products/" + this.props.product.productId}>
+                            {saleBadge}
+                            <Card.Img variant="top" src="/slider1.png" />
+                        </Link>
+
                     </div>
 
                     <Card.Body>
@@ -33,7 +46,8 @@ class ProductCard extends Component {
                             {startPrice}
                             <span className="product-price">  {this.props.product.finalPrice}€</span>
                         </Card.Text>
-                        <Link to={"/products/" + this.props.product.productId}>
+
+                        <Link >
                             <button className="btn btn-submit" >Add to cart</button>
                         </Link>
 
@@ -44,4 +58,4 @@ class ProductCard extends Component {
     }
 }
 
-export default ProductCard;
+export default withRouter(ProductCard);
