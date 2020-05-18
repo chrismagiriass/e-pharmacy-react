@@ -14,6 +14,9 @@ export default {
   get() {
     return apiClient.get('customers');
   },
+  getById( id ) {
+    return apiClient.get(`customers/${id}`);
+  },
   deleteCustomer(id) {
     return apiClient.delete(`customers/${id}`);
   },

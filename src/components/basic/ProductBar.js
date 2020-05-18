@@ -31,7 +31,7 @@ class ProductBar extends Component {
                             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Ingredients" id="basic-nav-dropdown2">
-                            <NavDropdown.Item href="#action/3.1">Type 1</NavDropdown.Item>
+                            <NavDropdown.Item href="/ingredients">Ingredients</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">Type 2</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.3">Type 3</NavDropdown.Item>
                             <NavDropdown.Divider />
@@ -39,7 +39,6 @@ class ProductBar extends Component {
                         </NavDropdown>
                         <NavDropdown title="AboutUs" id="basic-nav-dropdown2">
                             <NavDropdown.Item href="/employees" >Employees</NavDropdown.Item>
-                            <NavDropdown.Item href="/ingredients">Ingredients</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.3">Type 3</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>

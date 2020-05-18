@@ -7,6 +7,8 @@ import ShowProducts from '../components/products/ShowProducts';
 import ProductPage from '../components/products/ProductPage';
 import IngredientPage from '../components/ingredients/IngredientPage';
 import ShowIngredients from '../components/ingredients/ShowIngredients';
+import ShowOrder from '../components/order/ShowOrder';
+import Multistep from '../multistep/multistep';
 
 
 
@@ -26,6 +28,7 @@ const Router = () => {
             <Route exact path='/employees' component={ShowEmployees} />
             <Route exact path='/intranet/products' />
             <Route exact path='/intranet/employees' />
+            <Route exact path='/order' component={Multistep}/>
 
         </Switch>
     );
