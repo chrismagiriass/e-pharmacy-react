@@ -29,6 +29,11 @@
     position:relative;
     display:inline-block;
 }
+
+
+.badge-big{
+    font-size:24px !important;
+}
 .notify-badge{
     position: absolute;
     left:-5px;
@@ -43,5 +48,13 @@
 
 .pagination{
  padding-top: 60px;
+}
+
+.in-stock{
+    background-color: lightgreen;
+}
+
+.out-stock{
+    background-color: lightsalmon;
 }
 

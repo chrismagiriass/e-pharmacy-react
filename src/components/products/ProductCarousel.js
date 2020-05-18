@@ -1,40 +1,40 @@
 import Carousel from 'react-bootstrap/Carousel';
-import React, { useState } from 'react';
-import ProductCard from './ProductCard'
+import React, { useState, useEffect } from 'react';
+import ProductCard from './ProductCard';
+import ProductService from '../../services/productService';
+
 
 function ProductCarousel() {
     const [index, setIndex] = useState(0);
+
+    const [products, setProducts] = useState([]);
 
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
     };
 
+    useEffect(() => {
+        ProductService.get(
+            {
+                params: {
+                    page: 0,
+                    size: 8
+                }
+            }
+        ).then(result => {
+            this.setProducts(result.results);
+        }
+        ).catch(error =>
+            console.error("Error from product", error)
+        )
+    });
+
     return (
         <Carousel activeIndex={index} onSelect={handleSelect} slide={false} className="container">
             <Carousel.Item>
                 <div className="row">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
+                    {this.state.products.map((product, i) => <ProductCard key={product.productId} product={product} />)}
                 </div>
-                <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-                <div className="row">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                </div>
-
-                <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
                 <div className="row">

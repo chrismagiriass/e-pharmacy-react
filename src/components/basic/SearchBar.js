@@ -1,4 +1,4 @@
-import { Navbar, Nav, NavItem, Button, Modal } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import React, { Component } from 'react';
 export default class SearchBar extends Component {
 
