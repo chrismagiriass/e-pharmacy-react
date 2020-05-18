@@ -73,7 +73,7 @@ footer {
     bottom:0;
     right:0;
     background: lightslategrey;
-    color: black !important;
+    /* color: black !important; */
    
 }
 footer a, footer p{
