@@ -14,7 +14,6 @@ class ShowProducts extends Component {
         this.state = {
             product: {}
         }
-        // this.getProduct.bind(this)
 
     }
 
@@ -35,37 +34,43 @@ class ShowProducts extends Component {
 
     render() {
 
-        let saleBadge = this.state.product.discount ? <span class="notify-badge">-{this.state.product.discount}%</span> : '';
+        let saleBadge = this.state.product.discount ? <span class="notify-badge badge-big">-{this.state.product.discount}%</span> : '';
         let startPrice = this.state.product.discount ? <span className="product-price-discount">  {this.state.product.price}€</span> : '';
-        let stock = this.state.product.stock ?"Int stock": "Out of stock";
+        let stock = this.state.product.stock ? <span className="in-stock">  {"In stock: " + this.state.product.stock}</span> : <span className="out-stock">  {"Out of stock "}</span>;
 
         return (
-            <div className="row">
-                <div className="col-md-3">
-                    <Card className="mb-2 product-card">
-                        <div class="item">
-                            {saleBadge}
-                            <Card.Img variant="top" src="/slider1.png" />
-                        </div>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-2"></div>
+                    <div className=" col-md-offset-2">
+                        <Card className="mb-2 product-card">
+                            <div class="item">
+                                {saleBadge}
+                                <Card.Img variant="top" src="/slider1.png" />
+                            </div>
 
-                        <Card.Body>
-                            <Card.Title>{this.state.product.name}</Card.Title>
-                            <Card.Text>
-                                {this.state.product.description}
-                                {stock}
-                            </Card.Text>
-                            <Card.Text >
-                                {startPrice}
-                                <span className="product-price">  {this.state.product.finalPrice}€</span>
-                            </Card.Text>
-                            <Link to={"/products/" + this.state.product.productId}>
-                                <button className="btn btn-submit" >Add to cart</button>
-                            </Link>
-
-                        </Card.Body>
-                    </Card>
+                            <Card.Body>
+                                <Card.Title>{this.state.product.name}
+                                </Card.Title>
+                                <Card.Text>
+                                    <p>
+                                        {stock}
+                                    </p>
+                                    {this.state.product.description}
+                                </Card.Text>
+                                <Card.Text >
+                                    {startPrice}
+                                    <span className="product-price">  {this.state.product.finalPrice}€</span>
+                                </Card.Text>
+                                <Link to={"/products/" + this.state.product.productId}>
+                                    <button className="btn btn-submit" >Add to cart</button>
+                                </Link>
+                            </Card.Body>
+                        </Card>
+                    </div>
                 </div>
             </div>
+
         );
     }
 }

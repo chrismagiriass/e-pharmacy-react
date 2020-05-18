@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
 import "./products.css";
-import { Link, useHistory, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 
 class ProductCard extends Component {
