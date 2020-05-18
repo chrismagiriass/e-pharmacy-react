@@ -68,13 +68,13 @@
 }
 
 footer {
-    /* position:absolute; */
+    
     left:0;
     bottom:0;
     right:0;
-    background: #507642;
-    color: #CCCFBC !important;
-    padding: 30px;
+    background: lightslategrey;
+    color: black !important;
+   
 }
 footer a, footer p{
     color: #CCCFBC !important;
