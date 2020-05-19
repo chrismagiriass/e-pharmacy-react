@@ -23,9 +23,9 @@ function ProductCarousel() {
                 }
             }
         ).then(result => {
-            let first=[];
-            let second=[];
-            let products =result.results;
+            let first = [];
+            let second = [];
+            let products = result.results;
             for (let i = 0; i < 4; i++) {
                 first.push(products[i]);
             }
@@ -39,7 +39,8 @@ function ProductCarousel() {
         ).catch(error =>
             console.error("Error from product", error)
         )
-    });
+    }, []
+    );
 
 
 

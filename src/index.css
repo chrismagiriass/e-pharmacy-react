@@ -58,7 +58,7 @@ code {
 
 }
 
-.btn-submit{
+.btn-submit, .react-bootstrap-table-pagination .pagination .page-item.active .page-link{
   background-color: #507642 !important;
   border-color: #507642 !important;
   color: #CCCFBC !important;
@@ -115,6 +115,10 @@ footer a, footer p{
 
 .carousel-caption{
   color: #507642 !important;
+}
+
+.react-bs-table-sizePerPage-dropdown{
+  position: relative !important;
 }
 
 
