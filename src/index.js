@@ -11,11 +11,9 @@ import Footer from './components/basic/Footer';
 ReactDOM.render(
 
   <React.StrictMode>
-    <BrowserRouter>
+  
       <App />
-      <Router />
-      <Footer />
-    </BrowserRouter>
+     
   </React.StrictMode>
   ,
   document.getElementById('root')

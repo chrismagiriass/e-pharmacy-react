@@ -12,9 +12,10 @@ class ShowProducts extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            product: {}
+            product: {},
+            cart:[]
         }
-
+        this.addToCard.bind(this);
     }
 
     componentDidMount() {
@@ -29,6 +30,25 @@ class ShowProducts extends Component {
         ).catch(error =>
             console.error("Error from product", error)
         )
+    }
+
+    addToCard(product){
+        let cartItems=[];
+       let cart= localStorage.getItem("cart");
+        if(cart){
+            cartItems = JSON.parse(cart);
+        }
+        let productExists= cartItems.filter(item=>item.productId===product.productId);
+        product.quantity=1;
+        if(productExists.length>0){
+            productExists[0].quantity++;
+        }else{
+            cartItems.push(product);
+        }
+     
+        localStorage.setItem("cart",JSON.stringify(cartItems))
+      
+        this.props.test15();
     }
 
 
@@ -62,9 +82,8 @@ class ShowProducts extends Component {
                                     {startPrice}
                                     <span className="product-price">  {this.state.product.finalPrice}€</span>
                                 </Card.Text>
-                                <Link to={"/products/" + this.state.product.productId}>
-                                    <button className="btn btn-submit" >Add to cart</button>
-                                </Link>
+                                    <button className="btn btn-submit" onClick={() => { this.addToCard(this.state.product) }}>Add to cart</button>
+                                
                             </Card.Body>
                         </Card>
                     </div>

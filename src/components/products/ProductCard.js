@@ -9,6 +9,7 @@ class ProductCard extends Component {
     constructor(props) {
         super(props);
         this.productDetails.bind(this)
+        this.addToCard.bind(this);
     }
 
     productDetails(product) {
@@ -18,6 +19,23 @@ class ProductCard extends Component {
         //    return  history.push(path);
 
         this.props.history.push(`/products/${product.productId}`);
+    }
+    addToCard(product){
+        let cartItems=[];
+       let cart= localStorage.getItem("cart");
+        if(cart){
+            cartItems = JSON.parse(cart);
+        }
+        let productExists= cartItems.filter(item=>item.productId===product.productId);
+        product.quantity=1;
+        if(productExists.length>0){
+            productExists[0].quantity++;
+        }else{
+            cartItems.push(product);
+        }
+        localStorage.setItem("cart",JSON.stringify(cartItems));
+        window.location.reload(true);
+
     }
 
     render() {
@@ -48,7 +66,7 @@ class ProductCard extends Component {
                         </Card.Text>
 
                         <Link >
-                            <button className="btn btn-submit" >Add to cart</button>
+                            <button className="btn btn-submit" onClick={() => { this.addToCard(this.props.product) }}  >Add to cart</button>
                         </Link>
 
                     </Card.Body>

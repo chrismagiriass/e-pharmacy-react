@@ -16,13 +16,19 @@ class AppBar extends Component {
             showModal: false,
             modalTitle: '',
             register: true,
-            cart: {
-                items: 4
-            }
+            cart: []
         };
         this.openRegisterModal = this.openRegisterModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.openLoginModal = this.openLoginModal.bind(this);
+    }
+
+    componentDidMount() {
+        let cartItems = localStorage.getItem("cart");
+        if (cartItems) {
+            this.setState({ cart: JSON.parse(cartItems) })
+        }
+
     }
 
     openRegisterModal() {
@@ -71,11 +77,12 @@ class AppBar extends Component {
                             <NavDropdown.Item onClick={this.openRegisterModal}>Register</NavDropdown.Item>
                             <NavDropdown.Item onClick={this.openLoginModal}>Login</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.state.cart.items}</sup> </div>} id="basic-nav-dropdown">
-                            <NavDropdown.Item >Cart item 1</NavDropdown.Item>
-                            <NavDropdown.Item >Cart item 2</NavDropdown.Item>
+                        <NavDropdown title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.state.cart.length}</sup> </div>} id="basic-nav-dropdown">
+                            {this.state.cart.map((item) => {
+                                return <NavDropdown.Item >{item.name}</NavDropdown.Item>
+                            })}
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4"><button className="btn btn-submit">Checkout</button></NavDropdown.Item>
+                            <NavDropdown.Item href="/order"><button className="btn btn-submit">Checkout</button></NavDropdown.Item>
                         </NavDropdown>
                     </Navbar.Collapse>
                 </Navbar>

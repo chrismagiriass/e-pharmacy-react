@@ -33,12 +33,6 @@ class Wizard extends Component {
             page: Math.max(state.page - 1, 0)
         }))
 
-    /**
-     * NOTE: Both validate and handleSubmit switching are implemented
-     * here because 🏁 Redux Final Form does not accept changes to those
-     * functions once the form has been defined.
-     */
-
     validate = values => {
         const activePage = React.Children.toArray(this.props.children)[
             this.state.page
