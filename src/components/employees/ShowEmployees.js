@@ -80,8 +80,6 @@ class ShowEmployees extends Component {
     
   }
 
-
-
   componentDidMount() {
     EmployeeService.get().then(result => {
       this.setState({ employees: result });

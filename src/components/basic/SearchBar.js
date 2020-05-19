@@ -1,20 +1,10 @@
 import { Nav } from 'react-bootstrap';
 import React, { Component } from 'react';
+
+
+
 export default class SearchBar extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            isVisible: false,
-        };
-        this.updateModal = this.updateModal.bind(this);
-    }
-
-    updateModal(isVisible) {
-        this.state.isVisible = isVisible;
-        this.forceUpdate();
-    }
 
     render() {
         return (
