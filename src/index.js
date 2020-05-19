@@ -7,6 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 import Router from './router/router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/basic/Footer';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 ReactDOM.render(
 

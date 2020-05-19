@@ -3,7 +3,6 @@ import { Navbar, Nav, NavDropdown, Form, InputGroup } from 'react-bootstrap';
 import { AccountCircle } from '@material-ui/icons';
 import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 import SearchIcon from '@material-ui/icons/Search';
-import './basic.css';
 import MyModal from './MyModal';
 
 

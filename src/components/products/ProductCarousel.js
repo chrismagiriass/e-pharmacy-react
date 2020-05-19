@@ -33,16 +33,16 @@ function ProductCarousel() {
         <Carousel activeIndex={index} onSelect={handleSelect} slide={false} className="container">
             <Carousel.Item>
                 <div className="row">
-                    {this.state.products.map((product, i) => <ProductCard key={product.productId} product={product} />)}
+                    {products.map((product, i) => <ProductCard key={product.productId} product={product} />)}
                 </div>
             </Carousel.Item>
             <Carousel.Item>
-                <div className="row">
+                {/* <div className="row">
                     <ProductCard />
                     <ProductCard />
                     <ProductCard />
                     <ProductCard />
-                </div>
+                </div> */}
             </Carousel.Item>
         </Carousel>
     );
