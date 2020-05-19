@@ -18,8 +18,8 @@ function ControlledCarousel() {
                     alt="First slide"
                 />
                 <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    <h3>Olive products</h3>
+                    <p>-40% in all biological olive products</p>
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -28,26 +28,14 @@ function ControlledCarousel() {
                     src="https://glimmerbeauty.gr/image/cache/catalog/slider/Organic%20and%20botanic-1920x692.jpg"
                     alt="Second slide"
                 />
-
-                <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
                 <img
                     className="d-block w-100"
                     style={{ height: 400 }}
-                    src="/slider1.png"
+                    src="https://cdn.chemistdirect.co.uk/img/2020/May/7_Changes/Anti-Virus-Slide+(Desktop).png"
                     alt="Third slide"
                 />
-
-                <Carousel.Caption>
-                    <h3>Third slide label</h3>
-                    <p>
-                        Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
-                </Carousel.Caption>
             </Carousel.Item>
         </Carousel >
     );

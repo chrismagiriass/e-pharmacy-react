@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import './basic.css';
+
 
 
 class ProductBar extends Component {

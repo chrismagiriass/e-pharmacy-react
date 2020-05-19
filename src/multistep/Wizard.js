@@ -1,8 +1,20 @@
+<<<<<<< HEAD
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Form } from 'react-final-form'
+
+export default class Wizard extends React.Component {
+    static propTypes = {
+        onSubmit: PropTypes.func.isRequired
+    }
+    static Page = ({ children }) => children
+=======
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'react-final-form'
 
 class Wizard extends Component {
+>>>>>>> 200c8dd18bad2ab35ce9d8118a81714f9df8a226
 
     constructor(props) {
         super(props)
@@ -10,6 +22,9 @@ class Wizard extends Component {
             page: 0,
             values: props.initialValues || {}
         }
+<<<<<<< HEAD
+    }
+=======
         this.next.bind(this);
         this.previous.bind(this);
         this.validate.bind(this);
@@ -22,6 +37,7 @@ class Wizard extends Component {
     static Page = ({ children }) => children
 
 
+>>>>>>> 200c8dd18bad2ab35ce9d8118a81714f9df8a226
     next = values =>
         this.setState(state => ({
             page: Math.min(state.page + 1, this.props.children.length - 1),
@@ -86,4 +102,7 @@ class Wizard extends Component {
         )
     }
 }
+<<<<<<< HEAD
+=======
 export default Wizard;
+>>>>>>> 200c8dd18bad2ab35ce9d8118a81714f9df8a226
