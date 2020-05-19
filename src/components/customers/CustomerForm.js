@@ -14,7 +14,7 @@ class CustomerForm extends Component {
             validated: false,
             customer: {
                 firstName: '',
-                role: 'ADMIN',
+                role: 'CUSTOMER',
                 lastName: '',
                 password: '',
                 email: ''

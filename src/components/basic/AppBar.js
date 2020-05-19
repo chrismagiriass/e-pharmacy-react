@@ -4,6 +4,8 @@ import { AccountCircle } from '@material-ui/icons';
 import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 import SearchIcon from '@material-ui/icons/Search';
 import MyModal from './MyModal';
+import { withRouter } from "react-router-dom";
+
 
 
 class AppBar extends Component {
@@ -20,6 +22,7 @@ class AppBar extends Component {
         this.openRegisterModal = this.openRegisterModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.openLoginModal = this.openLoginModal.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     componentDidMount() {
@@ -43,13 +46,28 @@ class AppBar extends Component {
 
     }
 
+    logout(){
+        localStorage.clear();
+        this.props.history.push('/')
+    }
+
 
     render() {
+
+        let acountSettings = '';
+
+        if (!localStorage.getItem("user")) {
+            acountSettings = <> <NavDropdown.Item onClick={this.openRegisterModal}>Register</NavDropdown.Item>
+                <NavDropdown.Item onClick={this.openLoginModal}>Login</NavDropdown.Item></>;
+        } else {
+            acountSettings = <> <NavDropdown.Item onClick={this.openRegisterModal}>Profile</NavDropdown.Item>
+                <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item></>;
+        }
 
         return (
             <>
                 <Navbar expand="xl" sticky={true} className="appbar">
-                    <Navbar.Brand href="#home"><img
+                    <Navbar.Brand href="/home"><img
                         src="/favicon.ico"
                         width="60"
                         height="60"
@@ -73,8 +91,7 @@ class AppBar extends Component {
                         </Nav>
 
                         <NavDropdown title={<div style={{ display: "inline-block" }}><AccountCircle /> </div>} id="basic-nav-dropdown">
-                            <NavDropdown.Item onClick={this.openRegisterModal}>Register</NavDropdown.Item>
-                            <NavDropdown.Item onClick={this.openLoginModal}>Login</NavDropdown.Item>
+                            {acountSettings}
                         </NavDropdown>
                         <NavDropdown title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.state.cart.length}</sup> </div>} id="basic-nav-dropdown">
                             {this.state.cart.map((item) => {
@@ -91,5 +108,5 @@ class AppBar extends Component {
     }
 }
 
-export default AppBar;
+export default withRouter(AppBar);
 

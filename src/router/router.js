@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import ShowCustomers from '../components/customers/ShowCustomers';
-import ShowEmployees from '../components/employees/ShowEmployees';
+import ShowEmployeesNew from '../components/employees/ShowEmployeesNew';
 import HomePage from '../components/basic/HomePage';
 import ShowProducts from '../components/products/ShowProducts';
 import ProductPage from '../components/products/ProductPage';
@@ -26,7 +26,7 @@ const Router = () => {
             <Route exact path='/ingredients' component={ShowIngredients} />
             <Route exact path="/ingredients/:ingredientId" component={IngredientPage} />
             <Route exact path='/customers' component={ShowCustomers} />
-            <Route exact path='/employees' component={ShowEmployees} />
+            <Route exact path='/employees' component={ShowEmployeesNew} />
             <Route exact path='/intranet/products' />
             <Route exact path='/intranet/employees' />
             <Route exact path='/order' component={Cart}/>

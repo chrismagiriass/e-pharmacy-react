@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import CartItem from './CartItem'
-// import { Card } from 'react-bootstrap';
-// import "./products.css";
-// import { Link, withRouter } from 'react-router-dom';
+import CartItem from './CartItem';
 
 
 class Cart extends Component {
@@ -41,7 +38,7 @@ class Cart extends Component {
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
             cartItems.map(item => total += item.finalPrice * item.quantity);
-            cartItems.map((item, index) => {
+            cartItems.foreach((item, index) => {
                 if (item.productId === id) {
                     cartItems.splice(index, 1);
                 }
@@ -53,7 +50,7 @@ class Cart extends Component {
                 subtotal: total,
                 shipping: 3
             })
-        }else{
+        } else {
             this.setState({
                 cart: [],
                 subtotal: 0,

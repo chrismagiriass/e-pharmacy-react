@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Card } from 'react-bootstrap';
 import "./products.css";
-import { Link } from 'react-router-dom';
 import ProductService from '../../services/productService';
 
 

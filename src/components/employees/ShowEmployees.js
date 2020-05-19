@@ -23,7 +23,9 @@ const columns = [
     dataField: 'role',
     text: 'Role',
     sort: true
-  }
+  },
+  {dataField:'',
+text:"Actions"}
 ]
 
 

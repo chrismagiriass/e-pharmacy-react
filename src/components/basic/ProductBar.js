@@ -22,7 +22,7 @@ class ProductBar extends Component {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
+                        <Nav.Link href="/home">Home</Nav.Link>
                         <NavDropdown title="Products" id="basic-nav-dropdown">
                             <NavDropdown.Item href="/products">Woman</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">Men</NavDropdown.Item>

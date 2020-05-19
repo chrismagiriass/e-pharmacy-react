@@ -7,7 +7,8 @@ import ProductService from '../../services/productService';
 function ProductCarousel() {
     const [index, setIndex] = useState(0);
 
-    const [products, setProducts] = useState([]);
+    const [productCarouselFirstPage, setProductCarouselFirstPage] = useState([]);
+    const [productCarouselSecondPage, setProductCarouselSecondPage] = useState([]);
 
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
@@ -22,27 +23,40 @@ function ProductCarousel() {
                 }
             }
         ).then(result => {
-            this.setProducts(result.results);
+            let first=[];
+            let second=[];
+            let products =result.results;
+            for (let i = 0; i < 4; i++) {
+                first.push(products[i]);
+            }
+
+            for (let i = 4; i < 8; i++) {
+                second.push(products[i]);
+            }
+            setProductCarouselFirstPage(first);
+            setProductCarouselSecondPage(second);
         }
         ).catch(error =>
             console.error("Error from product", error)
         )
     });
 
+
+
+
     return (
-        <Carousel activeIndex={index} onSelect={handleSelect} slide={false} className="container">
+
+
+        <Carousel activeIndex={index} onSelect={handleSelect} slide={true} className="container">
             <Carousel.Item>
                 <div className="row">
-                    {products.map((product, i) => <ProductCard key={product.productId} product={product} />)}
+                    {productCarouselFirstPage.map((product, i) => <ProductCard key={product.productId} product={product} />)}
                 </div>
             </Carousel.Item>
             <Carousel.Item>
-                {/* <div className="row">
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                    <ProductCard />
-                </div> */}
+                <div className="row">
+                    {productCarouselSecondPage.map((product, i) => <ProductCard key={product.productId} product={product} />)}
+                </div>
             </Carousel.Item>
         </Carousel>
     );

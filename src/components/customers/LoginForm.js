@@ -40,10 +40,11 @@ class LoginForm extends Component {
         } else {
             event.preventDefault();
             LoginService.login(this.state.user)
-            .then(resp=>console.log(resp))
-            //add user to local storage 
-            .catch(err=>console.log(err));
-            // this.props.history.push("/customers");
+                .then(resp => {localStorage.setItem("user", JSON.stringify(resp.data))
+                this.props.closeModal();
+            })
+            
+                .catch(err => console.log(err));
 
         }
     }

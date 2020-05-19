@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { render } from 'react-dom'
+// import { render } from 'react-dom'
 import { Field } from 'react-final-form'
 import Wizard from './Wizard'
 import { Form, Col, InputGroup } from 'react-bootstrap';
 
 import CustomerService from "../services/customerService";
-import ProductService from '../services/productService';
-import CustomerForm from '../components/customers/CustomerForm';
+// import ProductService from '../services/productService';
+// import CustomerForm from '../components/customers/CustomerForm';
 
 class Multistep extends Component {
     constructor(props) {

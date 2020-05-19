@@ -34,7 +34,7 @@ class ProductCard extends Component {
             cartItems.push(product);
         }
         localStorage.setItem("cart",JSON.stringify(cartItems));
-        window.location.reload(true);
+       this.props.history.push("/products");
 
     }
 

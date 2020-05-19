@@ -9,7 +9,7 @@ class MyModal extends Component {
     render() {
         let modalBody;
         if (this.props.register) {
-            modalBody = <CustomerForm register={this.props.register} />
+            modalBody = <CustomerForm register={this.props.register}  closeModal={()=>this.props.onHide}/>
         } else {
             modalBody = <LoginForm></LoginForm>
         }
