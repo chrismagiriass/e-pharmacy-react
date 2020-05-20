@@ -63,7 +63,7 @@ class Wizard extends Component {
         const isLastPage = page === React.Children.count(children) - 1
         return (
             <Form
-                initialValues={values}
+                initialValues={this.props.initialValues}
                 validate={this.validate}
                 onSubmit={this.handleSubmit}
             >
@@ -72,7 +72,7 @@ class Wizard extends Component {
                         {activePage}
                         <div className="buttons">
                             {page > 0 && (
-                                <button className="btn-sm" type="button" onClick={this.previous}>
+                                <button className="btn btn-sm" type="button" onClick={this.previous}>
                                     « Previous
                                 </button>
                             )}

@@ -7,14 +7,11 @@ class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cart: [],
             subtotal: 0,
             shipping: 0
         };
         this.remove.bind(this);
         this.onChangeQuantity.bind(this);
-
-
     }
     componentDidMount() {
         let cartItems = localStorage.getItem("cart");
@@ -26,55 +23,46 @@ class Cart extends Component {
             this.setState({
                 cart: cartItems,
                 subtotal: total,
-                shipping: 3
+                shipping: 0
             })
         }
-
     }
 
     remove(id) {
+        this.props.removeCartItem(id);
         let cartItems = localStorage.getItem("cart");
         let total = 0;
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
             cartItems.map(item => total += item.finalPrice * item.quantity);
-            cartItems.foreach((item, index) => {
-                if (item.productId === id) {
-                    cartItems.splice(index, 1);
-                }
-            })
-            localStorage.setItem("cart", JSON.stringify(cartItems))
-
+        
             this.setState({
-                cart: cartItems,
                 subtotal: total,
-                shipping: 3
+                shipping: 0
             })
         } else {
             this.setState({
-                cart: [],
                 subtotal: 0,
-                shipping: 3
+                shipping: 0
             })
         }
-        // this.setState({ })
+      
     }
 
     onChangeQuantity() {
+        this.props.onChangeQuantity();
         let cartItems = localStorage.getItem("cart");
+        let total = 0;
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
-            let total = 0;
             cartItems.map(item => total += item.finalPrice * item.quantity);
             if (cartItems) {
                 this.setState({
-                    cart: cartItems,
                     subtotal: total,
                     shipping: 3
                 })
             }
         }
-
 
     }
 
@@ -99,7 +87,7 @@ class Cart extends Component {
                             </thead>
                             <tbody>
 
-                                {this.state.cart.map(item => {
+                                {this.props.cartItems.map(item => {
                                     return <CartItem item={item} remove={() => this.remove(item.productId)} onChangeQuantity={() => this.onChangeQuantity()} />
                                 })}
 
@@ -133,7 +121,7 @@ class Cart extends Component {
                                             <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
                                 </button></td>
                                     <td>
-                                        <button type="button" class="btn btn-submit">
+                                        <button type="button" class="btn btn-submit" onClick={this.props.onSubmit}>
                                             Checkout <span class="glyphicon glyphicon-play"></span>
                                         </button></td>
                                 </tr>

@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
-// import { render } from 'react-dom'
-import { Field } from 'react-final-form'
+import { Field, useField } from 'react-final-form'
 import Wizard from './Wizard'
 import { Form, Col, InputGroup } from 'react-bootstrap';
 import Cart from '../components/cart/Cart';
 
 import CustomerService from "../services/customerService";
-// import ProductService from '../services/productService';
-// import CustomerForm from '../components/customers/CustomerForm';
 
 class Multistep extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            customer: ''
+            customer: {},
+            initialValues: {}
         }
         this.sleep.bind(this);
         this.onSubmit.bind(this);
@@ -22,16 +20,27 @@ class Multistep extends Component {
 
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const cart = JSON.parse(localStorage.getItem("cart"));
 
-        CustomerService.getById('6').then(customer => {
-            this.setState({
-                customer: customer
-            });
-        }
-        ).catch(error =>
-            console.error("Error from customer", error)
-        )
+        if (user === null) return;
+        const result = await CustomerService.getByUsername(user.username)
+        // .then(customer => {
+        //     console.log(customer)
+        //     this.setState({
+        //         customer: customer,
+        //         initialValues: {
+        //             status: 'PENDING',
+        //             customerId: customer.personId ,
+        //             productDTOList: cart ? cart : []
+        //         }
+        //     });
+        // }
+        // ).catch(error =>
+        //     console.error("Error from customer", error)
+        // )
+        this.setState({ customer: result });
     }
 
 
@@ -55,11 +64,18 @@ class Multistep extends Component {
     required = value => (value ? undefined : 'Required')
 
     render() {
+        // const user = JSON.parse(localStorage.getItem("user"));
+        const cart = JSON.parse(localStorage.getItem("cart"));
+
         return (
             < div className="container" >
-                <h1>fianalize your order</h1>
+                <h3>Order checkout</h3>
                 <Wizard
-                    initialValues={{ employed: true, stooge: 'larry' }}
+                    initialValues={{
+                        status: 'PENDING',
+                        customerId: this.state.customer.personId,
+                        productDTOList: cart ? cart : []
+                    }}
                     onSubmit={this.onSubmit}
                 >
                     <Wizard.Page>

@@ -17,10 +17,13 @@ import ShowIngredients from './components/ingredients/ShowIngredients';
 import Cart from './components/cart/Cart';
 import HomePageAdmin from './components/admin/HomePage'
 import HomeBar from './components/admin/HomeBar';
-import ShowOrders from './components/order/ShowOrder'
+import ShowOrders from './components/order/ShowOrder';
+import CheckoutForm from './components/cart/Wizard';
 
 
 class App extends Component {
+
+
 
 
   render() {
@@ -67,7 +70,7 @@ class App extends Component {
             <Route exact path='/home' component={HomePage} />
             <Route exact path='/products' component={ShowProducts} />
             <Route exact path="/products/:productId" component={ProductPage} />
-            <Route exact path='/order' component={Cart} />
+            <Route exact path='/order' component={()=><CheckoutForm/>} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;

@@ -17,6 +17,9 @@ export default {
   getById( id ) {
     return apiClient.get(`customers/${id}`);
   },
+  getByUsername( username ) {
+    return apiClient.get(`customers/username/${username}`);
+  },
   deleteCustomer(id) {
     return apiClient.delete(`customers/${id}`);
   },

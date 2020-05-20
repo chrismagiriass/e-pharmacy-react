@@ -12,7 +12,7 @@ class CustomerForm extends Component {
             register: this.props.register,
             hiddenCheckBox: this.props.register,
             validated: false,
-            customer: {
+            customer: this.props.customer|| {
                 firstName: '',
                 role: 'CUSTOMER',
                 lastName: '',
@@ -68,7 +68,7 @@ class CustomerForm extends Component {
         this.setState({ register: !this.state.register });
         if (this.state.register) {
             this.setState({
-                customer: {
+                customer:{
                     ...this.state.customer,
                     address: {
                         city: '',
