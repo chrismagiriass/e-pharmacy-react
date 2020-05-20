@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Field } from 'react-final-form'
 import Wizard from './Wizard'
 import { Form, Col, InputGroup } from 'react-bootstrap';
+import Cart from '../components/cart/Cart';
 
 import CustomerService from "../services/customerService";
 // import ProductService from '../services/productService';
@@ -62,70 +63,7 @@ class Multistep extends Component {
                     onSubmit={this.onSubmit}
                 >
                     <Wizard.Page>
-                        <h2>Your delivery details:</h2>
-                        <Form.Group as={Col} md="6">
-                            <Form.Label>First name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="First name"
-                                name="firstName"
-                                value={this.state.customer.firstName}
-                                // onChange={this.changeHandler}
-                                validate={this.required}
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} md="6">
-                            <Form.Label>Last name</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Last name"
-                                name="lastName"
-                                value={this.state.customer.lastName}
-                                // onChange={this.changeHandler}
-                                validate={this.required}
-
-                            />
-                            <this.Error name="lastName" />
-                        </Form.Group>
-                        {/* <div>
-                            <label>First Name</label>
-                            <Field
-                                name="firstName"
-                                component="input"
-                                type="text"
-                                placeholder={this.state.customer.firstName}
-                                validate={this.required}
-                            />
-                            <this.Error name="firstName" />
-                        </div>
-                        <div>
-                            <label>Last Name</label>
-                            <Field
-                                name="lastName"
-                                component="input"
-                                type="text"
-                                placeholder="Last Name"
-                                validate={this.required}
-                            />
-                            <this.Error name="lastName" />
-                        </div> */}
-                        <Form.Group as={Col} md="6">
-
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control
-                                name="lastName"
-                                component="input"
-                                type="text"
-                                placeholder="Last Name"
-                            // validate={this.required}
-                            />
-                            <this.Error name="lastName" />
-                            <Form.Group>
-                                <Form.Check>Change your delivery address: </Form.Check>
-                                <Field name="employed" component="input" type="checkbox" />
-                            </Form.Group>
-                        </Form.Group>
-
+                        <Cart />
                     </Wizard.Page>
                     <Wizard.Page
                         validate={values => {

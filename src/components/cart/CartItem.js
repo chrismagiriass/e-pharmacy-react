@@ -30,9 +30,9 @@ class CartItem extends Component {
             <tr>
                 <td class="col-sm-8 col-md-6">
                     <div class="media">
-                        <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" /> </a>
+                        <a class="thumbnail pull-left" href={"/products/"+this.props.item.productId}> <img class="media-object" src={this.props.item.image} /> </a>
                         <div class="media-body">
-                            <h4 class="media-heading"><a href="#">{this.props.item.name}</a></h4>
+                            <h4 class="media-heading"><a href={"/products/"+this.props.item.productId}>{this.props.item.name}</a></h4>
                             <span>Status: </span>{stock}
                         </div>
                     </div></td>
@@ -42,7 +42,7 @@ class CartItem extends Component {
                 <td class="col-sm-1 col-md-1 text-center"><strong>€{this.props.item.finalPrice}</strong></td>
                 <td class="col-sm-1 col-md-1 text-center"><strong>€{total}</strong></td>
                 <td class="col-sm-1 col-md-1">
-                    <button type="button" class="btn btn-danger btn-sm" onClick={() => { this.props.remove(this.props.item.productId) }}>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onClick={() => { this.props.remove(this.props.item.productId) }}>
                         <DeleteIcon />
                     </button></td>
             </tr>

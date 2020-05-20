@@ -1,30 +1,30 @@
 import React, { Component } from 'react';
-import { Nav } from 'react-bootstrap';
+import "./simple-sidebar.css";
 
 class HomePageAdmin extends Component {
 
 
     render() {
+
+        let user = JSON.parse(localStorage.getItem('user'));
         return (
-            <Nav className="col-md-2 d-none d-md-block bg-dark sidebar"
-                activeKey="/home"
-                onSelect={selectedKey => alert(`selected ${selectedKey}`)}>
-                <div className="sidebar-sticky"></div>
-                <Nav.Item>
-                    <Nav.Link href="/home">Active</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link eventKey="link-1">Link</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link eventKey="link-2">Link</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                    <Nav.Link eventKey="disabled" disabled>
-                        Disabled
-            </Nav.Link>
-                </Nav.Item>
-            </Nav>
+      
+
+
+                <div class="bg-light border-right" id="sidebar-wrapper">
+                    <div class="sidebar-heading">Hello {user.fullName} </div>
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action bg-light"><i class="pe-7s-user"></i>Profile</a>
+                        <a href="/orders" class="list-group-item list-group-item-action bg-light">Orders</a>
+                        <a href="/employees" class="list-group-item list-group-item-action bg-light">Employees</a>
+                        <a href="/customers" class="list-group-item list-group-item-action bg-light">Customers</a>
+                        <a href="#" class="list-group-item list-group-item-action bg-light">VIP Customers</a>
+                        <a href="/products" class="list-group-item list-group-item-action bg-light">Products</a>
+                        <a href="/ingredients" class="list-group-item list-group-item-action bg-light">Ingredients</a>
+
+                    </div>
+                </div>
+
         );
     }
 }

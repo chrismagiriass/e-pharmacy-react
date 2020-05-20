@@ -30,7 +30,7 @@ class ShowCustomers extends Component {
     //  console.log( row)
     return (
       <button
-        className="btn btn-sm btn-success"
+        className="btn btn-sm btn-outline-success"
         type="button"
         onClick={() =>
           this.saveCustomer(row)}
@@ -46,7 +46,7 @@ class ShowCustomers extends Component {
     //  console.log( row)
     return (
       <button
-        className="btn btn-sm btn-danger"
+        className="btn btn-sm btn-outline-danger"
         type="button"
         onClick={() =>
           this.deleteCustomer(row)}
@@ -136,7 +136,6 @@ class ShowCustomers extends Component {
         text: ""
       },
       {
-        formatter: this.buttonFormatterSave,
         formatter: this.buttonFormatterRemove,
         editable: false,
         text: ""

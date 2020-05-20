@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable  from 'react-bootstrap-table-next';
 import filterFactory from 'react-bootstrap-table2-filter';
-import paginationFactory from 'react-bootstrap-table2-paginator';
 
 
 class DataTable extends Component {
@@ -17,7 +16,7 @@ class DataTable extends Component {
                     data={this.props.data}
                     columns={this.props.columns}
                     filter={filterFactory()}
-                    pagination={paginationFactory()} 
+                    pagination={this.props.pagination} 
                     cellEdit={  this.props.cellEdit}
                     />
             </div>

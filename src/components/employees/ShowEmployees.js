@@ -4,6 +4,7 @@ import DataTable from "../basic/DataTable";
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
 class ShowEmployees extends Component {
 
@@ -26,7 +27,7 @@ class ShowEmployees extends Component {
     //  console.log( row)
     return (
       <button
-        className="btn btn-sm btn-success"
+        className="btn btn-sm btn-outline-success"
         type="button"
         onClick={() =>
           this.saveEmployee(row)}
@@ -42,7 +43,7 @@ class ShowEmployees extends Component {
     //  console.log( row)
     return (
       <button
-        className="btn btn-sm btn-danger"
+        className="btn btn-sm btn-outline-danger"
         type="button"
         onClick={() =>
           this.deleteEmployee(row)}
@@ -127,7 +128,6 @@ class ShowEmployees extends Component {
         text: ""
       },
       {
-        formatter: this.buttonFormatterSave,
         formatter: this.buttonFormatterRemove,
         editable: false,
         text: ""
@@ -147,10 +147,11 @@ class ShowEmployees extends Component {
     }
 
     return (
-      <>
+      <div id="page-content-wrapper">
+        <h1 class="mt-4">Employees</h1>
         {message}
-        <DataTable key="showEmployeesTable" columns={columns} data={this.state.employees} cellEdit={cellEdit} tableKey={'personId'} />
-      </>
+        <DataTable key="showEmployeesTable" columns={columns} data={this.state.employees} cellEdit={cellEdit} tableKey={'personId'} pagination={paginationFactory()}/>
+      </div>
     )
 
   }

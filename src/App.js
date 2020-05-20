@@ -16,26 +16,39 @@ import IngredientPage from './components/ingredients/IngredientPage';
 import ShowIngredients from './components/ingredients/ShowIngredients';
 import Cart from './components/cart/Cart';
 import HomePageAdmin from './components/admin/HomePage'
+import HomeBar from './components/admin/HomeBar';
+import ShowOrders from './components/order/ShowOrder'
 
 
 class App extends Component {
 
+
   render() {
     let router;
+    let loggedIn = false;
     let user = JSON.parse(localStorage.getItem('user'));
     if (user !== null) {
+      loggedIn = true;
       switch (user.role) {
         case 'ADMIN':
-          router = (<Switch>
-            <Route exact path='/' component={HomePageAdmin} />
-            <Route exact path='/home' component={HomePageAdmin} />
-            <Route exact path='/products' component={ProductTable} />
-            <Route exact path='/ingredients' component={ShowIngredients} />
-            <Route exact path='/customers' component={ShowCustomers} />
-            <Route exact path='/employees' component={ShowEmployees} />
-            <Route exact path='/orders' component={Cart} />
-            <Route render={() => <Redirect to="/" />} />
-          </Switch>);
+          router = (
+            <div class="d-flex" id="wrapper">
+              <HomeBar />
+              <div id="page-content-wrapper">
+                <div class="container-fluid">
+                  <Switch>
+                    <Route exact path='/' component={HomePageAdmin} />
+                    <Route exact path='/home' component={HomePageAdmin} />
+                    <Route exact path='/products' component={ProductTable} />
+                    <Route exact path='/ingredients' component={ShowIngredients} />
+                    <Route exact path='/customers' component={ShowCustomers} />
+                    <Route exact path='/employees' component={ShowEmployees} />
+                    <Route exact path='/orders' component={ShowOrders} />
+                    <Route render={() => <Redirect to="/" />} />
+                  </Switch>
+                </div>
+              </div>
+            </div>);
           break;
         case 'EMPLOYEE':
           router = <Switch>
@@ -95,10 +108,10 @@ class App extends Component {
     return (
       <>
         <BrowserRouter>
-          <AppBar />
-          <ProductBar />
+          <AppBar userRole={user? user.role:'GUEST'}/>
+          {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <ProductBar /> : ''}
           {router}
-          <Footer />
+          {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <Footer /> : ''}
         </BrowserRouter>
       </>
     );

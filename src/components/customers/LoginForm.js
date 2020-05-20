@@ -3,6 +3,7 @@ import "./customerForm.css";
 import { Form, Col, InputGroup } from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
 import LoginService from "../../services/loginService";
+import AlertMessage from "../basic/AlertMessage";
 
 class LoginForm extends Component {
 
@@ -13,13 +14,14 @@ class LoginForm extends Component {
             user: {
                 password: '',
                 username: ''
-            }
+            },
+            message:'',
+            show:false
         }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.changeHandler = this.changeHandler.bind(this);
+       
 
     }
-    changeHandler(event) {
+    changeHandler=(event)=> {
         const name = event.target.name;
         const value = event.target.value;
 
@@ -31,7 +33,7 @@ class LoginForm extends Component {
         })
     }
 
-    handleSubmit(event) {
+    handleSubmit=(event) =>{
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -40,12 +42,11 @@ class LoginForm extends Component {
         } else {
             event.preventDefault();
             LoginService.login(this.state.user)
-                .then(resp => {localStorage.setItem("user", JSON.stringify(resp.data))
-                this.props.closeModal();
-            })
-            
-                .catch(err => console.log(err));
-
+                .then(resp => {
+                    localStorage.setItem("user", JSON.stringify(resp.data))
+                    window.location.reload();
+                })
+                .catch(err => this.setState({message:err.message,show:true}));
         }
     }
 
@@ -56,6 +57,7 @@ class LoginForm extends Component {
             <div className="container">
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Row>
+                        {this.state.show ?<AlertMessage show={true} message={this.state.message} key={'login-error'} variant={'danger'}/>:''}
 
                         <Form.Group as={Col} md="12" controlId="validationCustomEmail">
                             <Form.Label>E-mail</Form.Label>

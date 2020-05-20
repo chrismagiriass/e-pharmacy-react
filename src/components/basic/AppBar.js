@@ -22,7 +22,6 @@ class AppBar extends Component {
         this.openRegisterModal = this.openRegisterModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.openLoginModal = this.openLoginModal.bind(this);
-        this.logout = this.logout.bind(this);
     }
 
     componentDidMount() {
@@ -46,9 +45,9 @@ class AppBar extends Component {
 
     }
 
-    logout(){
+    logout = () => {
         localStorage.clear();
-        this.props.history.push('/')
+        window.location.reload();
     }
 
 
@@ -77,29 +76,31 @@ class AppBar extends Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mx-auto">
-                            <Form >
-                                <InputGroup className="mr-md-5 mr-sm-2 mr-xl-5">
-                                    <Form.Control
-                                        className="py-2 border-right-0 border"
-                                        type="text"
-                                        placeholder="Search" />
-                                    <span className="input-group-append">
-                                        <button className="btn btn-outline-secondary border-left-0 border"><SearchIcon /></button>
-                                    </span>
-                                </InputGroup>
-                            </Form>
+                            {(this.props.userRole !== 'ADMIN' && this.props.userRole !== 'EMPLOYEE') ?
+                                <Form >
+                                    <InputGroup className="mr-md-5 mr-sm-2 mr-xl-5">
+                                        <Form.Control
+                                            className="py-2 border-right-0 border"
+                                            type="text"
+                                            placeholder="Search" />
+                                        <span className="input-group-append">
+                                            <button className="btn btn-outline-secondary border-left-0 border"><SearchIcon /></button>
+                                        </span>
+                                    </InputGroup>
+                                </Form>
+                                : ''}
                         </Nav>
-
                         <NavDropdown title={<div style={{ display: "inline-block" }}><AccountCircle /> </div>} id="basic-nav-dropdown">
                             {acountSettings}
                         </NavDropdown>
-                        <NavDropdown title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.state.cart.length}</sup> </div>} id="basic-nav-dropdown">
-                            {this.state.cart.map((item) => {
-                                return <NavDropdown.Item >{item.name}</NavDropdown.Item>
-                            })}
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/order"><button className="btn btn-submit">Checkout</button></NavDropdown.Item>
-                        </NavDropdown>
+                        {(this.props.userRole !== 'ADMIN' && this.props.userRole !== 'EMPLOYEE') ?
+                            <NavDropdown title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.state.cart.length}</sup> </div>} id="basic-nav-dropdown">
+                                {this.state.cart.map((item) => {
+                                    return <NavDropdown.Item >{item.name}</NavDropdown.Item>
+                                })}
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item href="/order"><button className="btn btn-submit">Checkout</button></NavDropdown.Item>
+                            </NavDropdown> : ''}
                     </Navbar.Collapse>
                 </Navbar>
                 <MyModal key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} register={this.state.register} />

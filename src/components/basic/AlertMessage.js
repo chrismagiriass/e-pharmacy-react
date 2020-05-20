@@ -7,14 +7,15 @@ class AlertMessage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { show: true };
+        this.state = { show: this.props.show };
     }
 
-    componentDidMount() {
-        setTimeout(() => {
-            this.setState({ show: false });
-        }, 5000);
-    }
+    // componentDidMount() {
+    //     setTimeout(() => {
+    //         this.setState({ show: false });
+    //     }, 5000);
+        
+    // }
 
     render() {
         return (
