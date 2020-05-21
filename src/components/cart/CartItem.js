@@ -5,7 +5,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 class CartItem extends Component {
 
     changeQuantity(event) {
-        console.log(event.target.value);
         let cartItems = localStorage.getItem("cart");
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
@@ -28,7 +27,7 @@ class CartItem extends Component {
         return (
 
             <tr>
-                <td class="col-sm-8 col-md-6">
+                <td class="col-sm-4 col-md-6">
                     <div class="media">
                         <a class="thumbnail pull-left" href={"/products/"+this.props.item.productId}> <img class="media-object" src={this.props.item.image} /> </a>
                         <div class="media-body">
@@ -40,7 +39,7 @@ class CartItem extends Component {
                     <input type="number" class="form-control" id="exampleInputEmail1" value={this.props.item.quantity} onChange={this.changeQuantity.bind(this)} />
                 </td>
                 <td class="col-sm-1 col-md-1 text-center"><strong>€{this.props.item.finalPrice}</strong></td>
-                <td class="col-sm-1 col-md-1 text-center"><strong>€{total}</strong></td>
+                <td class="col-sm-1 col-md-1 text-center"><strong>€{total.toFixed(2)}</strong></td>
                 <td class="col-sm-1 col-md-1">
                     <button type="button" class="btn btn-outline-danger btn-sm" onClick={() => { this.props.remove(this.props.item.productId) }}>
                         <DeleteIcon />

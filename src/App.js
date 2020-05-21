@@ -8,6 +8,8 @@ import Footer from './components/basic/Footer';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import ShowCustomers from './components/customers/ShowCustomers';
 import ShowEmployees from './components/employees/ShowEmployees';
+import HomeBarEmpl from './components/employees/HomeBar';
+import HomePageEmpl from './components/employees/HomePage';
 import HomePage from './components/basic/HomePage';
 import ShowProducts from './components/products/ShowProducts';
 import ProductPage from './components/products/ProductPage';
@@ -54,15 +56,22 @@ class App extends Component {
             </div>);
           break;
         case 'EMPLOYEE':
-          router = <Switch>
-            <Route exact path='/' component={HomePage} />
-            <Route exact path='/home' component={HomePage} />
-            <Route exact path='/products' component={ProductTable} />
-            <Route exact path='/ingredients' component={ShowIngredients} />
-            <Route exact path='/customers' component={ShowCustomers} />
-            <Route exact path='/orders' component={Cart} />
-            <Route render={() => <Redirect to="/" />} />
-          </Switch>;
+          router = (
+            <div class="d-flex" id="wrapper">
+              <HomeBarEmpl />
+              <div id="page-content-wrapper">
+                <div class="container-fluid"><Switch>
+                  <Route exact path='/' component={HomePageEmpl} />
+                  <Route exact path='/home' component={HomePageEmpl} />
+                  <Route exact path='/products' component={ProductTable} />
+                  <Route exact path='/ingredients' component={ShowIngredients} />
+                  <Route exact path='/customers' component={ShowCustomers} />
+                  <Route exact path='/orders' component={Cart} />
+                  <Route render={() => <Redirect to="/" />} />
+                </Switch>
+                </div>
+              </div>
+            </div>);
           break;
         case 'CUSTOMER':
           router = (<Switch>
@@ -70,7 +79,7 @@ class App extends Component {
             <Route exact path='/home' component={HomePage} />
             <Route exact path='/products' component={ShowProducts} />
             <Route exact path="/products/:productId" component={ProductPage} />
-            <Route exact path='/order' component={()=><CheckoutForm/>} />
+            <Route exact path='/order' component={() => <CheckoutForm />} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;
@@ -111,7 +120,7 @@ class App extends Component {
     return (
       <>
         <BrowserRouter>
-          <AppBar userRole={user? user.role:'GUEST'}/>
+          <AppBar userRole={user ? user.role : 'GUEST'} />
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <ProductBar /> : ''}
           {router}
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <Footer /> : ''}

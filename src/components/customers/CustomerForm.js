@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./customerForm.css";
-import { Form, Col, InputGroup } from 'react-bootstrap';
 import CustomerService from "../../services/customerService";
 import { withRouter } from "react-router-dom";
+import { Form, Col, InputGroup } from 'react-bootstrap';
 
 class CustomerForm extends Component {
 

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import CartItem from './CartItem';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 
 
 class Cart extends Component {
@@ -35,7 +37,7 @@ class Cart extends Component {
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
             cartItems.map(item => total += item.finalPrice * item.quantity);
-        
+
             this.setState({
                 subtotal: total,
                 shipping: 0
@@ -46,7 +48,7 @@ class Cart extends Component {
                 shipping: 0
             })
         }
-      
+
     }
 
     onChangeQuantity() {
@@ -55,7 +57,7 @@ class Cart extends Component {
         let total = 0;
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
-            cartItems.map(item => total += item.finalPrice * item.quantity);
+            cartItems.map(item => (total += item.finalPrice * item.quantity));
             if (cartItems) {
                 this.setState({
                     subtotal: total,
@@ -66,16 +68,12 @@ class Cart extends Component {
 
     }
 
-
-
     render() {
-
-
         return (
-            <div class="container">
+            <div class="container cart-container card-container">
                 <div class="row">
-                    <div class="col-sm-12 col-md-10 col-md-offset-1">
-                        <table class="table table-hover">
+                    <div class="col-sm-12 col-md-12 ">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Product</th>
@@ -92,38 +90,26 @@ class Cart extends Component {
                                 })}
 
                                 <tr>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td><h5>Subtotal</h5></td>
+                                    <td colSpan={4} class="text-right"><h5>Subtotal</h5></td>
                                     <td class="text-right"><h5><strong>{this.state.subtotal}€</strong></h5></td>
                                 </tr>
                                 <tr>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td><h5>Estimated shipping</h5></td>
+                                    <td colSpan={4} class="text-right"><h5>Estimated shipping</h5></td>
                                     <td class="text-right"><h5><strong>{this.state.shipping}€</strong></h5></td>
                                 </tr>
                                 <tr>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td><h3>Total</h3></td>
-                                    <td class="text-right"><h3><strong>${this.state.shipping + this.state.subtotal}€</strong></h3></td>
+                                    <td class="text-right" colSpan={4}><h3>Total</h3></td>
+                                    <td class="text-right"><h3><strong>{(this.state.shipping + this.state.subtotal).toFixed(2)}€</strong></h3></td>
                                 </tr>
                                 <tr>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td>   </td>
-                                    <td>
-                                        <button type="button" class="btn btn-default">
-                                            <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-                                </button></td>
-                                    <td>
-                                        <button type="button" class="btn btn-submit" onClick={this.props.onSubmit}>
-                                            Checkout <span class="glyphicon glyphicon-play"></span>
-                                        </button></td>
+                                    <td colSpan={4} class="text-right">
+                                        <a type="button" class="btn btn-outline-secondary" href="/products">
+                                            <ShoppingCartIcon />Continue Shopping</a>
+                                    </td>
+                                    <td colSpan={1} class="text-right">
+                                        <button type="button"  class="btn btn-submit" onClick={this.props.onSubmit}>
+                                        <LocalMallIcon />Checkout </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

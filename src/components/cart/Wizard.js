@@ -2,15 +2,21 @@ import React, { Component } from 'react';
 import Cart from './Cart';
 import CustomerService from '../../services/customerService'
 import CustomerInfo from './CustomerInfo';
+import Payment from './Payment';
 
 class CheckoutForm extends Component {
     constructor() {
         super();
         this.state = {
             step: 1,
-            order: { productListDTO: [] ,addressInfo: {}},
+            order: {
+                productListDTO: [],
+                addressInfo: '',
+                customerId: '',
+                payment:''
+            },
             addressInfo: {}
-            
+
 
         };
 
@@ -55,7 +61,6 @@ class CheckoutForm extends Component {
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
             let total = 0;
-            cartItems.map(item => total += item.finalPrice * item.quantity);
             if (cartItems) {
                 this.setState({
                     order: {
@@ -108,12 +113,29 @@ class CheckoutForm extends Component {
         }
     }
 
-    submitOrder=()=>{
+    goToPrevious = () => {
+        const { step } = this.state;
+        if (step !== 1) {
+            this.setState({ step: step - 1 });
+        }
+    }
+
+    submitOrder = () => {
         this.state.order.addressInfo = JSON.stringify(this.state.addressInfo);
         console.log(this.state.order);
     }
 
+    paymentHandler = (event) => {
+          const value = event.target.value;
+        this.setState({
+            order: {
+                ...this.state.order,
+                payment: value
+            },
+        })
+      
 
+    }
 
 
     changeHandler = (event) => {
@@ -122,6 +144,7 @@ class CheckoutForm extends Component {
         if (name.indexOf('address.') >= 0) {
             this.setState({
                 addressInfo: {
+                    ...this.state.addressInfo,
                     address: {
                         ...this.state.addressInfo.address,
                         [name.split(".")[1]]: value
@@ -145,41 +168,23 @@ class CheckoutForm extends Component {
     }
 
     render() {
+
         switch (this.state.step) {
             case 1:
                 return (
-                    <Cart cartItems={this.state.order.productListDTO} onChangeQuantity={this.onChangeQuantity} removeCartItem={this.removeCartItem} onSubmit={this.goToNext} />
+                 
+                        <Cart cartItems={this.state.order.productListDTO} onChangeQuantity={this.onChangeQuantity} removeCartItem={this.removeCartItem} onSubmit={this.goToNext} previous={this.goToPrevious} />
+                    
                 );
             case 2:
                 return (
-                    <CustomerInfo customer={this.state.addressInfo} changeHandler={this.changeHandler}  onSubmit={this.goToNext}/>
-                    // <CheckoutFormShipping
-                    //   key="shipping"
-                    //   onSubmit={this.goToNext}
-                    //   shippingLine={this.state.shipping_line}
-                    //   shippingCity={this.state.shipping_city}
-                    //   shippingZip={this.state.shipping_zip}
-                    //   onChangeShippingLine={this.handleChange("shipping_line")}
-                    //   onChangeShippingCity={this.handleChange("shipping_city")}
-                    //   onChangeShippingZip={this.handleChange("shipping_zip")}
-                    // />
+                    <CustomerInfo customer={this.state.addressInfo} changeHandler={this.changeHandler} onSubmit={this.goToNext} previous={this.goToPrevious} payment={this.state.order.payment}  onPaymentChange={this.paymentHandler}/>
+                  
                 );
             case 3:
                 return (
-                    <div>
-                        the end
-                        <button type="submit" className="btn btn-submit" onClick={this.goToNext}>Next</button>
-                    </div>
-                    // <CheckoutFormBilling
-                    //   key="billing"
-                    //   onSubmit={this.goToNext}
-                    //   billingLine={this.state.billing_line}
-                    //   billingCity={this.state.billing_city}
-                    //   billingZip={this.state.billing_zip}
-                    //   onChangeBillingLine={this.handleChange("billing_line")}
-                    //   onChangeBillingCity={this.handleChange("billing_city")}
-                    //   onChangeBillingZip={this.handleChange("billing_zip")}
-                    // />
+                    <Payment previous={this.goToPrevious} />
+               
                 );
         }
     }

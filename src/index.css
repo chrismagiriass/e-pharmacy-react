@@ -122,3 +122,26 @@ footer a, footer p{
 }
 
 
+.cart-container{
+  margin-top: 80px;
+  margin-bottom: 80px;
+  min-height: 530px;
+}
+.card-container{
+  box-shadow:20px 20px 50px 10px  #F3F4EC;  
+}
+
+.card-container h3{
+  margin-top: 20px;
+}
+
+.payment-col{
+  margin-left: 0px !important;
+}
+
+.payment-header{
+  margin-bottom: 35px;
+}
+.btn-previous{
+  margin:7px !important;
+}
