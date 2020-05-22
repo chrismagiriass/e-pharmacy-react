@@ -16,9 +16,13 @@ import IngredientPage from './components/ingredients/IngredientPage';
 import ShowIngredients from './components/ingredients/ShowIngredients';
 import Cart from './components/cart/Cart';
 import HomePageAdmin from './components/admin/HomePage'
+import Chat from './components/chat/chat';
+
 
 
 class App extends Component {
+
+  
 
   render() {
     let router;
@@ -34,6 +38,7 @@ class App extends Component {
             <Route exact path='/customers' component={ShowCustomers} />
             <Route exact path='/employees' component={ShowEmployees} />
             <Route exact path='/orders' component={Cart} />
+            <Route path="/chat" component={Chat} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;
@@ -45,6 +50,7 @@ class App extends Component {
             <Route exact path='/ingredients' component={ShowIngredients} />
             <Route exact path='/customers' component={ShowCustomers} />
             <Route exact path='/orders' component={Cart} />
+            <Route path="/chat" component={Chat} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>;
           break;
@@ -55,6 +61,7 @@ class App extends Component {
             <Route exact path='/products' component={ShowProducts} />
             <Route exact path="/products/:productId" component={ProductPage} />
             <Route exact path='/order' component={Cart} />
+            <Route path="/chat" component={Chat} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;
@@ -67,6 +74,7 @@ class App extends Component {
             <Route exact path='/ingredients' component={ShowIngredients} />
             <Route exact path="/ingredients/:ingredientId" component={IngredientPage} />
             <Route exact path='/orders' component={Cart} />
+            <Route path="/chat" component={Chat} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;
@@ -76,6 +84,7 @@ class App extends Component {
             <Route exact path='/home' component={HomePage} />
             <Route exact path='/products' component={ShowProducts} />
             <Route exact path="/products/:productId" component={ProductPage} />
+            <Route path="/chat" component={Chat} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
 
@@ -88,6 +97,7 @@ class App extends Component {
         <Route exact path='/products' component={ShowProducts} />
         <Route exact path="/products/:productId" component={ProductPage} />
         <Route exact path='/order' component={Cart} />
+        <Route path="/chat" component={Chat} />
         <Route render={() => <Redirect to="/" />} />
       </Switch>);
     }
@@ -98,6 +108,7 @@ class App extends Component {
           <AppBar />
           <ProductBar />
           {router}
+          <Chat />
           <Footer />
         </BrowserRouter>
       </>

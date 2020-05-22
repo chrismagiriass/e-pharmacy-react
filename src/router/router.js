@@ -11,6 +11,8 @@ import ShowIngredients from '../components/ingredients/ShowIngredients';
 import ShowOrder from '../components/order/ShowOrder';
 import Cart from '../components/cart/Cart';
 import Multistep from '../multistep/multistep';
+import chat from '../components/chat/chat';
+
 
 
 
@@ -32,6 +34,8 @@ const Router = () => {
             <Route exact path='/intranet/products' />
             <Route exact path='/intranet/employees' />
             <Route exact path='/order' component={Cart}/>
+            <Route exact path="/chat" component={chat} />
+
             <Route render={()=><Redirect to="/"/>} />
 
         </Switch>
