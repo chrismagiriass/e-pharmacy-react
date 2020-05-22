@@ -7,7 +7,7 @@ class CustomerForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            paymentMethods: ['Paypal', 'Credit or Debit card', 'Pay on delivery', 'Bank deposit']
+            paymentMethods: ['Credit or Debit card', 'Pay on delivery', 'Bank deposit']
         }
     }
 
@@ -19,7 +19,7 @@ class CustomerForm extends Component {
 
             paymentForm = <Form.Row className={this.props.payment == 'Credit or Debit card' ? '' : 'hidden-row'}>
                 <Form.Group as={Col} md="10" controlId="validationCustfomPassword">
-                    <CardForm />
+                    <CardForm handleCreditCardChange={this.props.handleCreditCardChange} errorMessage={this.props.errorMessage}/>
                 </Form.Group>
             </Form.Row>
 
@@ -27,10 +27,12 @@ class CustomerForm extends Component {
 
         return (
             <div className="container cart-container card-container" >
-                <div className="row">
-                    <div className="col-md-6">
-                        <h3>Personal Info</h3>
-                        <Form noValidate validated={true} >
+
+                <Form noValidate validated={this.props.validated} onSubmit={this.props.onSubmit}>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <h3>Personal Info</h3>
+
                             <Form.Row>
                                 <Form.Group as={Col} md="6">
                                     <Form.Label>First name</Form.Label>
@@ -115,12 +117,9 @@ class CustomerForm extends Component {
                                 </Form.Group>
                             </Form.Row>
 
-
-                        </Form>
-                    </div>
-                    <div className="col-md-4 offset-md-2">
-                        <h3 className="payment-header">Payment Method</h3>
-                        <Form>
+                        </div>
+                        <div className="col-md-5 offset-md-1">
+                            <h3 className="payment-header">Payment Method</h3>
                             <fieldset>
                                 <Form.Group >
                                     {this.state.paymentMethods.map((method) => {
@@ -143,17 +142,19 @@ class CustomerForm extends Component {
                                     })}
                                 </Form.Group>
                             </fieldset>
-                        </Form>
 
-                    </div>
-                </div>
-                <div className="row" style={{"margin-top":"60px"}}>
-                    <div className="col-md-3 offset-md-9">
 
-                        <button type="button" class="btn btn-outline-secondary btn-previous" onClick={this.props.previous}> Previous  </button>
-                        <button type="submit" className="btn btn-submit" onClick={this.props.onSubmit}>Next</button>
+                        </div>
+                   
+                            <div className="col-md-4 offset-md-8" style={{ "margin-top": "60px" }}>
+                                <button type="button" class="btn btn-outline-secondary btn-previous" onClick={this.props.previous}> Previous  </button>
+                                <button type="submit" className="btn btn-submit" >Next</button>
+                            </div>
+                        
                     </div>
-                </div>
+                </Form>
+
+
             </div>
         );
     }

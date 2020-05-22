@@ -24,9 +24,15 @@ import CheckoutForm from './components/cart/Wizard';
 
 
 class App extends Component {
+ 
+  constructor(props){
+    super(props);
+    this.state={showModal:false}
+  }
 
-
-
+  openLogin=()=>{
+    this.setState({showModal:true})
+  }
 
   render() {
     let router;
@@ -91,7 +97,7 @@ class App extends Component {
             <Route exact path="/products/:productId" component={ProductPage} />
             <Route exact path='/ingredients' component={ShowIngredients} />
             <Route exact path="/ingredients/:ingredientId" component={IngredientPage} />
-            <Route exact path='/orders' component={Cart} />
+            <Route exact path='/orders' component={Cart}  />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;
@@ -112,7 +118,7 @@ class App extends Component {
         <Route exact path='/home' component={HomePage} />
         <Route exact path='/products' component={ShowProducts} />
         <Route exact path="/products/:productId" component={ProductPage} />
-        <Route exact path='/order' component={Cart} />
+        <Route exact path='/order' component={() => <CheckoutForm  openLogin={this.openLogin}/>} />
         <Route render={() => <Redirect to="/" />} />
       </Switch>);
     }
@@ -120,7 +126,7 @@ class App extends Component {
     return (
       <>
         <BrowserRouter>
-          <AppBar userRole={user ? user.role : 'GUEST'} />
+          <AppBar userRole={user ? user.role : 'GUEST'}  showModal={this.state.openLogin}/>
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <ProductBar /> : ''}
           {router}
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <Footer /> : ''}

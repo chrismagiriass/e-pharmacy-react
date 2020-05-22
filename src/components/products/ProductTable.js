@@ -5,6 +5,8 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import Pagination from "react-js-pagination";
+import AddProduct from './AddProduct';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 
 
@@ -20,12 +22,15 @@ class ShowProducts extends Component {
             itemsPerPage: 12,
             totalItems: 0,
             sort: 'name',
-            success: ''
+            success: '',
+            showModal: false
         }
         this.saveProduct = this.saveProduct.bind(this);
         this.buttonFormatterSave = this.buttonFormatterSave.bind(this);
         this.deleteProduct = this.deleteProduct.bind(this);
         this.buttonFormatterRemove = this.buttonFormatterRemove.bind(this)
+        this.openAddProduct = this.openAddProduct.bind(this);
+        this.closeModal = this.closeModal.bind(this);
 
     }
 
@@ -72,10 +77,11 @@ class ShowProducts extends Component {
     }
 
     deleteProduct(product) {
-        ProductService.deleteProduct(product.personId).then(result => {
+        ProductService.deleteProduct(product.productId).then(result => {
             this.setState({ success: 'Product deleted succesfully', error: '' })
             ProductService.get().then(result => {
-                this.setState({ products: result });
+                this.setState({    products: result.results,
+                    totalItems: result.totalItems });
             }
             ).catch(error =>
                 this.setState({
@@ -108,7 +114,7 @@ class ShowProducts extends Component {
     }
 
 
-    getProducts=(pageNumber)=> {
+    getProducts = (pageNumber) => {
         ProductService.get(
             {
                 params: {
@@ -128,11 +134,23 @@ class ShowProducts extends Component {
         )
     }
 
-    handlePageChange=(pageNumber) =>{
+    handlePageChange = (pageNumber) => {
         console.log(`active page is ${pageNumber}`);
         this.setState({ activePage: pageNumber });
         this.getProducts(pageNumber);
     }
+
+    openAddProduct() {
+        this.setState({ showModal: true });
+
+    }
+
+    closeModal() {
+        this.setState({ showModal: false });
+        this.getProducts(1);
+
+    }
+
 
     render() {
 
@@ -213,7 +231,14 @@ class ShowProducts extends Component {
 
         return (
             <>
+                <h1 class="mt-4">Products</h1>
                 {message}
+                <button className="btn btn-sm btn-outline-success"
+                    title="Add product"
+                    type="button"
+                    onClick={() =>
+                        this.openAddProduct()}
+                ><PersonAddIcon /></button>
                 <DataTable key="showProductsTable" columns={columns} data={this.state.products} cellEdit={cellEdit} tableKey={'productId'} />
                 <div className="row d-flex justify-content-center">
                     <Pagination
@@ -226,6 +251,8 @@ class ShowProducts extends Component {
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
+                <AddProduct key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} />
+
             </>
         )
 

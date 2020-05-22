@@ -50,7 +50,7 @@ class ProductCard extends Component {
                     <div class="item" >
                         <Link to={"/products/" + this.props.product.productId}>
                             {saleBadge}
-                            <Card.Img variant="top" src="/slider1.png" />
+                            <Card.Img variant="top" src={this.props.product.image} />
                         </Link>
 
                     </div>

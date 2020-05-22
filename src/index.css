@@ -129,6 +129,7 @@ footer a, footer p{
 }
 .card-container{
   box-shadow:20px 20px 50px 10px  #F3F4EC;  
+  border-radius: 20px;
 }
 
 .card-container h3{
@@ -144,4 +145,8 @@ footer a, footer p{
 }
 .btn-previous{
   margin:7px !important;
+}
+
+.form-check-label{
+  color:black !important;
 }
