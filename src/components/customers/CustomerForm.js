@@ -12,12 +12,17 @@ class CustomerForm extends Component {
             register: this.props.register,
             hiddenCheckBox: this.props.register,
             validated: false,
-            customer: this.props.customer|| {
+            customer: props.customer || {
                 firstName: '',
                 role: 'CUSTOMER',
                 lastName: '',
                 password: '',
+                verifyPassword: '',
                 email: ''
+            },
+            errors: {
+                email: '',
+                password: ''
             }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,6 +36,7 @@ class CustomerForm extends Component {
         if (name.indexOf('address.') >= 0) {
             this.setState({
                 customer: {
+                    ...this.state.customer,
                     address: {
                         ...this.state.customer.address,
                         [name.split(".")[1]]: value
@@ -45,20 +51,53 @@ class CustomerForm extends Component {
                 }
             })
         }
+        if (this.state.customer.password !== value) {
+            this.setState({
+                errors: {
+                    password: 'Passwords does not much.'
+                }
+            })
+        } else {
+            this.setState({
+                errors: {
+                    password: ''
+                }
+            })
+        }
 
     }
 
     handleSubmit(event) {
         const form = event.currentTarget;
-        console.log(this.state.customer);
-        if (form.checkValidity() === false) {
+        console.log(this.state.customer );
+        if (form.checkValidity()==false || this.state.errors.password!=='') {
             event.preventDefault();
             event.stopPropagation();
             this.setState({ validated: true });
         } else {
+            CustomerService.uniqueEmail(this.state.customer.email).then(result => {
+                if (!result) {
+                    this.setState({
+                        errors: {
+                            email: 'User with this email is already registered.'
+                        }
+                    })
+                    return;
+                }else{
+                    this.setState({
+                        errors: {
+                            email: ''
+                        }
+                    }) 
+                }
+            }
+            ).catch(err => {
+
+            })
             event.preventDefault();
             CustomerService.post(this.state.customer);
-            this.props.history.push("/customers");
+            window.location.reload();
+            
 
         }
     }
@@ -68,7 +107,7 @@ class CustomerForm extends Component {
         this.setState({ register: !this.state.register });
         if (this.state.register) {
             this.setState({
-                customer:{
+                customer: {
                     ...this.state.customer,
                     address: {
                         city: '',
@@ -178,12 +217,14 @@ class CustomerForm extends Component {
                                     placeholder="Email"
                                     aria-describedby="inputGroupPrepend"
                                     required
+                                    isInvalid={this.state.errors.email}
                                     name="email"
                                     value={this.state.customer.email}
                                     onChange={this.changeHandler}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     E-mail is required.
+                                    {this.state.errors.email}
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
@@ -209,13 +250,13 @@ class CustomerForm extends Component {
                                 <Form.Control
                                     type="password"
                                     placeholder="Password"
-                                    required
-                                    name="password"
-                                    value={this.state.customer.password}
+                                    isInvalid={this.state.errors.password}
+                                    name="verifyPassword"
+                                    value={this.state.customer.verifyPassword}
                                     onChange={this.changeHandler}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Password is required.
+                                    {this.state.errors.password}
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>

@@ -150,3 +150,10 @@ footer a, footer p{
 .form-check-label{
   color:black !important;
 }
+
+body{
+  overflow-x: auto !important;
+  /* text-overflow: ellipsis; */
+/* white-space: nowrap; */
+
+}

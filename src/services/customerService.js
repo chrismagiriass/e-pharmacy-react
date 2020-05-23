@@ -23,8 +23,8 @@ export default {
   deleteCustomer(id) {
     return apiClient.delete(`customers/${id}`);
   },
-  uniqueEmail(data) {
-    return apiClient.post('customers/unique', data);
+  uniqueEmail(email) {
+    return apiClient.get(`customers/unique?email=${email}` );
   }
 
 

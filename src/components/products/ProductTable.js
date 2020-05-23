@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import CategoryService from '../../services/categoryService';
 import ProductService from '../../services/productService';
 import DataTable from "../basic/DataTable";
 import cellEditFactory from 'react-bootstrap-table2-editor';
@@ -7,6 +8,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import Pagination from "react-js-pagination";
 import AddProduct from './AddProduct';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { Type } from 'react-bootstrap-table2-editor';
+import PostAddIcon from '@material-ui/icons/PostAdd';
 
 
 
@@ -21,6 +24,7 @@ class ShowProducts extends Component {
             activePage: 1,
             itemsPerPage: 12,
             totalItems: 0,
+            productCategoryList: [],
             sort: 'name',
             success: '',
             showModal: false
@@ -80,8 +84,10 @@ class ShowProducts extends Component {
         ProductService.deleteProduct(product.productId).then(result => {
             this.setState({ success: 'Product deleted succesfully', error: '' })
             ProductService.get().then(result => {
-                this.setState({    products: result.results,
-                    totalItems: result.totalItems });
+                this.setState({
+                    products: result.results,
+                    totalItems: result.totalItems
+                });
             }
             ).catch(error =>
                 this.setState({
@@ -103,6 +109,7 @@ class ShowProducts extends Component {
                 size: this.state.itemsPerPage
             }
         }).then(result => {
+            this.getCategories();
             this.setState({
                 products: result.results,
                 totalItems: result.totalItems
@@ -113,6 +120,19 @@ class ShowProducts extends Component {
         )
     }
 
+    getCategories = () => {
+        CategoryService.get().then(result => {
+            this.setState({
+                productCategoryList: result
+            });
+        }
+        ).catch(error =>
+            this.setState({
+                error: error.message,
+                success: ''
+            })
+        )
+    }
 
     getProducts = (pageNumber) => {
         ProductService.get(
@@ -153,6 +173,9 @@ class ShowProducts extends Component {
 
 
     render() {
+        // const options = this.state.productCategoryList.map(function(row) {
+        //     return { value : row.categoryId, label : row.nameCategory }
+        //  })
 
         const cellEdit = cellEditFactory({
             mode: 'click',
@@ -170,24 +193,50 @@ class ShowProducts extends Component {
             }, {
                 dataField: 'name',
                 text: 'Title',
+                editor: {
+                    type: Type.TEXTAREA
+                },
                 sort: true,
             }, {
                 dataField: 'description',
                 text: 'Description',
+                style: {
+                    'width': '270px',
+                    'overflow': 'hidden',
+                    'display': '-webkit-box',
+                    '-webkit-line-clamp': '3',
+                    '-webkit-box-orient': 'vertical',
+                    'min-height': '73px'
+                },
+                editor: {
+                    type: Type.TEXTAREA
+                },
                 sort: false
             }, {
-                dataField: 'type',
-                text: 'Type',
-                sort: true
-            }, {
+            //     dataField: 'productCategoryList[0].categoryId',
+            //     text: 'Category',
+            //     editor: {
+            //         type: Type.SELECT,
+            //         options:options
+            //     },
+            //     sort: false,
+            //     editable: false
+            // }, {
                 dataField: 'prescripted',
                 text: 'Prescripted',
+                editor: {
+                    type: Type.CHECKBOX,
+                    value: 'true:false'
+                },
                 sort: false,
 
             }
             , {
                 dataField: 'image',
                 text: 'Image',
+                editor: {
+                    type: Type.TEXTAREA
+                },
                 sort: false,
 
             }, {
@@ -238,7 +287,7 @@ class ShowProducts extends Component {
                     type="button"
                     onClick={() =>
                         this.openAddProduct()}
-                ><PersonAddIcon /></button>
+                ><PostAddIcon /></button>
                 <DataTable key="showProductsTable" columns={columns} data={this.state.products} cellEdit={cellEdit} tableKey={'productId'} />
                 <div className="row d-flex justify-content-center">
                     <Pagination
@@ -251,7 +300,7 @@ class ShowProducts extends Component {
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
-                <AddProduct key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} />
+                <AddProduct key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} categories={this.state.productCategoryList}/>
 
             </>
         )

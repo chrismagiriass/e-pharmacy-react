@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap';
 import ProductService from "../../services/productService";
 import { withRouter } from "react-router-dom";
 import { Form, Col, InputGroup } from 'react-bootstrap';
+import MultiSelect from "react-multi-select-component";
+
 
 class AddProduct extends Component {
     constructor(props) {
@@ -15,10 +17,11 @@ class AddProduct extends Component {
                 productCategoryList: [],
                 prescripted: '',
                 image: '',
-                discount:'',
-                price:'',
-                stock:''
-            }
+                discount: '',
+                price: '',
+                stock: ''
+            },
+            selectedCategories: []
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeHandler = this.changeHandler.bind(this);
@@ -45,13 +48,29 @@ class AddProduct extends Component {
             this.setState({ validated: true });
         } else {
             event.preventDefault();
+            let categories = this.state.selectedCategories.map(function (row) {
+                return { categoryId: row.value, nameCategory: row.label }
+            })
+            this.state.product.productCategoryList = categories;
+
             ProductService.post(this.state.product);
             this.props.onHide();
-
         }
     }
 
+    changeCategory = (value) => {
+        console.log(value);
+
+        this.setState({
+            selectedCategories: value
+        })
+
+    }
+
     render() {
+        const options = this.props.categories.map(function (row) {
+            return { value: row.categoryId, label: row.nameCategory }
+        })
 
         return (
             <Modal show={this.props.showModal}
@@ -63,7 +82,7 @@ class AddProduct extends Component {
                     <div className="container">
                         <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                             <Form.Row>
-                                <Form.Group as={Col} md="6">
+                                <Form.Group as={Col} md="12">
                                     <Form.Label>Name</Form.Label>
                                     <Form.Control
                                         type="text"
@@ -73,9 +92,9 @@ class AddProduct extends Component {
                                         onChange={this.changeHandler}
                                     />
                                 </Form.Group>
-                                <Form.Group as={Col} md="6">
+                                <Form.Group as={Col} md="12">
                                     <Form.Label>Description</Form.Label>
-                                    <Form.Control
+                                    <Form.Control as="textarea" rows="3" 
                                         type="text"
                                         placeholder="description"
                                         name="description"
@@ -85,23 +104,18 @@ class AddProduct extends Component {
 
                                 </Form.Group>
                                 <Form.Group as={Col} md="12">
-                                    <Form.Label>prescripted</Form.Label>
-                                    <InputGroup>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Prescripted"
-                                            aria-describedby="inputGroupPrepend"
-                                            required
-                                            name="prescripted"
-                                            value={this.state.product.prescripted}
-                                            onChange={this.changeHandler}
-                                        />
-                                    </InputGroup>
+                                    <Form.Label>Categories</Form.Label>
+                                    <MultiSelect
+                                        options={options}
+                                        value={this.state.selectedCategories}
+                                        onChange={this.changeCategory}
+                                        labelledBy={"Select"}
+                                    />
                                 </Form.Group>
                                 <Form.Group as={Col} md="12" >
                                     <Form.Label>Image</Form.Label>
                                     <InputGroup>
-                                        <Form.Control
+                                    <Form.Control as="textarea" rows="3" 
                                             type="url"
                                             placeholder="image"
                                             // required
@@ -148,6 +162,16 @@ class AddProduct extends Component {
                                             onChange={this.changeHandler}
                                         />
                                     </InputGroup>
+                                </Form.Group>
+                                <Form.Group as={Col} md="12">
+                                    <Form.Check
+                                        required
+                                        label="Prescripted"
+                                        value={this.state.product.prescripted}
+                                        onChange={this.changeHandler}
+                                        name="prescripted"
+                                    />
+
                                 </Form.Group>
                             </Form.Row>
                             <button type="submit" className="btn btn-submit float-right">Save</button>

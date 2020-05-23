@@ -18,16 +18,16 @@ class HomePageAdmin extends Component {
       
 
 
-                <div class="bg-light border-right" id="sidebar-wrapper">
-                    <div class="sidebar-heading">Hello {user.fullName} </div>
-                    <div class="list-group list-group-flush">
-                        <a href="#" class="list-group-item list-group-item-action bg-light"><PersonIcon/><i class="pe-7s-user"></i> Profile</a>
-                        <a href="/orders" class="list-group-item list-group-item-action bg-light"><LocalShippingIcon/> Orders</a>
-                        <a href="/employees" class="list-group-item list-group-item-action bg-light"><GroupIcon/> Employees</a>
-                        <a href="/customers" class="list-group-item list-group-item-action bg-light"><SupervisedUserCircleIcon/> Customers</a>
-                        <a href="#" class="list-group-item list-group-item-action bg-light"><LocalHospitalIcon/> VIP Customers</a>
-                        <a href="/products" class="list-group-item list-group-item-action bg-light"><ListAltIcon/> Products</a>
-                        <a href="/ingredients" class="list-group-item list-group-item-action bg-light"><LocalPharmacyIcon/> Ingredients</a>
+                <div className="bg-light border-right" id="sidebar-wrapper">
+                    <div className="sidebar-heading">Hello {user.fullName} </div>
+                    <div className="list-group list-group-flush">
+                        <a href="#" className="list-group-item list-group-item-action bg-light"><PersonIcon/><i className="pe-7s-user"></i> Profile</a>
+                        <a href="/orders" className="list-group-item list-group-item-action bg-light"><LocalShippingIcon/> Orders</a>
+                        <a href="/employees" className="list-group-item list-group-item-action bg-light"><GroupIcon/> Employees</a>
+                        <a href="/customers" className="list-group-item list-group-item-action bg-light"><SupervisedUserCircleIcon/> Customers</a>
+                        <a href="#" className="list-group-item list-group-item-action bg-light"><LocalHospitalIcon/> VIP Customers</a>
+                        <a href="/products" className="list-group-item list-group-item-action bg-light"><ListAltIcon/> Products</a>
+                        <a href="/ingredients" className="list-group-item list-group-item-action bg-light"><LocalPharmacyIcon/> Ingredients</a>
 
                     </div>
                 </div>

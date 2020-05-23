@@ -8,7 +8,7 @@ class DataTable extends Component {
     render() {
 
         return (
-            <div className="container">
+            <div>
                 <BootstrapTable
                     striped
                     hover

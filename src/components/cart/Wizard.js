@@ -48,8 +48,7 @@ class CheckoutForm extends Component {
                     streetNumber: '',
                     region: '',
                     zipCode: ''
-                },
-                validated: false
+                }
             }
 
             this.setState({
@@ -68,7 +67,7 @@ class CheckoutForm extends Component {
         let cartItems = localStorage.getItem("cart");
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
-            let total = 0;
+            // let total = 0;
             if (cartItems) {
                 this.setState({
                     order: {
@@ -114,11 +113,11 @@ class CheckoutForm extends Component {
     goToNext = (event) => {
 
         const { step } = this.state;
-        if (step == 1 && !this.state.order.customerId) {
+        if (step === 1 && !this.state.order.customerId) {
             return;
             // this.props.openLogin();
         }
-        if (step == 2) {
+        if (step === 2) {
             const form = event.currentTarget;
             if (form.checkValidity() === false || !!this.state.creaditCardMessage) {
                 event.preventDefault();

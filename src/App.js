@@ -21,6 +21,7 @@ import HomePageAdmin from './components/admin/HomePage'
 import HomeBar from './components/admin/HomeBar';
 import ShowOrders from './components/order/ShowOrder';
 import CheckoutForm from './components/cart/Wizard';
+import ProfilePage from './components/customers/ProfilePage'
 
 
 class App extends Component {
@@ -83,9 +84,11 @@ class App extends Component {
           router = (<Switch>
             <Route exact path='/' component={HomePage} />
             <Route exact path='/home' component={HomePage} />
+            <Route exact path='/profile' component={ProfilePage} />
             <Route exact path='/products' component={ShowProducts} />
             <Route exact path="/products/:productId" component={ProductPage} />
             <Route exact path='/order' component={() => <CheckoutForm />} />
+            
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;

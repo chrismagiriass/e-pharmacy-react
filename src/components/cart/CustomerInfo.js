@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Col, InputGroup, Row } from 'react-bootstrap';
+import { Form, Col, InputGroup } from 'react-bootstrap';
 import CardForm from '../payment/CardForm';
 
 class CustomerForm extends Component {
@@ -15,9 +15,9 @@ class CustomerForm extends Component {
     render() {
 
         let paymentForm = '';
-        if (this.props.payment == 'Credit or Debit card') {
+        if (this.props.payment === 'Credit or Debit card') {
 
-            paymentForm = <Form.Row className={this.props.payment == 'Credit or Debit card' ? '' : 'hidden-row'}>
+            paymentForm = <Form.Row className={this.props.payment === 'Credit or Debit card' ? '' : 'hidden-row'}>
                 <Form.Group as={Col} md="10" controlId="validationCustfomPassword">
                     <CardForm handleCreditCardChange={this.props.handleCreditCardChange} errorMessage={this.props.errorMessage}/>
                 </Form.Group>
@@ -137,7 +137,7 @@ class CustomerForm extends Component {
                                                 value={method}
                                                 onChange={this.props.onPaymentChange}
                                             />
-                                            {method == 'Credit or Debit card' ? paymentForm : ''}
+                                            {method === 'Credit or Debit card' ? paymentForm : ''}
                                         </div>
                                     })}
                                 </Form.Group>

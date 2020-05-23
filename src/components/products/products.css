@@ -12,6 +12,7 @@
 
 .product-card{
     text-align: center;
+    height: 450px;
 }
 
 .product-price{
@@ -65,4 +66,10 @@
 footer{
     margin-top:50px !important;
 }
+
+/* .align-end {
+    position: absolute;
+    bottom: 6px;
+    left: 120px;
+  } */
 
