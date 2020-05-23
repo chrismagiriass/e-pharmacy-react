@@ -85,7 +85,7 @@ class ShowProducts extends Component {
                     <Container fluid={true} >
 
                         <div className="row">
-                            {this.state.products.map((product, i) => <ProductCard key={product.productId} product={product} />)}
+                            {this.state.products.map((product, i) => <ProductCard addToCart={() => this.props.addToCart(product)}  key={product.productId} product={product} />)}
                         </div>
                         <div className="row d-flex justify-content-center">
                             <Pagination

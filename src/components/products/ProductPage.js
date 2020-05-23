@@ -95,7 +95,7 @@ class ShowProducts extends Component {
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button style={{ 'margin-top': '20px' }} className="btn btn-submit" onClick={() => { this.addToCard(this.state.product) }}>Add to cart</button>
+                                <button style={{ 'margin-top': '20px' }} className="btn btn-submit" onClick={() => this.props.addToCart(this.state.product)}>Add to cart</button>
                             </div>
                         </div>
                     </div>

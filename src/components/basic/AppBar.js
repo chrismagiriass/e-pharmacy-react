@@ -16,20 +16,11 @@ class AppBar extends Component {
         this.state = {
             showModal: false,
             modalTitle: '',
-            register: true,
-            cart: []
+            register: true
         };
         this.openRegisterModal = this.openRegisterModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.openLoginModal = this.openLoginModal.bind(this);
-    }
-
-    componentDidMount() {
-        let cartItems = localStorage.getItem("cart");
-        if (cartItems) {
-            this.setState({ cart: JSON.parse(cartItems) })
-        }
-
     }
 
     openRegisterModal() {
@@ -59,7 +50,7 @@ class AppBar extends Component {
             acountSettings = <> <NavDropdown.Item onClick={this.openRegisterModal}>Register</NavDropdown.Item>
                 <NavDropdown.Item onClick={this.openLoginModal}>Login</NavDropdown.Item></>;
         } else {
-            acountSettings = <> <NavDropdown.Item onClick={this.openRegisterModal}>Profile</NavDropdown.Item>
+            acountSettings = <> <NavDropdown.Item href='/profile'>Profile</NavDropdown.Item>
                 <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item></>;
         }
 
@@ -94,8 +85,8 @@ class AppBar extends Component {
                             {acountSettings}
                         </NavDropdown>
                         {(this.props.userRole !== 'ADMIN' && this.props.userRole !== 'EMPLOYEE') ?
-                            <NavDropdown title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.state.cart.length}</sup> </div>} id="basic-nav-dropdown">
-                                {this.state.cart.map((item) => {
+                            <NavDropdown drop='left' title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.props.cartItems.length}</sup> </div>} id="basic-nav-dropdown">
+                                {this.props.cartItems.map((item) => {
                                     return <NavDropdown.Item >{item.name}</NavDropdown.Item>
                                 })}
                                 <NavDropdown.Divider />

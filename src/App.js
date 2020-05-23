@@ -25,14 +25,44 @@ import ProfilePage from './components/customers/ProfilePage'
 
 
 class App extends Component {
- 
-  constructor(props){
+
+  constructor(props) {
     super(props);
-    this.state={showModal:false}
+    this.state = {
+      showModal: false,
+      cart: []
+    }
   }
 
-  openLogin=()=>{
-    this.setState({showModal:true})
+  openLogin = () => {
+    this.setState({ showModal: true })
+  }
+
+  componentDidMount() {
+    let cartItems = localStorage.getItem("cart");
+    if (cartItems) {
+        this.setState({ cart: JSON.parse(cartItems) })
+    }
+
+}
+
+  addToCart = (product) => {
+    let cartItems = [];
+    let cart = localStorage.getItem("cart");
+    if (cart) {
+      cartItems = JSON.parse(cart);
+    }
+    let productExists = cartItems.filter(item => item.productId === product.productId);
+    product.quantity = 1;
+    if (productExists.length > 0) {
+      productExists[0].quantity++;
+    } else {
+      cartItems.push(product);
+    }
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+    this.setState({
+      cart: cartItems
+    })
   }
 
   render() {
@@ -85,10 +115,10 @@ class App extends Component {
             <Route exact path='/' component={HomePage} />
             <Route exact path='/home' component={HomePage} />
             <Route exact path='/profile' component={ProfilePage} />
-            <Route exact path='/products' component={ShowProducts} />
-            <Route exact path="/products/:productId" component={ProductPage} />
+            <Route exact path='/products' render={() => <ShowProducts addToCart={this.addToCart} />} />
+            <Route exact path="/products/:productId" render={props => <ProductPage {...props} addToCart={this.addToCart} />} />
             <Route exact path='/order' component={() => <CheckoutForm />} />
-            
+
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;
@@ -100,7 +130,7 @@ class App extends Component {
             <Route exact path="/products/:productId" component={ProductPage} />
             <Route exact path='/ingredients' component={ShowIngredients} />
             <Route exact path="/ingredients/:ingredientId" component={IngredientPage} />
-            <Route exact path='/orders' component={Cart}  />
+            <Route exact path='/orders' component={Cart} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;
@@ -108,8 +138,9 @@ class App extends Component {
           router = (<Switch>
             <Route exact path='/' component={HomePage} />
             <Route exact path='/home' component={HomePage} />
-            <Route exact path='/products' component={ShowProducts} />
-            <Route exact path="/products/:productId" component={ProductPage} />
+            <Route exact path='/products' render={() => <ShowProducts addToCart={this.addToCart} />} />
+            <Route exact path="/products/:productId" render={props => <ProductPage {...props} addToCart={this.addToCart} />} />
+            <Route exact path='/order' component={() => <CheckoutForm openLogin={this.openLogin} />} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
 
@@ -119,9 +150,9 @@ class App extends Component {
       router = (<Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/home' component={HomePage} />
-        <Route exact path='/products' component={ShowProducts} />
-        <Route exact path="/products/:productId" component={ProductPage} />
-        <Route exact path='/order' component={() => <CheckoutForm  openLogin={this.openLogin}/>} />
+        <Route exact path='/products' render={() => <ShowProducts addToCart={this.addToCart} />} />
+        <Route exact path="/products/:productId" render={props => <ProductPage {...props} addToCart={this.addToCart} />} />
+        <Route exact path='/order' component={() => <CheckoutForm openLogin={this.openLogin} />} />
         <Route render={() => <Redirect to="/" />} />
       </Switch>);
     }
@@ -129,7 +160,7 @@ class App extends Component {
     return (
       <>
         <BrowserRouter>
-          <AppBar userRole={user ? user.role : 'GUEST'}  showModal={this.state.openLogin}/>
+          <AppBar userRole={user ? user.role : 'GUEST'} showModal={this.state.openLogin} cartItems={this.state.cart} />
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <ProductBar /> : ''}
           {router}
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <Footer /> : ''}

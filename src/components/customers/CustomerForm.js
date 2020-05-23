@@ -70,7 +70,7 @@ class CustomerForm extends Component {
     handleSubmit(event) {
         const form = event.currentTarget;
         console.log(this.state.customer );
-        if (form.checkValidity()==false || this.state.errors.password!=='') {
+        if (form.checkValidity()===false || this.state.errors.password!=='') {
             event.preventDefault();
             event.stopPropagation();
             this.setState({ validated: true });

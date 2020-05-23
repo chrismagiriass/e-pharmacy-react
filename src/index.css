@@ -77,10 +77,10 @@ code {
   display: none;
   }
 
-.dropdown-toggle.btn.btn-secondary::before,
-.dropdown-toggle.nav-link::after{
-  display: none;
-}
+  .dropdown-toggle.btn.btn-secondary::before,
+  .dropdown-toggle.nav-link::after{
+      display: none;
+  }
 
 footer {
   

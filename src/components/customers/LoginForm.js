@@ -46,7 +46,7 @@ class LoginForm extends Component {
                     localStorage.setItem("user", JSON.stringify(resp.data))
                     window.location.reload();
                 })
-                .catch(err => this.setState({message:err.message,show:true}));
+                .catch(err => this.setState({message:err.message==='Request failed with status code 401'?'Wrong credentials.':'Something went wrong.',show:true}));
         }
     }
 

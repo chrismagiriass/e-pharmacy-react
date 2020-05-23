@@ -83,7 +83,15 @@ class ShowProducts extends Component {
     deleteProduct(product) {
         ProductService.deleteProduct(product.productId).then(result => {
             this.setState({ success: 'Product deleted succesfully', error: '' })
-            ProductService.get().then(result => {
+            ProductService.get(
+                {
+                    params: {
+                        page: this.state.activePage - 1,
+                        sort: this.state.sort,
+                        size: this.state.itemsPerPage
+                    }
+                }
+            ).then(result => {
                 this.setState({
                     products: result.results,
                     totalItems: result.totalItems
@@ -193,6 +201,9 @@ class ShowProducts extends Component {
             }, {
                 dataField: 'name',
                 text: 'Title',
+                style: {
+                    maxWidth: '200px'
+                },
                 editor: {
                     type: Type.TEXTAREA
                 },
@@ -201,12 +212,13 @@ class ShowProducts extends Component {
                 dataField: 'description',
                 text: 'Description',
                 style: {
-                    'width': '270px',
-                    'overflow': 'hidden',
-                    'display': '-webkit-box',
-                    '-webkit-line-clamp': '3',
-                    '-webkit-box-orient': 'vertical',
-                    'min-height': '73px'
+                    maxHeight: '90px',
+                    maxWidth: '270px',
+                    overflow: 'hidden',
+                    display: '-webkit-box',
+                    WebkitLineClamp: '3',
+                    WebkitBoxOrient: 'vertical',
+                    border: 'none'
                 },
                 editor: {
                     type: Type.TEXTAREA
@@ -236,6 +248,15 @@ class ShowProducts extends Component {
                 text: 'Image',
                 editor: {
                     type: Type.TEXTAREA
+                },
+                style: {
+                    maxHeight: '90px',
+                    maxWidth: '270px',
+                    overflow: 'hidden',
+                    display: '-webkit-box',
+                    WebkitLineClamp: '3',
+                    WebkitBoxOrient: 'vertical',
+                    border: 'none'
                 },
                 sort: false,
 

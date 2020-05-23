@@ -15,7 +15,7 @@ class AddProduct extends Component {
                 name: '',
                 description: '',
                 productCategoryList: [],
-                prescripted: '',
+                prescripted: false,
                 image: '',
                 discount: '',
                 price: '',
@@ -165,7 +165,6 @@ class AddProduct extends Component {
                                 </Form.Group>
                                 <Form.Group as={Col} md="12">
                                     <Form.Check
-                                        required
                                         label="Prescripted"
                                         value={this.state.product.prescripted}
                                         onChange={this.changeHandler}
