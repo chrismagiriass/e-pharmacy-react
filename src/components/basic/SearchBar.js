@@ -86,21 +86,21 @@ export default class SearchBar extends Component {
                             <Form.Group controlId="stock">
                                 <Form.Check type="checkbox" label="In stock"
                                     value={this.props.searchFilters.stock}
-                                    name="stock" onChange={this.props.changeHandler} />
+                                    name="stock" onChange={this.props.checkboxHandler} />
                             </Form.Group>
                         </div>
                         <div class="mb-3 col-md-12">
                             <Form.Group controlId="prescripted">
                                 <Form.Check type="checkbox" label="Prescripted"
                                     value={this.props.searchFilters.prescripted}
-                                    name="prescripted" onChange={this.props.changeHandler} />
+                                    name="prescripted" onChange={this.props.checkboxHandler} />
                             </Form.Group>
                         </div>
                         <div class="mb-3 col-md-12">
                             <Form.Group controlId="discount">
                                 <Form.Check type="checkbox" label="Offers"
                                     value={this.props.searchFilters.discount}
-                                    name="dicsount" onChange={this.props.changeHandler} />
+                                    name="discount" onChange={this.props.checkboxHandler} />
                             </Form.Group>
                         </div>
 

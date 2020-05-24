@@ -22,6 +22,9 @@ export default {
   },
   search(filters,conf = {} ) {
     return apiClient.post('products/search', filters,conf);
-  }
+  },
+  postReview(review,id) {
+    return apiClient.post(`products/review/${id}`, review);
+  },
 
 }

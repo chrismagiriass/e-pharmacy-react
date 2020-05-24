@@ -6,7 +6,7 @@ import { Link, withRouter } from 'react-router-dom';
 
 class ProductCard extends Component {
 
-    productDetails=(product)=> {
+    productDetails = (product) => {
         this.props.history.push(`/products/${product.productId}`);
     }
 
@@ -36,9 +36,9 @@ class ProductCard extends Component {
                             <span className="product-price">  {this.props.product.finalPrice}€</span>
                         </Card.Text>
 
-                        <Link >
-                            <button className="btn btn-submit align-end" onClick={() => { this.props.addToCart(this.props.product) }}  >Add to cart</button>
-                        </Link>
+
+                        <button  className={this.props.carousel?' btn btn-submit button-carousel': ' btn btn-submit buttonCard'} onClick={() => { this.props.addToCart(this.props.product) }}  >Add to cart</button>
+
 
                     </Card.Body>
                 </Card>

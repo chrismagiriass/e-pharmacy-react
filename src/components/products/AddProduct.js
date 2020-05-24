@@ -167,7 +167,8 @@ class AddProduct extends Component {
                                     <Form.Check
                                         label="Prescripted"
                                         value={this.state.product.prescripted}
-                                        onChange={this.changeHandler}
+                                        onChange={()=>this.setState({product:{...this.state.product,
+                                            prescripted:!this.state.product.prescripted }})}
                                         name="prescripted"
                                     />
 

@@ -19,8 +19,7 @@ export default class SimpleRating extends Component {
                     />
                 </Box> */}
                 <Box component="fieldset" mb={3} borderColor="transparent">
-                    <Typography component="legend">Ratings</Typography>
-                    <Rating name="read-only" value={this.props.value} readOnly />
+                    <Rating name="read-only" value={this.props.value} readOnly size={'small'} />
                 </Box>
             </div >
         );

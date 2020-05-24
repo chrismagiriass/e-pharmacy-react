@@ -51,7 +51,7 @@ class CustomerForm extends Component {
                 }
             })
         }
-        if (this.state.customer.password !== value) {
+        if ((name==='verifyPassword'|| name==='password') && this.state.customer.password !== value) {
             this.setState({
                 errors: {
                     password: 'Passwords does not much.'
@@ -213,17 +213,18 @@ class CustomerForm extends Component {
                                     <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <Form.Control
-                                    type="text"
+                                    type="email"
                                     placeholder="Email"
                                     aria-describedby="inputGroupPrepend"
                                     required
                                     isInvalid={this.state.errors.email}
                                     name="email"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                     value={this.state.customer.email}
                                     onChange={this.changeHandler}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    E-mail is required.
+                                    Invalid email
                                     {this.state.errors.email}
                                 </Form.Control.Feedback>
                             </InputGroup>
@@ -235,12 +236,13 @@ class CustomerForm extends Component {
                                     type="password"
                                     placeholder="Password"
                                     required
+                                    minLength={4}
                                     name="password"
                                     value={this.state.customer.password}
                                     onChange={this.changeHandler}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Password is required.
+                                    Password length should be more than 4 characters.
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
@@ -252,6 +254,7 @@ class CustomerForm extends Component {
                                     placeholder="Password"
                                     isInvalid={this.state.errors.password}
                                     name="verifyPassword"
+                                    minLength={4}
                                     value={this.state.customer.verifyPassword}
                                     onChange={this.changeHandler}
                                 />

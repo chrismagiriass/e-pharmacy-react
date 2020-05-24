@@ -48,12 +48,12 @@ function ProductCarousel(props) {
         <Carousel activeIndex={index} onSelect={handleSelect} slide={true} className="container" style={{'margin-top':'50px',"margin-bottom":'40px'}}>
             <Carousel.Item>
                 <div className="row">
-                    {productCarouselFirstPage.map((product, i) => <ProductCard key={product.productId} product={product} addToCart={props.addToCart} />)}
+                    {productCarouselFirstPage.map((product, i) => <ProductCard key={product.productId} product={product} addToCart={props.addToCart} carousel={true}/>)}
                 </div>
             </Carousel.Item>
             <Carousel.Item>
                 <div className="row">
-                    {productCarouselSecondPage.map((product, i) => <ProductCard key={product.productId} product={product} addToCart={props.addToCart}/>)}
+                    {productCarouselSecondPage.map((product, i) => <ProductCard key={product.productId} product={product} addToCart={props.addToCart} carousel={true}/>)}
                 </div>
             </Carousel.Item>
         </Carousel>
