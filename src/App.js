@@ -18,12 +18,13 @@ import IngredientPage from './components/ingredients/IngredientPage';
 import ShowIngredients from './components/ingredients/ShowIngredients';
 import IngredientsTable from './components/ingredients/IngredientsTable';
 import Cart from './components/cart/Cart';
-import HomePageAdmin from './components/admin/HomePage'
+import HomePageAdmin from './components/admin/HomePage';
 import HomeBar from './components/admin/HomeBar';
 import ShowOrders from './components/order/ShowOrder';
 import CheckoutForm from './components/cart/Wizard';
-import ProfilePage from './components/customers/ProfilePage'
-import ShowCategories from './components/categories/ShowCategories'
+import ProfilePage from './components/customers/ProfilePage';
+import ShowCategories from './components/categories/ShowCategories';
+import Chat from './components/chat/chat'
 
 
 class App extends Component {
@@ -168,6 +169,7 @@ class App extends Component {
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <ProductBar /> : ''}
           {router}
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <Footer /> : ''}
+          <Chat></Chat>
         </BrowserRouter>
       </>
     );
