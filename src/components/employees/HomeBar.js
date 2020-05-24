@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "./simple-sidebar.css";
-import PersonIcon from '@material-ui/icons/Person';
+import CategoryIcon from '@material-ui/icons/Category';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
@@ -20,13 +20,12 @@ class HomePageAdmin extends Component {
                 <div class="bg-light border-right" id="sidebar-wrapper">
                     <div class="sidebar-heading">Hello {user.fullName} </div>
                     <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item list-group-item-action bg-light"><PersonIcon/><i class="pe-7s-user"></i> Profile</a>
                         <a href="/orders" class="list-group-item list-group-item-action bg-light"><LocalShippingIcon/> Orders</a>
                         <a href="/customers" class="list-group-item list-group-item-action bg-light"><SupervisedUserCircleIcon/> Customers</a>
                         <a href="#" class="list-group-item list-group-item-action bg-light"><LocalHospitalIcon/> VIP Customers</a>
                         <a href="/products" class="list-group-item list-group-item-action bg-light"><ListAltIcon/> Products</a>
                         <a href="/ingredients" class="list-group-item list-group-item-action bg-light"><LocalPharmacyIcon/> Ingredients</a>
-
+                        <a href="/categories" className="list-group-item list-group-item-action bg-light"><CategoryIcon/> Categories</a>
                     </div>
                 </div>
 

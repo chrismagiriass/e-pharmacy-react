@@ -17,7 +17,7 @@ export default {
   getById( id ) {
     return apiClient.get(`ingredients/${id}`);
   },
-  deleteProduct(id) {
+  deleteIngredient(id) {
     return apiClient.delete(`ingredients/${id}`);
   }
 

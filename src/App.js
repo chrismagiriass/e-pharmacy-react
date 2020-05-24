@@ -23,6 +23,7 @@ import HomeBar from './components/admin/HomeBar';
 import ShowOrders from './components/order/ShowOrder';
 import CheckoutForm from './components/cart/Wizard';
 import ProfilePage from './components/customers/ProfilePage'
+import ShowCategories from './components/categories/ShowCategories'
 
 
 class App extends Component {
@@ -85,6 +86,7 @@ class App extends Component {
                     <Route exact path='/products' component={ProductTable} />
                     <Route exact path='/ingredients' component={IngredientsTable} />
                     <Route exact path='/customers' component={ShowCustomers} />
+                    <Route exact path='/categories' component={ShowCategories} />
                     <Route exact path='/employees' component={ShowEmployees} />
                     <Route exact path='/orders' component={ShowOrders} />
                     <Route render={() => <Redirect to="/" />} />
@@ -103,6 +105,7 @@ class App extends Component {
                   <Route exact path='/home' component={HomePageEmpl} />
                   <Route exact path='/products' component={ProductTable} />
                   <Route exact path='/ingredients' component={IngredientsTable} />
+                  <Route exact path='/categories' component={ShowCategories} />
                   <Route exact path='/customers' component={ShowCustomers} />
                   <Route exact path='/orders' component={Cart} />
                   <Route render={() => <Redirect to="/" />} />

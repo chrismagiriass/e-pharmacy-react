@@ -25,8 +25,18 @@ class ShowProducts extends Component {
             totalItems: 0,
             productCategoryList: [],
             sort: 'name',
+            order: 'ASC',
             success: '',
-            showModal: false
+            showModal: false,
+            searchFilters: {
+                productName: '',
+                categoryList: [],
+                discount: false,
+                prescripted: false,
+                minPrice: 0,
+                maxPrice: 200,
+                stock: false
+            },
         }
         this.saveProduct = this.saveProduct.bind(this);
         this.buttonFormatterSave = this.buttonFormatterSave.bind(this);
@@ -141,30 +151,30 @@ class ShowProducts extends Component {
         )
     }
 
-    getProducts = (pageNumber) => {
-        ProductService.get(
+    getProducts(pageNumber, sort, order) {
+        ProductService.search(this.state.searchFilters,
             {
                 params: {
                     page: pageNumber - 1,
-                    sort: this.state.sort,
+                    order: order,
+                    sort: sort,
                     size: this.state.itemsPerPage
                 }
             }
-        ).then(result => {
-            this.setState({
-                products: result.results,
-                totalItems: result.totalItems
-            });
-        }
-        ).catch(error =>
-            console.error("Error from product", error)
         )
+            .then(result => this.setState({
+                products: result.results,
+                totalItems: result.totalItems,
+                activePage: 1
+            })).catch(error =>
+                console.error("Error from product", error)
+            )
     }
 
     handlePageChange = (pageNumber) => {
         console.log(`active page is ${pageNumber}`);
         this.setState({ activePage: pageNumber });
-        this.getProducts(pageNumber);
+        this.getProducts(pageNumber, this.state.sort, this.state.order);
     }
 
     openAddProduct() {
@@ -174,8 +184,12 @@ class ShowProducts extends Component {
 
     closeModal() {
         this.setState({ showModal: false });
-        this.getProducts(1);
+        this.getProducts(this.state.activePage, this.state.sort, this.state.order);
 
+    }
+
+    changeSort = (field, order) => {
+        this.getProducts(1, field, order.toUpperCase());
     }
 
 
@@ -195,7 +209,10 @@ class ShowProducts extends Component {
                 dataField: 'productId',
                 text: 'Product ID',
                 isKey: true,
-                sort: false,
+                sort: true,
+                onSort: (field, order) => {
+                    this.changeSort(field, order);
+                },
                 editable: false
             }, {
                 dataField: 'name',
@@ -207,6 +224,9 @@ class ShowProducts extends Component {
                     type: Type.TEXTAREA
                 },
                 sort: true,
+                onSort: (field, order) => {
+                    this.changeSort(field, order);
+                }
             }, {
                 dataField: 'description',
                 text: 'Description',
@@ -224,15 +244,15 @@ class ShowProducts extends Component {
                 },
                 sort: false
             }, {
-            //     dataField: 'productCategoryList[0].categoryId',
-            //     text: 'Category',
-            //     editor: {
-            //         type: Type.SELECT,
-            //         options:options
-            //     },
-            //     sort: false,
-            //     editable: false
-            // }, {
+                //     dataField: 'productCategoryList[0].categoryId',
+                //     text: 'Category',
+                //     editor: {
+                //         type: Type.SELECT,
+                //         options:options
+                //     },
+                //     sort: false,
+                //     editable: false
+                // }, {
                 dataField: 'prescripted',
                 text: 'Prescripted',
                 editor: {
@@ -268,11 +288,17 @@ class ShowProducts extends Component {
                 dataField: 'stock',
                 text: 'Stock',
                 sort: true,
+                onSort: (field, order) => {
+                    this.changeSort(field, order);
+                }
 
             }, {
                 dataField: 'price',
                 text: 'Price',
                 sort: true,
+                onSort: ( field, order) => {
+                    this.changeSort(field, order);
+                }
 
             }, {
                 formatter: this.buttonFormatterSave,
@@ -320,7 +346,7 @@ class ShowProducts extends Component {
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
-                <AddProduct key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} categories={this.state.productCategoryList}/>
+                <AddProduct key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} categories={this.state.productCategoryList} />
 
             </>
         )

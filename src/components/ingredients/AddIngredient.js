@@ -136,15 +136,6 @@ class AddIngredient extends Component {
                                         />
                                     </InputGroup>
                                 </Form.Group>
-                                <Form.Group as={Col} md="12">
-                                    <Form.Check
-                                        label="Prescripted"
-                                        value={this.state.ingredient.prescripted}
-                                        onChange={this.changeHandler}
-                                        name="prescripted"
-                                    />
-
-                                </Form.Group>
                             </Form.Row>
                             <button type="submit" className="btn btn-submit float-right">Save</button>
                         </Form>

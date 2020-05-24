@@ -26,16 +26,10 @@ class ShowIngredients extends Component {
             success: '',
             showModal: false
         }
-        this.saveIngredient = this.saveIngredient.bind(this);
-        this.buttonFormatterSave = this.buttonFormatterSave.bind(this);
-        this.deleteIngredient = this.deleteIngredient.bind(this);
-        this.buttonFormatterRemove = this.buttonFormatterRemove.bind(this)
-        this.openAddIngredient = this.openAddIngredient.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-
+  
     }
 
-    buttonFormatterSave(cell, row, enumObject, rowIndex) {
+    buttonFormatterSave=(cell, row, enumObject, rowIndex) =>{
         //  console.log( row)
         return (
             <button
@@ -49,7 +43,7 @@ class ShowIngredients extends Component {
         )
     }
 
-    buttonFormatterRemove(cell, row, enumObject, rowIndex) {
+    buttonFormatterRemove=(cell, row, enumObject, rowIndex)=> {
         //  console.log( row)
         return (
             <button
@@ -63,7 +57,7 @@ class ShowIngredients extends Component {
         )
     }
 
-    saveIngredient(ingredient) {
+    saveIngredient=(ingredient) =>{
         IngredientService.post(ingredient).then(result => {
             this.setState({
                 success: 'Ingredient updated succesfully',
@@ -77,7 +71,7 @@ class ShowIngredients extends Component {
             }));
     }
 
-    deleteIngredient(ingredient) {
+    deleteIngredient=(ingredient) =>{
         IngredientService.deleteIngredient(ingredient.ingredientId).then(result => {
             this.setState({ success: 'Ingredient deleted succesfully', error: '' })
             IngredientService.get(
@@ -151,12 +145,12 @@ class ShowIngredients extends Component {
         this.getIngredients(pageNumber);
     }
 
-    openAddIngredient() {
+    openAddIngredient=() =>{
         this.setState({ showModal: true });
 
     }
 
-    closeModal() {
+    closeModal=() =>{
         this.setState({ showModal: false });
         this.getIngredients(1);
 
@@ -201,7 +195,20 @@ class ShowIngredients extends Component {
                     WebkitBoxOrient: 'vertical',
                     border: 'none'
                 }
+            },  {
+                dataField: 'discount',
+                text: 'Discount',
+                sort: true,
             }, {
+                dataField: 'stock',
+                text: 'Stock',
+                sort: true
+
+            }, {
+                dataField: 'price',
+                text: 'Price',
+                sort: true
+            },  {
                 dataField: 'image',
                 text: 'Image',
                 editor: {
@@ -217,20 +224,8 @@ class ShowIngredients extends Component {
                     border: 'none'
                 },
                 sort: false
-            }, {
-                dataField: 'discount',
-                text: 'Discount',
-                sort: true,
-            }, {
-                dataField: 'stock',
-                text: 'Stock',
-                sort: true
-
-            }, {
-                dataField: 'price',
-                text: 'Price',
-                sort: true
-            }, {
+            },
+            {
                 formatter: this.buttonFormatterSave,
                 editable: false,
                 text: ""
@@ -273,7 +268,7 @@ class ShowIngredients extends Component {
                         itemsCountPerPage={this.state.itemsPerPage}
                         totalItemsCount={this.state.totalItems}
                         pageRangeDisplayed={5}
-                        onChange={this.handlePageChange.bind(this)}
+                        onChange={this.handlePageChange}
                     />
                 </div>
                 <AddIngredient key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} />
