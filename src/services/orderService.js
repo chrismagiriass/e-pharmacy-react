@@ -5,11 +5,11 @@ let apiClient = new ApiClient();
 export default {
 
 
-  post(product) {
-    return apiClient.post('orders', product);
+  post(order) {
+    return apiClient.post('orders', order);
   },
-  update(id, product) {
-    return apiClient.post('orders/' + id + '/update', product);
+  update(id, order) {
+    return apiClient.post('orders/' + id + '/update', order);
   },
   get( conf = {} ) {
     return apiClient.get('orders',conf);
@@ -17,8 +17,7 @@ export default {
   getById( id ) {
     return apiClient.get(`orders/${id}`);
   },
-  deleteProduct(id) {
-    return apiClient.delete(`orders/${id}`);
+  getByEmail( email ) {
+    return apiClient.get(`orders/email/${email}`);
   }
-
 }

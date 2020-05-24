@@ -6,10 +6,6 @@ import { Link, withRouter } from 'react-router-dom';
 
 class ProductCard extends Component {
 
-    constructor(props) {
-        super(props);
-        }
-
     productDetails=(product)=> {
         this.props.history.push(`/products/${product.productId}`);
     }

@@ -3,7 +3,6 @@ import CartItem from './CartItem';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 
-
 class Cart extends Component {
 
     constructor(props) {
@@ -15,13 +14,15 @@ class Cart extends Component {
         this.remove.bind(this);
         this.onChangeQuantity.bind(this);
     }
+    
     componentDidMount() {
         let cartItems = localStorage.getItem("cart");
         let total = 0;
         cartItems = JSON.parse(cartItems);
 
-        cartItems.map(item => total += item.finalPrice * item.quantity);
+        
         if (cartItems) {
+            cartItems.map(item => total += item.finalPrice * item.quantity);
             this.setState({
                 cart: cartItems,
                 subtotal: total,
@@ -107,8 +108,8 @@ class Cart extends Component {
                                             <ShoppingCartIcon />Continue Shopping</a>
                                     </td>
                                     <td colSpan={1} class="text-right">
-                                        <button type="button"  class="btn btn-submit" onClick={this.props.onSubmit}>
-                                        <LocalMallIcon />Checkout </button>
+                                        <button type="button" class="btn btn-submit" onClick={this.props.onSubmit}>
+                                            <LocalMallIcon />Checkout </button>
                                     </td>
                                 </tr>
                             </tbody>

@@ -19,6 +19,9 @@ export default {
   },
   deleteProduct(id) {
     return apiClient.delete(`products/${id}`);
+  },
+  search(filters,conf = {} ) {
+    return apiClient.post('products/search', filters,conf);
   }
 
 }

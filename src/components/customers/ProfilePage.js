@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import CustomerService from '../../services/customerService';
+import OrderService from '../../services/orderService';
 import { Form, Col, InputGroup } from 'react-bootstrap';
+import DataTable from "../basic/DataTable";
+import moment from 'moment';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
 
 class ProfilePage extends Component {
@@ -8,16 +12,17 @@ class ProfilePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            validated:false,
+            validated: false,
+            orders: [],
             customer: props.customer || {
                 firstName: '',
                 role: 'CUSTOMER',
                 lastName: '',
                 email: '',
-                oldPassword:'',
-                newPassword:'',
-                afm:'',
-                amka:'',
+                oldPassword: '',
+                newPassword: '',
+                afm: '',
+                amka: '',
                 address: {
                     city: '',
                     streetName: '',
@@ -34,18 +39,18 @@ class ProfilePage extends Component {
         const user = JSON.parse(localStorage.getItem("user"));
         if (user !== null) {
             let result = await CustomerService.getByUsername(user.username);
-            let customer ={
+            let customer = {
                 firstName: result.firstName,
                 role: result.role,
                 lastName: result.lastName,
-                personId:result.personId,
+                personId: result.personId,
                 email: result.email,
-                password:result.password,
-                oldPassword:null,
-                newPassword:null,
-                afm:result.afm,
-                amka:result.amka,
-                address:result.address|| {
+                password: result.password,
+                oldPassword: null,
+                newPassword: null,
+                afm: result.afm,
+                amka: result.amka,
+                address: result.address || {
                     city: '',
                     streetName: '',
                     streetNumber: '',
@@ -53,11 +58,24 @@ class ProfilePage extends Component {
                     zipCode: ''
                 }
             }
-
+            this.getOrders(user.username);
             this.setState({
                 customer: customer
             });
         }
+    }
+
+    getOrders = (email) => {
+        OrderService.getByEmail(email).then(result => {
+            this.setState({ orders: result });
+        }
+        ).catch(error =>
+            this.setState({
+                error: error.message,
+                success: ''
+            })
+        )
+        
     }
 
     changeHandler = (event) => {
@@ -83,7 +101,7 @@ class ProfilePage extends Component {
         }
     }
 
-    handleSubmit=(event) =>{
+    handleSubmit = (event) => {
         const form = event.currentTarget;
         console.log(this.state.customer);
         if (form.checkValidity() === false) {
@@ -92,8 +110,8 @@ class ProfilePage extends Component {
             this.setState({ validated: true });
         } else {
             event.preventDefault();
-            CustomerService.post(this.state.customer).then(()=>{
-                if(this.state.customer.newPassword){
+            CustomerService.post(this.state.customer).then(() => {
+                if (this.state.customer.newPassword) {
                     localStorage.clear();
                     window.location.reload();
                 }
@@ -101,11 +119,43 @@ class ProfilePage extends Component {
         }
     }
 
+    dateFormatter =(cell, row, enumObject, rowIndex)=>{
+       
+        return  moment(new Date(row.orderDate)).format("DD-MM-YYYY HH:mm");
 
-    
+    }
+
+
 
     render() {
-   
+
+        const columns = [
+            {
+                dataField: 'orderId',
+                text: 'Order No.',
+                isKey: true,
+                sort: true
+            }, {
+                dataField: 'orderDate',
+                text: 'Order date',
+                formatter: this.dateFormatter,
+                sort: true,
+            }, {
+                dataField: 'prescriptionZipcode',
+                text: 'Presc. code',
+                sort: true
+            }, {
+                dataField: 'payment',
+                text: 'Payment',
+                sort: true
+            }, {
+                dataField: 'status',
+                formatter: '',
+                editable: false,
+                text: 'Status'
+            }
+        ]
+
         return (
             <div className="container">
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
@@ -261,6 +311,8 @@ class ProfilePage extends Component {
 
                     <button type="submit" className="btn btn-submit float-right">Update</button>
                 </Form>
+                <h1 class="mt-4">Your orders</h1>
+                <DataTable key="showOrdersTable" columns={columns} data={this.state.orders} tableKey={'orderId'} pagination={paginationFactory()}/>
             </div>
         );
     }

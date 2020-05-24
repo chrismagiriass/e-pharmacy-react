@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import StripeScriptLoader from 'react-stripe-script-loader';
 import {
     CardElement,
     injectStripe,
@@ -7,9 +8,9 @@ import {
 } from 'react-stripe-elements';
 
 class _CardForm extends Component {
-    
 
- 
+
+
 
     handleSubmit = (evt) => {
         evt.preventDefault();
@@ -46,12 +47,19 @@ const CardForm = injectStripe(_CardForm);
 
 export default class CardDemo extends Component {
     render() {
+
         return (
-            <StripeProvider apiKey="pk_RXwtgk4Z5VR82S94vtwmam6P8qMXQ">
-                <Elements>
-                    <CardForm handleResult={this.props.handleResult} handleCreditCardChange={this.props.handleCreditCardChange} errorMessage={this.props.errorMessage}/>
-                </Elements>
-            </StripeProvider>
+            <StripeScriptLoader
+                uniqueId='myUniqueId'
+                script='https://js.stripe.com/v3/'
+                loader="Loading..."
+            >
+                <StripeProvider apiKey="pk_test_FD1yldEfFG85K8v5ycwOsclV00rFw7Y5j4">
+                    <Elements>
+                        <CardForm handleResult={this.props.handleResult} handleCreditCardChange={this.props.handleCreditCardChange} errorMessage={this.props.errorMessage} />
+                    </Elements>
+                </StripeProvider>
+            </StripeScriptLoader>
         );
     }
 }

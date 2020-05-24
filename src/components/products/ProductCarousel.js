@@ -4,7 +4,7 @@ import ProductCard from './ProductCard';
 import ProductService from '../../services/productService';
 
 
-function ProductCarousel() {
+function ProductCarousel(props) {
     const [index, setIndex] = useState(0);
 
     const [productCarouselFirstPage, setProductCarouselFirstPage] = useState([]);
@@ -42,21 +42,18 @@ function ProductCarousel() {
     }, []
     );
 
-
-
-
     return (
 
 
-        <Carousel activeIndex={index} onSelect={handleSelect} slide={true} className="container">
+        <Carousel activeIndex={index} onSelect={handleSelect} slide={true} className="container" style={{'margin-top':'50px',"margin-bottom":'40px'}}>
             <Carousel.Item>
                 <div className="row">
-                    {productCarouselFirstPage.map((product, i) => <ProductCard key={product.productId} product={product} />)}
+                    {productCarouselFirstPage.map((product, i) => <ProductCard key={product.productId} product={product} addToCart={props.addToCart} />)}
                 </div>
             </Carousel.Item>
             <Carousel.Item>
                 <div className="row">
-                    {productCarouselSecondPage.map((product, i) => <ProductCard key={product.productId} product={product} />)}
+                    {productCarouselSecondPage.map((product, i) => <ProductCard key={product.productId} product={product} addToCart={props.addToCart}/>)}
                 </div>
             </Carousel.Item>
         </Carousel>

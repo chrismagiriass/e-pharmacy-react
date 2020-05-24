@@ -85,12 +85,14 @@ class AppBar extends Component {
                             {acountSettings}
                         </NavDropdown>
                         {(this.props.userRole !== 'ADMIN' && this.props.userRole !== 'EMPLOYEE') ?
-                            <NavDropdown drop='left' title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon /> <sup className="cirlce">{this.props.cartItems.length}</sup> </div>} id="basic-nav-dropdown">
-                                {this.props.cartItems.map((item) => {
-                                    return <NavDropdown.Item >{item.name}</NavDropdown.Item>
-                                })}
+                            <NavDropdown drop='left' title={<div style={{ display: "inline-block" }}><ShoppingCartRoundedIcon />
+                                <sup className="cirlce">{this.props.cartItems.length}</sup> </div>} id="basic-nav-dropdown">
+                                {this.props.cartItems.length ? this.props.cartItems.map((item) => {
+                                    return <NavDropdown.Item disabled >{item.name}</NavDropdown.Item>
+                                }) : ''}
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item href="/order"><button className="btn btn-submit">Checkout</button></NavDropdown.Item>
+                                {this.props.cartItems.length ? <NavDropdown.Item href="/order"><button className="btn btn-submit">Checkout</button></NavDropdown.Item> :
+                                    <NavDropdown.Item disabled ><button className="btn btn-submit">Checkout</button></NavDropdown.Item>}
                             </NavDropdown> : ''}
                     </Navbar.Collapse>
                 </Navbar>

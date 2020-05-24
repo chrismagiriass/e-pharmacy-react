@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Col, InputGroup } from 'react-bootstrap';
 import CardForm from '../payment/CardForm';
+import AlertMessage from '../basic/AlertMessage';
 
 class CustomerForm extends Component {
 
@@ -19,11 +20,38 @@ class CustomerForm extends Component {
 
             paymentForm = <Form.Row className={this.props.payment === 'Credit or Debit card' ? '' : 'hidden-row'}>
                 <Form.Group as={Col} md="10" controlId="validationCustfomPassword">
-                    <CardForm handleCreditCardChange={this.props.handleCreditCardChange} errorMessage={this.props.errorMessage}/>
+                    <CardForm handleCreditCardChange={this.props.handleCreditCardChange} errorMessage={this.props.errorMessage} />
                 </Form.Group>
             </Form.Row>
 
         }
+
+        let prescripted = this.props.prescripted ? 
+        <>
+        <AlertMessage message={'Your order has medicines thar requires doctor prescription please fill in the following fields'} variant={'light'} show={true}/> 
+        <Form.Group as={Col} md="6">
+            <Form.Label>Prescription number</Form.Label>
+            <Form.Control
+                type="text"
+                placeholder="Prescription number"
+                required={true}
+                name="prescriptionZipcode"
+                value={this.props.order.prescriptionZipcode}
+                onChange={this.props.changePersciption}
+            />
+        </Form.Group>
+        <Form.Group as={Col} md="6">
+            <Form.Label>AMKA</Form.Label>
+            <Form.Control
+                type="text"
+                placeholder="AMKA"
+                required={true}
+                name="amka"
+                value={this.props.customer.amka}
+                onChange={this.props.changeHandler}
+            />
+        </Form.Group>
+        </> : '';
 
         return (
             <div className="container cart-container card-container" >
@@ -115,6 +143,8 @@ class CustomerForm extends Component {
                                         value={this.props.customer.address.zipCode}
                                         onChange={this.props.changeHandler} />
                                 </Form.Group>
+                            
+                                {prescripted}
                             </Form.Row>
 
                         </div>
@@ -145,12 +175,12 @@ class CustomerForm extends Component {
 
 
                         </div>
-                   
-                            <div className="col-md-4 offset-md-8" style={{ "margin-top": "60px" }}>
-                                <button type="button" class="btn btn-outline-secondary btn-previous" onClick={this.props.previous}> Previous  </button>
-                                <button type="submit" className="btn btn-submit" >Next</button>
-                            </div>
-                        
+
+                        <div className="col-md-4 offset-md-8" style={{ "margin-top": "60px" }}>
+                            <button type="button" class="btn btn-outline-secondary btn-previous" onClick={this.props.previous}> Previous  </button>
+                            <button type="submit" className="btn btn-submit" >Next</button>
+                        </div>
+
                     </div>
                 </Form>
 

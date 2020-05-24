@@ -10,7 +10,7 @@ class HomePage extends Component {
         return (
             <>
                 <ControlledCarousel />
-                <ProductCarousel />
+                <ProductCarousel addToCart={this.props.addToCart}/>
                 <ReviewContainer />
             </>
         );

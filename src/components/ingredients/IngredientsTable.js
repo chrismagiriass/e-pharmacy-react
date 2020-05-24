@@ -1,38 +1,36 @@
 import React, { Component } from "react";
-import CategoryService from '../../services/categoryService';
-import ProductService from '../../services/productService';
+import IngredientService from '../../services/ingredientService';
 import DataTable from "../basic/DataTable";
 import cellEditFactory from 'react-bootstrap-table2-editor';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import Pagination from "react-js-pagination";
-import AddProduct from './AddProduct';
+import AddIngredient from './AddIngredient';
 import { Type } from 'react-bootstrap-table2-editor';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 
 
 
-class ShowProducts extends Component {
+class ShowIngredients extends Component {
 
     constructor(props) {
         super(props)
         // super(props)
         this.state = {
-            products: [],
+            ingredients: [],
             error: '',
             activePage: 1,
             itemsPerPage: 12,
             totalItems: 0,
-            productCategoryList: [],
             sort: 'name',
             success: '',
             showModal: false
         }
-        this.saveProduct = this.saveProduct.bind(this);
+        this.saveIngredient = this.saveIngredient.bind(this);
         this.buttonFormatterSave = this.buttonFormatterSave.bind(this);
-        this.deleteProduct = this.deleteProduct.bind(this);
+        this.deleteIngredient = this.deleteIngredient.bind(this);
         this.buttonFormatterRemove = this.buttonFormatterRemove.bind(this)
-        this.openAddProduct = this.openAddProduct.bind(this);
+        this.openAddIngredient = this.openAddIngredient.bind(this);
         this.closeModal = this.closeModal.bind(this);
 
     }
@@ -44,7 +42,7 @@ class ShowProducts extends Component {
                 className="btn btn-sm btn-outline-success"
                 type="button"
                 onClick={() =>
-                    this.saveProduct(row)}
+                    this.saveIngredient(row)}
             >
                 <SaveIcon />
             </button>
@@ -58,17 +56,17 @@ class ShowProducts extends Component {
                 className="btn btn-sm btn-outline-danger"
                 type="button"
                 onClick={() =>
-                    this.deleteProduct(row)}
+                    this.deleteIngredient(row)}
             >
                 <DeleteIcon />
             </button>
         )
     }
 
-    saveProduct(product) {
-        ProductService.post(product).then(result => {
+    saveIngredient(ingredient) {
+        IngredientService.post(ingredient).then(result => {
             this.setState({
-                success: 'Product updated succesfully',
+                success: 'Ingredient updated succesfully',
                 error: ''
             })
         }
@@ -79,10 +77,10 @@ class ShowProducts extends Component {
             }));
     }
 
-    deleteProduct(product) {
-        ProductService.deleteProduct(product.productId).then(result => {
-            this.setState({ success: 'Product deleted succesfully', error: '' })
-            ProductService.get(
+    deleteIngredient(ingredient) {
+        IngredientService.deleteIngredient(ingredient.ingredientId).then(result => {
+            this.setState({ success: 'Ingredient deleted succesfully', error: '' })
+            IngredientService.get(
                 {
                     params: {
                         page: this.state.activePage - 1,
@@ -92,7 +90,7 @@ class ShowProducts extends Component {
                 }
             ).then(result => {
                 this.setState({
-                    products: result.results,
+                    ingredients: result.results,
                     totalItems: result.totalItems
                 });
             }
@@ -109,16 +107,15 @@ class ShowProducts extends Component {
     }
 
     componentDidMount() {
-        ProductService.get({
+        IngredientService.get({
             params: {
                 page: this.state.activePage - 1,
                 sort: this.state.sort,
                 size: this.state.itemsPerPage
             }
         }).then(result => {
-            this.getCategories();
             this.setState({
-                products: result.results,
+                ingredients: result.results,
                 totalItems: result.totalItems
             });
         }
@@ -127,22 +124,9 @@ class ShowProducts extends Component {
         )
     }
 
-    getCategories = () => {
-        CategoryService.get().then(result => {
-            this.setState({
-                productCategoryList: result
-            });
-        }
-        ).catch(error =>
-            this.setState({
-                error: error.message,
-                success: ''
-            })
-        )
-    }
 
-    getProducts = (pageNumber) => {
-        ProductService.get(
+    getIngredients = (pageNumber) => {
+        IngredientService.get(
             {
                 params: {
                     page: pageNumber - 1,
@@ -152,37 +136,34 @@ class ShowProducts extends Component {
             }
         ).then(result => {
             this.setState({
-                products: result.results,
+                ingredients: result.results,
                 totalItems: result.totalItems
             });
         }
         ).catch(error =>
-            console.error("Error from product", error)
+            console.error("Error from ingredient", error)
         )
     }
 
     handlePageChange = (pageNumber) => {
         console.log(`active page is ${pageNumber}`);
         this.setState({ activePage: pageNumber });
-        this.getProducts(pageNumber);
+        this.getIngredients(pageNumber);
     }
 
-    openAddProduct() {
+    openAddIngredient() {
         this.setState({ showModal: true });
 
     }
 
     closeModal() {
         this.setState({ showModal: false });
-        this.getProducts(1);
+        this.getIngredients(1);
 
     }
 
 
     render() {
-        // const options = this.state.productCategoryList.map(function(row) {
-        //     return { value : row.categoryId, label : row.nameCategory }
-        //  })
 
         const cellEdit = cellEditFactory({
             mode: 'click',
@@ -192,8 +173,8 @@ class ShowProducts extends Component {
 
         const columns = [
             {
-                dataField: 'productId',
-                text: 'Product ID',
+                dataField: 'ingredientId',
+                text: 'Ingredient ID',
                 isKey: true,
                 sort: false,
                 editable: false
@@ -206,10 +187,11 @@ class ShowProducts extends Component {
                 editor: {
                     type: Type.TEXTAREA
                 },
-                sort: true,
+                sort: true
             }, {
                 dataField: 'description',
                 text: 'Description',
+                sort: true,
                 style: {
                     maxHeight: '90px',
                     maxWidth: '270px',
@@ -218,31 +200,8 @@ class ShowProducts extends Component {
                     WebkitLineClamp: '3',
                     WebkitBoxOrient: 'vertical',
                     border: 'none'
-                },
-                editor: {
-                    type: Type.TEXTAREA
-                },
-                sort: false
+                }
             }, {
-            //     dataField: 'productCategoryList[0].categoryId',
-            //     text: 'Category',
-            //     editor: {
-            //         type: Type.SELECT,
-            //         options:options
-            //     },
-            //     sort: false,
-            //     editable: false
-            // }, {
-                dataField: 'prescripted',
-                text: 'Prescripted',
-                editor: {
-                    type: Type.CHECKBOX,
-                    value: 'true:false'
-                },
-                sort: false,
-
-            }
-            , {
                 dataField: 'image',
                 text: 'Image',
                 editor: {
@@ -257,23 +216,20 @@ class ShowProducts extends Component {
                     WebkitBoxOrient: 'vertical',
                     border: 'none'
                 },
-                sort: false,
-
+                sort: false
             }, {
                 dataField: 'discount',
                 text: 'Discount',
                 sort: true,
-
             }, {
                 dataField: 'stock',
                 text: 'Stock',
-                sort: true,
+                sort: true
 
             }, {
                 dataField: 'price',
                 text: 'Price',
-                sort: true,
-
+                sort: true
             }, {
                 formatter: this.buttonFormatterSave,
                 editable: false,
@@ -300,15 +256,15 @@ class ShowProducts extends Component {
 
         return (
             <>
-                <h1 class="mt-4">Products</h1>
+                <h1 class="mt-4">Ingredients</h1>
                 {message}
                 <button className="btn btn-sm btn-outline-success"
-                    title="Add product"
+                    title="Add ingredient"
                     type="button"
                     onClick={() =>
-                        this.openAddProduct()}
+                        this.openAddIngredient()}
                 ><PostAddIcon /></button>
-                <DataTable key="showProductsTable" columns={columns} data={this.state.products} cellEdit={cellEdit} tableKey={'productId'} />
+                <DataTable key="showIngredientsTable" columns={columns} data={this.state.ingredients} cellEdit={cellEdit} tableKey={'ingredientId'} />
                 <div className="row d-flex justify-content-center">
                     <Pagination
                         activePage={this.state.activePage}
@@ -320,11 +276,11 @@ class ShowProducts extends Component {
                         onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
-                <AddProduct key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} categories={this.state.productCategoryList}/>
+                <AddIngredient key={"registerModal"} showModal={this.state.showModal} onHide={this.closeModal} title={this.state.modalTitle} />
 
             </>
         )
 
     }
 }
-export default ShowProducts;
+export default ShowIngredients;

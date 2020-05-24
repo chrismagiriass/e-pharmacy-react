@@ -1,40 +1,55 @@
 import React, { Component } from 'react';
 import Cart from './Cart';
-import CustomerService from '../../services/customerService'
+import CustomerService from '../../services/customerService';
+import OrderService from '../../services/orderService'
 import CustomerInfo from './CustomerInfo';
+import AlertMessage from '../basic/AlertMessage';
+import { withRouter } from "react-router-dom";
+
 
 class CheckoutForm extends Component {
     constructor() {
         super();
         this.state = {
             step: 1,
+            showLoginMessage: false,
             order: {
-                productListDTO: [],
-                addressInfo: '',
+                productDTOList: [],
+                addressInfoDto: {},
                 customerId: '',
-                payment: 'Pay on delivery'
+                payment: 'Pay on delivery',
+                orderDate: '',
+                status: 'PENDING',
+                prescriptionZipcode: null
             },
             addressInfo: {},
-            creaditCardMessage: ''
+            creaditCardMessage: '',
+            errorMessage: '',
+            prescripted:false,
         };
 
     }
 
-
-
-
-
-
-
     async componentDidMount() {
-   
-        const cart = JSON.parse(localStorage.getItem("cart"));
+
+        let cart = JSON.parse(localStorage.getItem("cart"));
+        if (cart === null) {
+            cart = [];
+        }
+        let presc=false;
+        
+        cart.map(item => {
+                    if (item.prescripted){
+                        presc=true;
+                    }
+                });
 
         this.setState({
             order: {
                 ...this.state.order,
-                productListDTO: cart
-            }
+                productDTOList: cart,    
+            },
+            prescripted:presc
         });
         const user = JSON.parse(localStorage.getItem("user"));
         if (user !== null) {
@@ -42,6 +57,7 @@ class CheckoutForm extends Component {
             let customer = {
                 firstName: result.firstName,
                 lastName: result.lastName,
+                amka: result.amka,
                 address: result.address || {
                     city: '',
                     streetName: '',
@@ -55,38 +71,39 @@ class CheckoutForm extends Component {
                 order: {
                     ...this.state.order,
                     customerId: result.personId,
-                    productListDTO: cart
+                    productDTOList: cart
                 },
                 addressInfo: customer
             });
         }
     }
 
-
     onChangeQuantity = () => {
         let cartItems = localStorage.getItem("cart");
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
-            // let total = 0;
             if (cartItems) {
                 this.setState({
                     order: {
                         ...this.state.order,
-                        productListDTO: cartItems
+                        productDTOList: cartItems
                     },
                 })
             }
         }
     }
 
-
     removeCartItem = (id) => {
         let cartItems = localStorage.getItem("cart");
+        let presc=false;
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
             cartItems.map((item, index) => {
                 if (item.productId === id) {
                     cartItems.splice(index, 1);
+                }
+                if (item.productId !== id&& item.prescripted){
+                    presc=true;
                 }
             })
             localStorage.setItem("cart", JSON.stringify(cartItems))
@@ -94,28 +111,31 @@ class CheckoutForm extends Component {
             this.setState({
                 order: {
                     ...this.state.order,
-                    productListDTO: cartItems
+                    productDTOList: cartItems
                 },
+                prescripted:presc
             })
         } else {
             this.setState({
                 order: {
                     ...this.state.order,
-                    productListDTO: []
+                    productDTOList: []
                 },
             })
         }
     }
 
-
-
-
     goToNext = (event) => {
 
         const { step } = this.state;
         if (step === 1 && !this.state.order.customerId) {
-            return;
             // this.props.openLogin();
+            this.setState({
+                showLoginMessage: true,
+            })
+            window.scrollTo(0, 0);
+            return;
+
         }
         if (step === 2) {
             const form = event.currentTarget;
@@ -125,13 +145,13 @@ class CheckoutForm extends Component {
                 this.setState({ validated: true });
                 return;
 
+            } else {
+                event.preventDefault();
+                this.submitOrder();
             }
         }
-        if (step !== 3) {
+        if (step !== 2) {
             this.setState({ step: step + 1 });
-        } else {
-            alert("Submitting");
-            this.submitOrder();
         }
     }
 
@@ -143,8 +163,17 @@ class CheckoutForm extends Component {
     }
 
     submitOrder = () => {
-        this.state.order.addressInfo = JSON.stringify(this.state.addressInfo);
+        let created=false;
+        this.state.order.addressInfoDto = this.state.addressInfo.address;
+        this.state.order.addressInfoDto.fullName = (this.state.addressInfo.firstName + ' ' + this.state.addressInfo.lastName+' AMKA '+this.state.addressInfo.amka);
+        this.state.order.orderDate = new Date();
         console.log(this.state.order);
+        OrderService.post(this.state.order)
+            .then(result => this.props.history.push('/profile'))
+            .catch(err => { this.setState({ errorMessage: 'Something went wrong' }) }
+            )
+        
+            
     }
 
     paymentHandler = (event) => {
@@ -166,9 +195,20 @@ class CheckoutForm extends Component {
                 creaditCardMessage: ''
             })
         }
+    }
 
 
 
+    changePersciption=(event)=>{
+        const name = event.target.name;
+        const value = event.target.value;
+
+            this.setState({
+                order: {
+                    ...this.state.order,
+                    [name]: value,
+                }
+            })
     }
 
 
@@ -185,7 +225,8 @@ class CheckoutForm extends Component {
                     }
                 }
             })
-        } else {
+        }
+        else {
             this.setState({
                 addressInfo: {
                     ...this.state.addressInfo,
@@ -209,23 +250,26 @@ class CheckoutForm extends Component {
         switch (this.state.step) {
             case 1:
                 return (
+                    <>
 
-                    <Cart cartItems={this.state.order.productListDTO} onChangeQuantity={this.onChangeQuantity} removeCartItem={this.removeCartItem} onSubmit={this.goToNext} previous={this.goToPrevious} />
+                        {this.state.showLoginMessage ? <AlertMessage show={true} message={'Please login to continue!'} key={'cart-error'} variant={'danger'} /> : ''}
 
+                        <Cart cartItems={this.state.order.productDTOList} onChangeQuantity={this.onChangeQuantity} removeCartItem={this.removeCartItem} onSubmit={this.goToNext} previous={this.goToPrevious} />
+                    </>
                 );
             case 2:
                 return (
-                    <CustomerInfo customer={this.state.addressInfo} changeHandler={this.changeHandler} onSubmit={this.goToNext} previous={this.goToPrevious} payment={this.state.order.payment} onPaymentChange={this.paymentHandler} validated={this.state.validated} handleCreditCardChange={this.handleCreditCardChange} errorMessage={this.state.creaditCardMessage} />
+                    <>
+                        {this.state.errorMessage ? <AlertMessage show={true} message={this.state.errorMessage} key={'cart-error'} variant={'danger'} /> : ''}
 
-                );
-            case 3:
-                return (
-                    <></>
-                    // <Payment previous={this.goToPrevious} />
-
+                        <CustomerInfo customer={this.state.addressInfo} changeHandler={this.changeHandler} onSubmit={this.goToNext} previous={this.goToPrevious}
+                         payment={this.state.order.payment} onPaymentChange={this.paymentHandler} validated={this.state.validated} 
+                         handleCreditCardChange={this.handleCreditCardChange} errorMessage={this.state.creaditCardMessage} 
+                         prescripted ={this.state.prescripted}  order={this.state.order} changePersciption={this.changePersciption}/>
+                    </>
                 );
         }
     }
 }
 
-export default CheckoutForm;
+export default withRouter(CheckoutForm);

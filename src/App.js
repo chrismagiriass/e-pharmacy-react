@@ -16,6 +16,7 @@ import ProductPage from './components/products/ProductPage';
 import ProductTable from './components/products/ProductTable';
 import IngredientPage from './components/ingredients/IngredientPage';
 import ShowIngredients from './components/ingredients/ShowIngredients';
+import IngredientsTable from './components/ingredients/IngredientsTable';
 import Cart from './components/cart/Cart';
 import HomePageAdmin from './components/admin/HomePage'
 import HomeBar from './components/admin/HomeBar';
@@ -41,10 +42,10 @@ class App extends Component {
   componentDidMount() {
     let cartItems = localStorage.getItem("cart");
     if (cartItems) {
-        this.setState({ cart: JSON.parse(cartItems) })
+      this.setState({ cart: JSON.parse(cartItems) })
     }
 
-}
+  }
 
   addToCart = (product) => {
     let cartItems = [];
@@ -82,7 +83,7 @@ class App extends Component {
                     <Route exact path='/' component={HomePageAdmin} />
                     <Route exact path='/home' component={HomePageAdmin} />
                     <Route exact path='/products' component={ProductTable} />
-                    <Route exact path='/ingredients' component={ShowIngredients} />
+                    <Route exact path='/ingredients' component={IngredientsTable} />
                     <Route exact path='/customers' component={ShowCustomers} />
                     <Route exact path='/employees' component={ShowEmployees} />
                     <Route exact path='/orders' component={ShowOrders} />
@@ -101,7 +102,7 @@ class App extends Component {
                   <Route exact path='/' component={HomePageEmpl} />
                   <Route exact path='/home' component={HomePageEmpl} />
                   <Route exact path='/products' component={ProductTable} />
-                  <Route exact path='/ingredients' component={ShowIngredients} />
+                  <Route exact path='/ingredients' component={IngredientsTable} />
                   <Route exact path='/customers' component={ShowCustomers} />
                   <Route exact path='/orders' component={Cart} />
                   <Route render={() => <Redirect to="/" />} />
@@ -112,8 +113,8 @@ class App extends Component {
           break;
         case 'CUSTOMER':
           router = (<Switch>
-            <Route exact path='/' component={HomePage} />
-            <Route exact path='/home' component={HomePage} />
+        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
+        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
             <Route exact path='/profile' component={ProfilePage} />
             <Route exact path='/products' render={() => <ShowProducts addToCart={this.addToCart} />} />
             <Route exact path="/products/:productId" render={props => <ProductPage {...props} addToCart={this.addToCart} />} />
@@ -136,8 +137,8 @@ class App extends Component {
           break;
         default:
           router = (<Switch>
-            <Route exact path='/' component={HomePage} />
-            <Route exact path='/home' component={HomePage} />
+        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
+            <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
             <Route exact path='/products' render={() => <ShowProducts addToCart={this.addToCart} />} />
             <Route exact path="/products/:productId" render={props => <ProductPage {...props} addToCart={this.addToCart} />} />
             <Route exact path='/order' component={() => <CheckoutForm openLogin={this.openLogin} />} />
@@ -148,8 +149,8 @@ class App extends Component {
 
     } else {
       router = (<Switch>
-        <Route exact path='/' component={HomePage} />
-        <Route exact path='/home' component={HomePage} />
+        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
+        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
         <Route exact path='/products' render={() => <ShowProducts addToCart={this.addToCart} />} />
         <Route exact path="/products/:productId" render={props => <ProductPage {...props} addToCart={this.addToCart} />} />
         <Route exact path='/order' component={() => <CheckoutForm openLogin={this.openLogin} />} />

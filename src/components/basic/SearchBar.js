@@ -1,18 +1,63 @@
 import { Nav } from 'react-bootstrap';
 import React, { Component } from 'react';
 import MultiSelect from "react-multi-select-component";
+import CategoryService from "../../services/categoryService";
+import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
+import RangeSlider from 'react-bootstrap-range-slider';
+import { Form } from 'react-bootstrap';
 
 
 
 export default class SearchBar extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            categories: [],
+            selectedCategories: []
+        }
 
+    }
+
+
+    changeCategory = (value) => {
+        this.setState({
+            selectedCategories: value
+        })
+
+    }
+
+
+
+    componentDidMount() {
+        this.getCategories()
+    }
+
+
+    search=()=>{
+       let categoryIds = this.state.selectedCategories?this.state.selectedCategories.map(function (row) {
+        return row.value  }):[];
+        this.props.searchProducts(categoryIds)
+    }
+
+    getCategories = () => {
+        CategoryService.get().then(result => {
+            this.setState({
+                categories: result
+            });
+        }
+        ).catch(error =>
+            this.setState({
+                error: error.message,
+                success: ''
+            })
+        )
+    }
     render() {
-        const options = [
-            { label: "Grapes 🍇", value: "grapes" },
-            { label: "Mango 🥭", value: "mango" },
-            { label: "Strawberry 🍓", value: "strawberry", disabled: true },
-        ];
+
+        const options = this.state.categories.map(function (row) {
+            return { value: row.categoryId, label: row.nameCategory }
+        })
         return (
             <>
 
@@ -21,37 +66,67 @@ export default class SearchBar extends Component {
                 <div class="card" id="filters">
                     <div class="card-header">Filters</div>
                     <div class="card-body">
-                        <div class="col-md-12">
-                            <input class="custom-range" type="range" id="price" min="50" max="3000" value="3000" />
-                            <label for="price">Price: <span id="selected_price">3000</span></label>
+                        <div class="mb-3 col-md-12">
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Control type="text" placeholder="Product name" name="productName"
+                                    value={this.props.searchFilters.productName}
+                                    onChange={this.props.changeHandler} />
+                            </Form.Group>
                         </div>
-                        <div class="mb-12 col-md-12">
+                        <div class="mb-3 col-md-12">
                             <MultiSelect
                                 options={options}
-                                // value={selected}
-                                // onChange={setSelected}
+                                value={this.state.selectedCategories}
+                                onChange={this.changeCategory}
                                 labelledBy={"Select"}
                             />
                         </div>
+                        <hr></hr>
                         <div class="mb-3 col-md-12">
-                            <select id="hotelStars" class="browser-default custom-select">
-                                <option value="" selected>Select property type </option>
-                                <option value="1">One star</option>
-                                <option value="2">Two stars</option>
-                                <option value="3">Three stars</option>
-                                <option value="4">Four stars</option>
-                                <option value="5">Five stars</option>
-                            </select>
+                            <Form.Group controlId="stock">
+                                <Form.Check type="checkbox" label="In stock"
+                                    value={this.props.searchFilters.stock}
+                                    name="stock" onChange={this.props.changeHandler} />
+                            </Form.Group>
                         </div>
                         <div class="mb-3 col-md-12">
-                            <select id="customerRating" class="browser-default custom-select">
-                                <option value="" selected>Select by customer rating</option>
-                                <option value="3">1 to 3</option>
-                                <option value="5">3 to 5</option>
-                                <option value="7">5 to 7</option>
-                                <option value="10">7 to 10</option>
-                            </select>
+                            <Form.Group controlId="prescripted">
+                                <Form.Check type="checkbox" label="Prescripted"
+                                    value={this.props.searchFilters.prescripted}
+                                    name="prescripted" onChange={this.props.changeHandler} />
+                            </Form.Group>
                         </div>
+                        <div class="mb-3 col-md-12">
+                            <Form.Group controlId="discount">
+                                <Form.Check type="checkbox" label="Offers"
+                                    value={this.props.searchFilters.discount}
+                                    name="dicsount" onChange={this.props.changeHandler} />
+                            </Form.Group>
+                        </div>
+
+                        <hr></hr>
+
+                        <div class="col-md-12">
+                            <label>Price</label>
+                            <RangeSlider
+                                name="maxPrice"
+                                value={this.props.searchFilters.maxPrice}
+                                tooltip={"on"}
+                                size={'lg'}
+                                min={0}
+                                max={200}
+                                inputProps={{ name: 'maxPrice' }}
+                                tooltipPlacement={"bottom"}
+                                onChange={this.props.changeHandler}
+                            />
+                        </div>
+
+
+                        <div class="col-md-12" style={{ 'margin-top': '30px' }}>
+                            <button className="btn  btn-outline-primary " onClick={this.search}>Search</button>
+
+                        </div>
+
 
 
                     </div>

@@ -8,6 +8,8 @@ import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import moment from 'moment';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+
 
 
 class ShowOrders extends Component {
@@ -23,9 +25,9 @@ class ShowOrders extends Component {
 
     }
 
-    dateFormatter =(cell, row, enumObject, rowIndex)=>{
-       
-        return  moment(new Date(row.orderDate)).format("DD-MM-YYYY HH:mm");
+    dateFormatter = (cell, row, enumObject, rowIndex) => {
+
+        return moment(new Date(row.orderDate)).format("DD-MM-YYYY HH:mm");
 
     }
 
@@ -61,8 +63,8 @@ class ShowOrders extends Component {
             type="button" title="Delivered"
             onClick={() =>
                 this.changeStatus(row, 'DELIVERED')}>
-            <DoneAllIcon/>
-         </button>
+            <DoneAllIcon />
+        </button>
 
         switch (row.status) {
             case 'PENDING':
@@ -84,10 +86,6 @@ class ShowOrders extends Component {
         }
 
     }
-
-
-
-
 
     customerInfo = (cell, row, enumObject, rowIndex) => {
 
@@ -115,9 +113,12 @@ class ShowOrders extends Component {
     changeStatus = (order, status) => {
         order.status = status;
         OrderService.post(order).then(result => {
-            this.setState({ success: 'Order status updated.', error: '' })
+            // this.setState({ success: 'Order status updated.', error: '' })
             OrderService.get().then(result => {
-                this.setState({ orders: result });
+                this.setState({
+                    orders: result,
+                    success: 'Order status updated.', error: ''
+                });
             }
             ).catch(error =>
                 this.setState({
@@ -150,7 +151,7 @@ class ShowOrders extends Component {
             }, {
                 dataField: 'orderDate',
                 text: 'Order date',
-                formatter:this.dateFormatter,
+                formatter: this.dateFormatter,
                 sort: true,
             }, {
                 dataField: 'prescriptionZipcode',
@@ -173,7 +174,7 @@ class ShowOrders extends Component {
             }, {
                 formatter: this.buttonFormatter,
                 editable: false,
-                text: ""
+                text: "Status"
             }
         ]
         let message = '';
@@ -193,7 +194,7 @@ class ShowOrders extends Component {
             <div id="page-content-wrapper">
                 <h1 class="mt-4">Orders</h1>
                 {message}
-                <DataTable key="showOrdersTable" columns={columns} data={this.state.orders} tableKey={'orderId'} />
+                <DataTable key="showOrdersTable" columns={columns} data={this.state.orders} tableKey={'orderId'} pagination={paginationFactory()} />
             </div>
         )
 
