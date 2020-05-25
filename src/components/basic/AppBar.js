@@ -5,7 +5,7 @@ import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 import SearchIcon from '@material-ui/icons/Search';
 import MyModal from './MyModal';
 import { withRouter } from "react-router-dom";
-
+import HeadsetMicIcon from '@material-ui/icons/HeadsetMic';
 
 
 class AppBar extends Component {
@@ -50,14 +50,14 @@ class AppBar extends Component {
             acountSettings = <> <NavDropdown.Item onClick={this.openRegisterModal}>Register</NavDropdown.Item>
                 <NavDropdown.Item onClick={this.openLoginModal}>Login</NavDropdown.Item></>;
         } else {
-            acountSettings = <> <NavDropdown.Item href='/profile'>Profile</NavDropdown.Item>
+            acountSettings = <> <NavDropdown.Item onClick={() => this.props.history.push("/profile")}>Profile</NavDropdown.Item>
                 <NavDropdown.Item onClick={this.logout}>Logout</NavDropdown.Item></>;
         }
 
         return (
             <>
                 <Navbar expand="xl" sticky={true} className="appbar">
-                    <Navbar.Brand href="/home"><img
+                    <Navbar.Brand  href="#" onClick={() => this.props.history.push("/home")}><img
                         src="/favicon.ico"
                         width="60"
                         height="60"
@@ -68,17 +68,7 @@ class AppBar extends Component {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mx-auto">
                             {(this.props.userRole !== 'ADMIN' && this.props.userRole !== 'EMPLOYEE') ?
-                                <Form >
-                                    <InputGroup className="mr-md-5 mr-sm-2 mr-xl-5">
-                                        <Form.Control
-                                            className="py-2 border-right-0 border"
-                                            type="text"
-                                            placeholder="Search" />
-                                        <span className="input-group-append">
-                                            <button className="btn btn-outline-secondary border-left-0 border"><SearchIcon /></button>
-                                        </span>
-                                    </InputGroup>
-                                </Form>
+                                <h5 style={{'opacity':'0.8'}}><HeadsetMicIcon /> Customer support: + 30 210 1234567</h5>
                                 : ''}
                         </Nav>
                         <NavDropdown title={<div style={{ display: "inline-block" }}><AccountCircle /> </div>} id="basic-nav-dropdown">
@@ -91,7 +81,7 @@ class AppBar extends Component {
                                     return <NavDropdown.Item disabled >{item.name}</NavDropdown.Item>
                                 }) : ''}
                                 <NavDropdown.Divider />
-                                {this.props.cartItems.length ? <NavDropdown.Item href="/order"><button className="btn btn-submit">Checkout</button></NavDropdown.Item> :
+                                {this.props.cartItems.length ? <NavDropdown.Item onClick={() => this.props.history.push("/order")}><button className="btn btn-submit">Checkout</button></NavDropdown.Item> :
                                     <NavDropdown.Item disabled ><button className="btn btn-submit">Checkout</button></NavDropdown.Item>}
                             </NavDropdown> : ''}
                     </Navbar.Collapse>

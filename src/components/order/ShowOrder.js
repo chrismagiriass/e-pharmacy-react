@@ -16,7 +16,6 @@ class ShowOrders extends Component {
 
     constructor(props) {
         super(props)
-        // super(props)
         this.state = {
             orders: [],
             error: '',
@@ -110,14 +109,13 @@ class ShowOrders extends Component {
 
 
 
-    changeStatus = (order, status) => {
+     changeStatus = (order, status) => {
         order.status = status;
         OrderService.post(order).then(result => {
-            // this.setState({ success: 'Order status updated.', error: '' })
+            this.setState({ success: 'Order status updated.', error: '',orders:[] })
             OrderService.get().then(result => {
                 this.setState({
                     orders: result,
-                    success: 'Order status updated.', error: ''
                 });
             }
             ).catch(error =>

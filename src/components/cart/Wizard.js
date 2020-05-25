@@ -25,7 +25,7 @@ class CheckoutForm extends Component {
             addressInfo: {},
             creaditCardMessage: '',
             errorMessage: '',
-            prescripted:false,
+            prescripted: false,
         };
 
     }
@@ -36,20 +36,20 @@ class CheckoutForm extends Component {
         if (cart === null) {
             cart = [];
         }
-        let presc=false;
-        
+        let presc = false;
+
         cart.map(item => {
-                    if (item.prescripted){
-                        presc=true;
-                    }
-                });
+            if (item.prescripted) {
+                presc = true;
+            }
+        });
 
         this.setState({
             order: {
                 ...this.state.order,
-                productDTOList: cart,    
+                productDTOList: cart,
             },
-            prescripted:presc
+            prescripted: presc
         });
         const user = JSON.parse(localStorage.getItem("user"));
         if (user !== null) {
@@ -95,15 +95,15 @@ class CheckoutForm extends Component {
 
     removeCartItem = (id) => {
         let cartItems = localStorage.getItem("cart");
-        let presc=false;
+        let presc = false;
         if (cartItems) {
             cartItems = JSON.parse(cartItems);
             cartItems.map((item, index) => {
                 if (item.productId === id) {
                     cartItems.splice(index, 1);
                 }
-                if (item.productId !== id&& item.prescripted){
-                    presc=true;
+                if (item.productId !== id && item.prescripted) {
+                    presc = true;
                 }
             })
             localStorage.setItem("cart", JSON.stringify(cartItems))
@@ -113,7 +113,7 @@ class CheckoutForm extends Component {
                     ...this.state.order,
                     productDTOList: cartItems
                 },
-                prescripted:presc
+                prescripted: presc
             })
         } else {
             this.setState({
@@ -163,17 +163,20 @@ class CheckoutForm extends Component {
     }
 
     submitOrder = () => {
-        let created=false;
+        let created = false;
         this.state.order.addressInfoDto = this.state.addressInfo.address;
-        this.state.order.addressInfoDto.fullName = (this.state.addressInfo.firstName + ' ' + this.state.addressInfo.lastName+' AMKA '+this.state.addressInfo.amka);
+        this.state.order.addressInfoDto.fullName = (this.state.addressInfo.firstName + ' ' + this.state.addressInfo.lastName + ' AMKA ' + this.state.addressInfo.amka);
         this.state.order.orderDate = new Date();
         console.log(this.state.order);
         OrderService.post(this.state.order)
-            .then(result => this.props.history.push('/profile'))
+            .then(result => {
+                localStorage.removeItem('cart');
+                this.props.history.push('/profile/order');
+            })
             .catch(err => { this.setState({ errorMessage: 'Something went wrong' }) }
             )
-        
-            
+
+
     }
 
     paymentHandler = (event) => {
@@ -199,16 +202,16 @@ class CheckoutForm extends Component {
 
 
 
-    changePersciption=(event)=>{
+    changePersciption = (event) => {
         const name = event.target.name;
         const value = event.target.value;
 
-            this.setState({
-                order: {
-                    ...this.state.order,
-                    [name]: value,
-                }
-            })
+        this.setState({
+            order: {
+                ...this.state.order,
+                [name]: value,
+            }
+        })
     }
 
 
@@ -263,9 +266,9 @@ class CheckoutForm extends Component {
                         {this.state.errorMessage ? <AlertMessage show={true} message={this.state.errorMessage} key={'cart-error'} variant={'danger'} /> : ''}
 
                         <CustomerInfo customer={this.state.addressInfo} changeHandler={this.changeHandler} onSubmit={this.goToNext} previous={this.goToPrevious}
-                         payment={this.state.order.payment} onPaymentChange={this.paymentHandler} validated={this.state.validated} 
-                         handleCreditCardChange={this.handleCreditCardChange} errorMessage={this.state.creaditCardMessage} 
-                         prescripted ={this.state.prescripted}  order={this.state.order} changePersciption={this.changePersciption}/>
+                            payment={this.state.order.payment} onPaymentChange={this.paymentHandler} validated={this.state.validated}
+                            handleCreditCardChange={this.handleCreditCardChange} errorMessage={this.state.creaditCardMessage}
+                            prescripted={this.state.prescripted} order={this.state.order} changePersciption={this.changePersciption} />
                     </>
                 );
         }

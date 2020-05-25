@@ -120,7 +120,8 @@ class ShowCustomers extends Component {
       }, {
         dataField: 'email',
         text: 'E-mail',
-        sort: true
+        sort: true,
+        editable: false
       }, {
         dataField: 'afm',
         text: 'Tax Number',
@@ -129,16 +130,24 @@ class ShowCustomers extends Component {
         dataField: 'address.city',
         text: 'City',
         sort: true
+      }, {
+        dataField: 'phoneNumber',
+        text: 'Phone number',
+        sort: true
+      }, {
+        dataField: 'amka',
+        text: 'AMKA',
+        sort: true
       },
       {
         formatter: this.buttonFormatterSave,
         editable: false,
         text: ""
-      },
-      {
-        formatter: this.buttonFormatterRemove,
-        editable: false,
-        text: ""
+      // },
+      // {
+      //   formatter: this.buttonFormatterRemove,
+      //   editable: false,
+      //   text: ""
       }
     ]
 

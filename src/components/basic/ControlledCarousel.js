@@ -37,6 +37,15 @@ function ControlledCarousel() {
                     alt="Third slide"
                 />
             </Carousel.Item>
+            <Carousel.Item>
+                <img
+                    className="d-block w-100"
+                    style={{ height: 400 }}
+                    src="https://bestpharmacy.gr/media/magiccart/magicslider/cache/985x478//f/r/frezyderm-gift-eye-patch-en.jpg"
+                    alt="Forth slide"
+                />
+            </Carousel.Item>
+
         </Carousel >
     );
 }

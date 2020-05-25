@@ -11,6 +11,9 @@ class HomePage extends Component {
             <>
                 <ControlledCarousel />
                 <ProductCarousel addToCart={this.props.addToCart}/>
+                <div className="container online-medicine">
+
+                </div>
                 <ReviewContainer />
             </>
         );

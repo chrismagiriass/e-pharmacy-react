@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CartItem from './CartItem';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import { withRouter } from "react-router-dom";
 
 class Cart extends Component {
 
@@ -14,13 +15,13 @@ class Cart extends Component {
         this.remove.bind(this);
         this.onChangeQuantity.bind(this);
     }
-    
+
     componentDidMount() {
         let cartItems = localStorage.getItem("cart");
         let total = 0;
         cartItems = JSON.parse(cartItems);
 
-        
+
         if (cartItems) {
             cartItems.map(item => total += item.finalPrice * item.quantity);
             this.setState({
@@ -92,7 +93,7 @@ class Cart extends Component {
 
                                 <tr>
                                     <td colSpan={4} class="text-right"><h5>Subtotal</h5></td>
-                                    <td class="text-right"><h5><strong>{this.state.subtotal}€</strong></h5></td>
+                                    <td class="text-right"><h5><strong>{this.state.subtotal.toFixed(2)}€</strong></h5></td>
                                 </tr>
                                 <tr>
                                     <td colSpan={4} class="text-right"><h5>Estimated shipping</h5></td>
@@ -104,7 +105,7 @@ class Cart extends Component {
                                 </tr>
                                 <tr>
                                     <td colSpan={4} class="text-right">
-                                        <a type="button" class="btn btn-outline-secondary" href="/products">
+                                        <a type="button" class="btn btn-outline-secondary" onClick={() => this.props.history.push("/products")}>
                                             <ShoppingCartIcon />Continue Shopping</a>
                                     </td>
                                     <td colSpan={1} class="text-right">
@@ -121,4 +122,4 @@ class Cart extends Component {
     }
 }
 
-export default Cart;
+export default withRouter(Cart);

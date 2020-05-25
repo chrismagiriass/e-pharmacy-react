@@ -17,6 +17,7 @@ import ProductTable from './components/products/ProductTable';
 import IngredientPage from './components/ingredients/IngredientPage';
 import ShowIngredients from './components/ingredients/ShowIngredients';
 import IngredientsTable from './components/ingredients/IngredientsTable';
+import BetaPage from './components/ingredients/BetaPage';
 import Cart from './components/cart/Cart';
 import HomePageAdmin from './components/admin/HomePage';
 import HomeBar from './components/admin/HomeBar';
@@ -33,7 +34,8 @@ class App extends Component {
     super(props);
     this.state = {
       showModal: false,
-      cart: []
+      cart: [],
+      webSocket: new WebSocket('ws://localhost:3030')
     }
   }
 
@@ -72,8 +74,10 @@ class App extends Component {
     let router;
     let loggedIn = false;
     let user = JSON.parse(localStorage.getItem('user'));
+    let usernameChat = '';
     if (user !== null) {
       loggedIn = true;
+      usernameChat = user.role === 'ADMIN' || user.role === 'EMPLOYEE' ? 'Customer support' : user.username
       switch (user.role) {
         case 'ADMIN':
           router = (
@@ -101,29 +105,31 @@ class App extends Component {
             <div class="d-flex" id="wrapper">
               <HomeBarEmpl />
               <div id="page-content-wrapper">
-                <div class="container-fluid"><Switch>
-                  <Route exact path='/' component={HomePageEmpl} />
-                  <Route exact path='/home' component={HomePageEmpl} />
-                  <Route exact path='/products' component={ProductTable} />
-                  <Route exact path='/ingredients' component={IngredientsTable} />
-                  <Route exact path='/categories' component={ShowCategories} />
-                  <Route exact path='/customers' component={ShowCustomers} />
-                  <Route exact path='/orders' component={Cart} />
-                  <Route render={() => <Redirect to="/" />} />
-                </Switch>
+                <div class="container-fluid">
+                  <Switch>
+                    <Route exact path='/' component={HomePageEmpl} />
+                    <Route exact path='/home' component={HomePageEmpl} />
+                    <Route exact path='/products' component={ProductTable} />
+                    <Route exact path='/ingredients' component={IngredientsTable} />
+                    <Route exact path='/categories' component={ShowCategories} />
+                    <Route exact path='/customers' component={ShowCustomers} />
+                    <Route exact path='/orders' component={ShowOrders} />
+                    <Route render={() => <Redirect to="/" />} />
+                  </Switch>
                 </div>
               </div>
             </div>);
           break;
         case 'CUSTOMER':
           router = (<Switch>
-        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
-        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
+            <Route exact path='/' render={() => <HomePage addToCart={this.addToCart} />} />
+            <Route exact path='/' render={() => <HomePage addToCart={this.addToCart} />} />
             <Route exact path='/profile' component={ProfilePage} />
+            <Route exact path='/profile/order' render={props => <ProfilePage {...props} showMessage={true} />} />
             <Route exact path='/products' render={() => <ShowProducts addToCart={this.addToCart} />} />
             <Route exact path="/products/:productId" render={props => <ProductPage {...props} addToCart={this.addToCart} />} />
             <Route exact path='/order' component={() => <CheckoutForm />} />
-
+            <Route exact path="/ingredients" component={BetaPage} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
           break;
@@ -141,23 +147,24 @@ class App extends Component {
           break;
         default:
           router = (<Switch>
-        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
-            <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
+            <Route exact path='/' render={() => <HomePage addToCart={this.addToCart} />} />
+            <Route exact path='/' render={() => <HomePage addToCart={this.addToCart} />} />
             <Route exact path='/products' render={() => <ShowProducts addToCart={this.addToCart} />} />
             <Route exact path="/products/:productId" render={props => <ProductPage {...props} addToCart={this.addToCart} />} />
+            <Route exact path="/ingredients" component={BetaPage} />
             <Route exact path='/order' component={() => <CheckoutForm openLogin={this.openLogin} />} />
             <Route render={() => <Redirect to="/" />} />
           </Switch>);
-
       }
 
     } else {
       router = (<Switch>
-        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
-        <Route exact path='/'  render={() => <HomePage addToCart={this.addToCart} />} />
+        <Route exact path='/' render={() => <HomePage addToCart={this.addToCart} />} />
+        <Route exact path='/' render={() => <HomePage addToCart={this.addToCart} />} />
         <Route exact path='/products' render={() => <ShowProducts addToCart={this.addToCart} />} />
         <Route exact path="/products/:productId" render={props => <ProductPage {...props} addToCart={this.addToCart} />} />
         <Route exact path='/order' component={() => <CheckoutForm openLogin={this.openLogin} />} />
+        <Route exact path="/ingredients" component={BetaPage} />
         <Route render={() => <Redirect to="/" />} />
       </Switch>);
     }
@@ -169,7 +176,7 @@ class App extends Component {
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <ProductBar /> : ''}
           {router}
           {!loggedIn || (loggedIn && user.role === 'CUSTOMER') ? <Footer /> : ''}
-          <Chat></Chat>
+          <Chat ws={this.state.webSocket} username={usernameChat} ></Chat>
         </BrowserRouter>
       </>
     );

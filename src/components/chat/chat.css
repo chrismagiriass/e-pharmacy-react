@@ -1,0 +1,85 @@
+.chat-main{
+	position: fixed;
+	width: 320px;
+	bottom: 0;
+    right: 4px;
+	background-color: transparent;
+	
+}
+.chat-main-shadow{
+	position: fixed;
+	width: 320px;
+	bottom: 0;
+    right: 4px;
+	background-color: white;
+	box-shadow:20px 20px 50px 10px  rgb(59, 59, 55);  
+	border-radius: 20px;
+	
+}
+.chat-header{
+    background: #007bff;
+    font-size: 1rem;
+    color:white;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border-radius: 5px;
+}
+
+
+.username i{
+	font-size: 9px;
+}
+.username h6{
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 600;
+}
+.options i{
+	font-size: 14px;
+    font-weight: normal;
+    opacity: 0.7;
+}
+.options .live-video{
+	font-size: 6px;
+}
+.chats{
+	height: 260px;
+	overflow-x: scroll;
+	overflow-x: hidden;
+}
+.chats ul li{
+	list-style: none;
+	clear: both;
+	font-size: 13px;
+}
+.chats .send-msg{
+	float: right;
+}
+.receive-msg img{
+	border-radius: 100%;
+	height: 30px;
+	width: 12%;
+}
+.receive-msg-img{
+	display: inline;
+}
+.receive-msg .receive-msg-desc{
+	display: inline-block;
+}
+.receive-msg .receive-msg-desc p{
+	background: #c1c1c1;
+}
+.message-box input{
+	border: none;
+	font-size: 13px;
+	opacity: 0.7;
+}
+.message-box input:focus{
+	outline: none;
+}
+.tools i{
+	color: #a1a1a1;
+	cursor: pointer;
+	font-size: 20px;
+	margin-right: 6px;
+}

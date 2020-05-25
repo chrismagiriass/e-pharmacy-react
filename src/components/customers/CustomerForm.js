@@ -18,7 +18,8 @@ class CustomerForm extends Component {
                 lastName: '',
                 password: '',
                 verifyPassword: '',
-                email: ''
+                email: '',
+                phoneNumber:null
             },
             errors: {
                 email: '',
@@ -69,6 +70,7 @@ class CustomerForm extends Component {
 
     handleSubmit(event) {
         const form = event.currentTarget;
+        event.preventDefault();
         console.log(this.state.customer );
         if (form.checkValidity()===false || this.state.errors.password!=='') {
             event.preventDefault();
@@ -89,14 +91,14 @@ class CustomerForm extends Component {
                             email: ''
                         }
                     }) 
+                    CustomerService.post(this.state.customer);
+                    window.location.reload();
                 }
             }
             ).catch(err => {
 
             })
-            event.preventDefault();
-            CustomerService.post(this.state.customer);
-            window.location.reload();
+           
             
 
         }
@@ -126,7 +128,18 @@ class CustomerForm extends Component {
         let addressFields = '';
         if (!this.state.register) {
 
-            addressFields = <Form.Row className={this.state.register ? 'hidden-row' : ''}>
+            addressFields =  
+            <Form.Row className={this.state.register ? 'hidden-row' : ''}>
+                  <Form.Group as={Col} md="6">
+                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Phone Number"
+                        name="phoneNumber"
+                        pattern="[0-9]+"
+                        value={this.state.customer.phoneNumber}
+                        onChange={this.changeHandler} />
+                </Form.Group>
                 <Form.Group as={Col} md="6" controlId="validationCustfomPassword">
                     <Form.Label>City</Form.Label>
                     <InputGroup>
@@ -277,7 +290,7 @@ class CustomerForm extends Component {
                             feedback="You must agree before submitting."
                         />
                     </Form.Group>
-                    <button type="submit" className="btn btn-submit float-right">{this.state.register ? 'Register' : 'Update'}</button>
+                    <button type="submit" className="btn btn-submit float-right">Register</button>
                 </Form>
             </div>
         );

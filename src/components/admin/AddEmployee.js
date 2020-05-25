@@ -8,7 +8,7 @@ class AddEmployee extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            validated: true,
+            validated: false,
             employee: this.props.employee || {
                 firstName: '',
                 role: 'EMPLOYEE',
@@ -117,7 +117,7 @@ class AddEmployee extends Component {
                                 </Form.Control.Feedback>
                                     </InputGroup>
                                 </Form.Group>
-                                <Form.Group as={Col} md="12" controlId="validationCustomPassword">
+                                {/* <Form.Group as={Col} md="12" controlId="validationCustomPassword">
                                     <Form.Label>Verify Password</Form.Label>
                                     <InputGroup>
                                         <Form.Control
@@ -132,7 +132,7 @@ class AddEmployee extends Component {
                                             Password is required.
                                 </Form.Control.Feedback>
                                     </InputGroup>
-                                </Form.Group>
+                                </Form.Group> */}
                             </Form.Row>
                             <button type="submit" className="btn btn-submit float-right">Save</button>
                         </Form>

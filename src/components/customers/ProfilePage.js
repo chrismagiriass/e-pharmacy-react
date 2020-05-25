@@ -5,6 +5,7 @@ import { Form, Col, InputGroup } from 'react-bootstrap';
 import DataTable from "../basic/DataTable";
 import moment from 'moment';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import AlertMessage from '../basic/AlertMessage';
 
 
 class ProfilePage extends Component {
@@ -158,6 +159,7 @@ class ProfilePage extends Component {
 
         return (
             <div className="container">
+                {this.props.showMessage?<AlertMessage show={true} message={'Your order placed Successfully. Thank you!!'} variant={'success'}/> : ''}
                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit}>
                     <Form.Row>
                         <Form.Group as={Col} md="6">

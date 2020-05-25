@@ -107,7 +107,8 @@ class ProductPage extends Component {
 
         let saleBadge = this.state.product.discount ? <span className="notify-badge badge-big">-{this.state.product.discount}%</span> : '';
         let startPrice = this.state.product.discount ? <span className="product-price-discount">  {this.state.product.price}€</span> : '';
-        let stock = this.state.product.stock ? <span className="badge badge-success">  {"In stock: " + this.state.product.stock}</span> : <span className="badge badge-danger">  {"Out of stock "}</span>;
+        let prescripted = this.state.product.prescripted ? <p><em>Prescription required</em></p> : '';
+        let stock = this.state.product.stock ? <span className="badge badge-success">  {"In stock"}</span> : <span className="badge badge-danger">  {"Out of stock "}</span>;
 
         return (
 
@@ -125,19 +126,17 @@ class ProductPage extends Component {
                     <div className="col-md-6">
                         <div className="row">
                             <div className="col-md-12">
-                                <h3>{this.state.product.name}</h3>
+                                <h3>{this.state.product.name} </h3>
+                                {stock}
+                                <p>Product number: {this.state.product.productId}</p>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-12">
-                                <RatingStar value={3} />
-                            </div>
-                            <div className="col-md-12">
-                                <p>
-                                    {stock}
-                                </p>
+                            <div className="col-md-8">
+                               
                             </div>
                         </div>
+
                         <div className="row">
                             <div className="col-md-8">
                                 <h5>Description</h5>
@@ -153,7 +152,7 @@ class ProductPage extends Component {
                         </div>
                         <div className="row">
                             <div className="col-md-12">
-                                <button style={{ 'margin-top': '20px' }} className="btn btn-submit" onClick={() => this.props.addToCart(this.state.product)}>Add to cart</button>
+                                <button  disabled= {!this.state.product.stock} style={{ 'margin-top': '20px' }} className="btn btn-submit" onClick={() => this.props.addToCart(this.state.product)}>Add to cart</button> {prescripted}
                             </div>
                         </div>
                     </div>
@@ -162,7 +161,7 @@ class ProductPage extends Component {
                 <div className="row" >
 
                     <div className="col-md-6 offset-md-3 pb-2">
-                        <h4>Reviews</h4>
+                        <h4>Reviews <RatingStar  value={3} /></h4>
                         {this.state.reviews.map(review => {
                             return <div className="col-md-12 pb-2">
                                 <div className="card card-inner">

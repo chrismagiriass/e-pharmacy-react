@@ -106,11 +106,25 @@ footer a, footer p{
 
 
 .review{
-  background-color: #CCCFBC;
-  color: #507642;
-  height: 200px;
+  background:url('https://www.pharma4all.gr/images/detailed/3/farmakeio-menu.png') top right;
+  color: black;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+   background-size: 50% 100%; 
+   /* float: right; */
+  height: 300px;
   text-align: center;
+  font-size: 20px;
  
+}
+
+.online-medicine{
+  background-image:url('https://www.pharmacytomydoor.co.uk/pub/media/wysiwyg/Why_people_prefer_ordering_their_repeat_prescriptions_online.jpg');
+  background-repeat: no-repeat;
+  min-height: 600px;
+  min-width:300px;
+  background-size: 100% 100%; 
+  margin-bottom: 40px!important;
 }
 
 .carousel-caption{
@@ -128,8 +142,17 @@ footer a, footer p{
   min-height: 530px;
 }
 .card-container{
-  box-shadow:20px 20px 50px 10px  #F3F4EC;  
+  box-shadow:20px 20px 50px 10px  rgb(59, 59, 55);  
   border-radius: 20px;
+}
+
+.underconstruction{
+  height: 400px;
+  width: auto;
+  /* background-image: url('https://www.405.co.za/images/under-construction.png'); */
+  background-repeat: no-repeat;
+ background-attachment: fixed;
+  background-size: 100% 100%; 
 }
 
 .card-container h3{
@@ -168,4 +191,8 @@ body{
 	position: absolute;
 	bottom: 10px;
 	right: 35%;
+}
+
+.MuiBox-root-12{
+  border-bottom: 10px !important;
 }
